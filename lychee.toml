@@ -8,6 +8,10 @@
 # the files.
 fallback_extensions = ["html"]
 
+# A link to a folder ("/" or "/#download") means that folder's index.html, as on Pages.
+# Without this lychee checks the folder itself and cannot look for #download inside it.
+index_files = ["index.html"]
+
 # Check that #fragments point at real ids (the in-page links: #features, #download...).
 # Since lychee 0.24 this takes a mode, not true/false; anchors are the only kind used here.
 include_fragments = "anchor-only"
