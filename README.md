@@ -13,7 +13,7 @@ is documentation and checks.
 | `site/privacy.html`, `site/terms.html`, `site/refunds.html` | The legal pages the footer links to |
 | `site/404.html` | Served by GitHub Pages for any path that does not exist |
 | `site/css/` | `site.css` for every page, `home.css` for the home page only |
-| `site/img/` | The hero capture at 1x, 2x and 3x, the mark, the share image, the Store badge |
+| `site/img/` | The hero capture (native and a 1x copy), the mark, the share image, the Store badge |
 | `site/download/`, `site/source/` and others | Short links, each a page that forwards the browser |
 | `docs/hosting.md` | How the site is hosted: GitHub Pages settings and the DNS at Cloudflare |
 | `.github/workflows/check.yml` | HTML validation and link checking on every pull request |
@@ -34,8 +34,8 @@ npx serve site
   leave it out.
 - Screenshots are real PrintWindow captures of the app, never mock-ups or edited images,
   and never one that shows a real person's name or a private window title. The hero is
-  captured at `"BarScale": 1.8` on a 150% display, shown 221 points wide, and shipped
-  at 1x, 2x and 3x (221, 442 and 663 pixels), so it stays sharp on every screen.
+  a native capture of the floating bar on a 150% display (307 pixels), shown 205
+  points wide so that file lands pixel for pixel, plus a 205-pixel copy for 1x screens.
 - Deskbar is "source available", never "open source".
 - Nothing loads from another origin. The Content-Security-Policy meta tag in each page blocks
   it anyway, so a third-party script or font fails in the browser rather than shipping.

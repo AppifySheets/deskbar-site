@@ -130,10 +130,10 @@
   font-weight: 600;
 }
 
-/* The framed bar. The capture inside is a real render of the live bar, drawn from 1x, 2x
-   and 3x files (see the srcset in index.html), so it stays sharp on any screen. It sits in
-   a frame painted like a dark desktop, with the brand glow behind it, and fades out at the
-   bottom where the crop ends. */
+/* The framed bar. The capture inside is a native render of the live bar, drawn pixel for
+   pixel on a 150% screen (see the srcset in index.html), so its text has its real weight.
+   It sits in a frame painted like a dark desktop, with the brand glow behind it, and fades
+   out at the bottom where the crop ends. */
 .hero-shot::before {
   content: "";
   position: absolute;
@@ -163,11 +163,11 @@
     inset 0 1px 0 rgb(255 255 255 / 0.08);
 }
 
-/* Shown at exactly 221 CSS pixels; never let the layout scale it, or the srcset's
-   one-pixel-per-pixel promise breaks and the softness comes back. */
+/* Shown at exactly 205 CSS pixels, so the 307-pixel file lands pixel for pixel on a
+   150% screen. Never let the layout scale it, or the softness comes back. */
 .screen img {
   display: block;
-  width: 221px;
+  width: 205px;
   max-width: none;
   height: auto;
   border-radius: 12px 12px 0 0;
@@ -214,7 +214,7 @@
   box-shadow: 0 0 0 4px rgb(245 181 68 / 0.12);
 }
 
-/* Phones: the frame keeps its proportions; at 221 pixels the bar fits any phone. */
+/* Phones: the frame keeps its proportions; at 205 pixels the bar fits any phone. */
 @media (max-width: 420px) {
   .screen {
     border-radius: 18px;

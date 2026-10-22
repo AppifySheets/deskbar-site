@@ -110,30 +110,27 @@
         </section>
 
         <!--
-          The one screenshot: a PrintWindow capture of the live bar at BarScale 1.8 on a 150%
-          display, taken mid-chord (Win+Ctrl held, Tab tapped), so the Meta row wears the
-          amber "you would land here" ring. It was checked for private names before use: the
-          one window title with a person's name was shown as plain "Beeper" through Deskbar's
-          own Rename this window for the capture, and the bar was cropped above its meters
-          and now-playing line.
+          The one screenshot: a PrintWindow capture of the live floating bar at its normal
+          settings on a 150% display, 307 pixels wide. That is exactly how Windows draws the
+          bar on such a screen, so the 1.5x file is shown pixel for pixel, with the text at its
+          true weight. Shrinking a bigger render thins the strokes, which is why the hero is
+          not made that way. bar-hero-205.png is the same capture reduced for 1x screens.
 
-          The capture is 950 pixels wide and is shown 221 wide, so it is drawn from three
-          sizes made from it: 221 for ordinary screens, 442 for 2x screens, 663 for 3x phones.
-          Every screen gets at least one image pixel per screen pixel, which is what keeps it
-          sharp. If it
-          is ever replaced, replace it with a real capture made the same way, never a made-up
-          one, and keep all three sizes.
+          It was checked for private details before use: the one window title with a person's
+          name was shown as plain "Beeper" through Deskbar's own Rename this window for the
+          capture, and the bar was cropped above its meters and now-playing line. If it is
+          ever replaced, replace it with a real capture made the same way, never a made-up one.
         -->
         <figure class="hero-shot">
           <div class="screen">
             <img
-              src="/img/bar-hero-221.png"
-              srcset="/img/bar-hero-221.png 1x, /img/bar-hero-442.png 2x, /img/bar-hero-663.png 3x"
-              width="221"
-              height="461"
-              alt="The bar in the middle of a switch: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The Meta row is ringed in amber as the row Win+Ctrl+Tab would land on, and the current workspace, Deskbar site, is opened into a list of its windows with their titles. Groups of workspaces have a line down their left edge."
+              src="/img/bar-hero-205.png"
+              srcset="/img/bar-hero-205.png 1x, /img/bar-hero-307.png 1.5x"
+              width="205"
+              height="668"
+              alt="The floating bar: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The current workspace, Deskbar site, is tinted, ringed and opened into a list of its windows with their titles; the rows you came from are ringed in dashes and dots. Groups of workspaces have a line down their left edge."
             />
-            <!-- The chord that is being held in the capture, drawn crisp in CSS. -->
+            <!-- The switching chord, drawn crisp in CSS over the frame's corner. -->
             <div class="chord-chip" aria-hidden="true">
               <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
             </div>
