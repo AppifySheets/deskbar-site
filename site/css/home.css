@@ -149,8 +149,8 @@
 /* The desktop: wallpaper made of two colour fields, a fine border and a deep shadow. */
 .screen {
   position: relative;
-  padding: 30px 46px 0;
-  border-radius: 24px;
+  padding: 24px 34px 0;
+  border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgb(255 255 255 / 0.12);
   background:
@@ -163,11 +163,11 @@
     inset 0 1px 0 rgb(255 255 255 / 0.08);
 }
 
-/* Shown at exactly 316 CSS pixels; never let the layout scale it, or the srcset's
+/* Shown at exactly 221 CSS pixels; never let the layout scale it, or the srcset's
    one-pixel-per-pixel promise breaks and the softness comes back. */
 .screen img {
   display: block;
-  width: 316px;
+  width: 221px;
   max-width: none;
   height: auto;
   border-radius: 12px 12px 0 0;
@@ -179,13 +179,13 @@
 /* The chord being held in the capture, as glassy keycaps over the frame's corner. */
 .chord-chip {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
+  right: 14px;
+  bottom: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: 16px;
+  gap: 6px;
+  padding: 9px 10px;
+  border-radius: 14px;
   background: rgb(12 12 24 / 0.62);
   border: 1px solid rgb(255 255 255 / 0.14);
   backdrop-filter: blur(12px);
@@ -197,15 +197,15 @@
 .chord-chip kbd {
   display: inline-grid;
   place-items: center;
-  min-width: 52px;
-  height: 42px;
-  padding: 0 12px;
+  min-width: 42px;
+  height: 34px;
+  padding: 0 9px;
   border: 1px solid var(--border-strong);
   border-bottom-width: 3px;
-  border-radius: 10px;
+  border-radius: 9px;
   background: #18172a;
   color: var(--text);
-  font: 600 0.95rem/1 var(--font);
+  font: 600 0.82rem/1 var(--font);
 }
 
 .chord-chip kbd.tap {
@@ -214,25 +214,10 @@
   box-shadow: 0 0 0 4px rgb(245 181 68 / 0.12);
 }
 
-/* Phones: a slimmer frame so the 316-pixel bar still fits a 360-pixel screen. */
+/* Phones: the frame keeps its proportions; at 221 pixels the bar fits any phone. */
 @media (max-width: 420px) {
   .screen {
-    padding: 16px 6px 0;
     border-radius: 18px;
-  }
-
-  .chord-chip {
-    right: 10px;
-    bottom: 10px;
-    padding: 8px 10px;
-    gap: 5px;
-  }
-
-  .chord-chip kbd {
-    min-width: 40px;
-    height: 34px;
-    padding: 0 8px;
-    font-size: 0.82rem;
   }
 }
 

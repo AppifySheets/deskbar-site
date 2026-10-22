@@ -34,8 +34,8 @@ npx serve site
   leave it out.
 - Screenshots are real PrintWindow captures of the app, never mock-ups or edited images,
   and never one that shows a real person's name or a private window title. The hero is
-  captured at `"BarScale": 1.8` on a 150% display and shipped at 1x, 2x and 3x, so it
-  stays sharp on every screen.
+  captured at `"BarScale": 1.8` on a 150% display, shown 221 points wide, and shipped
+  at 1x, 2x and 3x (221, 442 and 663 pixels), so it stays sharp on every screen.
 - Deskbar is "source available", never "open source".
 - Nothing loads from another origin. The Content-Security-Policy meta tag in each page blocks
   it anyway, so a third-party script or font fails in the browser rather than shipping.
