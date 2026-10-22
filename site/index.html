@@ -79,8 +79,9 @@
 
     <main id="main">
       <!--
-        The stage: hero and features on the left, the bar standing on the right. On narrow
-        screens it collapses to one column (see .stage in home.css).
+        The stage: the hero text on the left and the bar, framed like a desktop, on the
+        right; the features run full width underneath. On narrow screens everything stacks
+        into one column (see .stage in home.css).
       -->
       <div class="wrap stage">
         <section class="hero" aria-labelledby="hero-title">
@@ -109,22 +110,33 @@
         </section>
 
         <!--
-          The one screenshot. bar-floating.png comes from docs/images in the Deskbar repo,
-          which holds sanitised captures only. It is shown at its own size on purpose; see
-          .bar-shot in home.css. If it is ever removed, use the .shot-placeholder block, never
-          a made-up capture.
+          The one screenshot: a PrintWindow capture of the live bar at BarScale 1.8 on a 150%
+          display, taken mid-chord (Win+Ctrl held, Tab tapped), so the Meta row wears the
+          amber "you would land here" ring. It was checked for private names before use: the
+          one window title with a person's name was shown as plain "Beeper" through Deskbar's
+          own Rename this window for the capture, and the bar was cropped above its meters
+          and now-playing line.
+
+          The capture is 950 pixels wide and is shown 316 wide, so it is drawn from three
+          sizes: 316 for ordinary screens, 633 for 2x screens, 950 for 3x phones. Every screen
+          gets at least one image pixel per screen pixel, which is what keeps it sharp. If it
+          is ever replaced, replace it with a real capture made the same way, never a made-up
+          one, and keep all three sizes.
         -->
-        <figure class="bar-shot">
-          <img
-            src="/img/bar-floating.png"
-            width="316"
-            height="1114"
-            alt="The floating bar: one row per workspace, each with its name above the icons of every window in it. The current workspace's row is tinted and ringed and lists its windows with their titles; the row you came from is ringed in dashes. Groups of workspaces have a line down their left edge, and along the bottom run the taskbar's pinned apps, a tray chevron, wifi, a volume dial, a bell and the clock."
-          />
-          <figcaption>
-            The floating bar, as it sits on a screen. Every workspace is a row; the current one
-            opens into a list of its windows.
-          </figcaption>
+        <figure class="hero-shot">
+          <div class="screen">
+            <img
+              src="/img/bar-hero-316.png"
+              srcset="/img/bar-hero-316.png 1x, /img/bar-hero-633.png 2x, /img/bar-hero-950.png 3x"
+              width="316"
+              height="659"
+              alt="The bar in the middle of a switch: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The Meta row is ringed in amber as the row Win+Ctrl+Tab would land on, and the current workspace, Deskbar site, is opened into a list of its windows with their titles. Groups of workspaces have a line down their left edge."
+            />
+            <!-- The chord that is being held in the capture, drawn crisp in CSS. -->
+            <div class="chord-chip" aria-hidden="true">
+              <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
+            </div>
+          </div>
         </figure>
 
         <section class="features" id="features" aria-labelledby="features-title">
@@ -155,6 +167,14 @@
                 before.
               </p>
             </li>
+            <li class="row rail-teal">
+              <h3>Each workspace keeps to itself</h3>
+              <p>
+                While you are in one workspace, its windows are the only ones on your taskbar
+                and the only ones Alt+Tab walks through. A screen share of one workspace shows
+                nothing of the others.
+              </p>
+            </li>
             <li class="row row-wide rail-amber">
               <h3>Switch the way Alt+Tab switches</h3>
               <div class="chord" aria-hidden="true">
@@ -164,14 +184,6 @@
                 Hold Win+Ctrl and tap Tab to walk your workspaces in most-recently-used order,
                 then let go to land. One tap takes you back to wherever you just were, and
                 focus lands on the window you were last using there, so you arrive typing.
-              </p>
-            </li>
-            <li class="row rail-teal">
-              <h3>Each workspace keeps to itself</h3>
-              <p>
-                While you are in one workspace, its windows are the only ones on your taskbar
-                and the only ones Alt+Tab walks through. A screen share of one workspace shows
-                nothing of the others.
               </p>
             </li>
             <li class="row rail-blue">

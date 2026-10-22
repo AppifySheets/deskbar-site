@@ -13,7 +13,7 @@ is documentation and checks.
 | `site/privacy.html`, `site/terms.html`, `site/refunds.html` | The legal pages the footer links to |
 | `site/404.html` | Served by GitHub Pages for any path that does not exist |
 | `site/css/` | `site.css` for every page, `home.css` for the home page only |
-| `site/img/` | The bar capture and mark from the Deskbar repo, the share image, the Store badge |
+| `site/img/` | The hero capture at 1x, 2x and 3x, the mark, the share image, the Store badge |
 | `site/download/`, `site/source/` and others | Short links, each a page that forwards the browser |
 | `docs/hosting.md` | How the site is hosted: GitHub Pages settings and the DNS at Cloudflare |
 | `.github/workflows/check.yml` | HTML validation and link checking on every pull request |
@@ -32,8 +32,10 @@ npx serve site
 
 - Every claim about the app has to be checkable against the Deskbar README. When unsure,
   leave it out.
-- Screenshots come only from `docs/images` in the Deskbar repo, which holds sanitised
-  captures. Never one that shows a real person's name as a workspace name.
+- Screenshots are real PrintWindow captures of the app, never mock-ups or edited images,
+  and never one that shows a real person's name or a private window title. The hero is
+  captured at `"BarScale": 1.8` on a 150% display and shipped at 1x, 2x and 3x, so it
+  stays sharp on every screen.
 - Deskbar is "source available", never "open source".
 - Nothing loads from another origin. The Content-Security-Policy meta tag in each page blocks
   it anyway, so a third-party script or font fails in the browser rather than shipping.

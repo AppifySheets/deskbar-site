@@ -4,19 +4,19 @@
   live in site.css, which every page loads first.
 */
 
-/* ---- hero and the bar beside it -------------------------------------------------------- */
+/* ---- hero and the framed bar ---------------------------------------------------------- */
 
-/* Two columns on a wide screen: the words on the left, and the bar standing on the right
-   the way it stands at the edge of a real screen, running down past the first features.
-   One column on anything narrower, with the bar between the hero and the features. */
+/* On a wide screen the words sit on the left and the framed bar on the right, with the
+   features full width underneath. On anything narrower it is one column: hero, bar,
+   features. */
 .stage {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 316px;
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    "hero bar"
-    "features bar";
-  column-gap: 80px;
-  padding-top: 88px;
+    "hero shot"
+    "features features";
+  column-gap: 72px;
+  padding-top: 72px;
   position: relative;
   isolation: isolate;
 }
@@ -45,19 +45,19 @@
 
 .hero {
   grid-area: hero;
-  padding-bottom: 72px;
+  align-self: center;
 }
 
-.bar-shot {
-  grid-area: bar;
+.hero-shot {
+  grid-area: shot;
   margin: 0;
   position: relative;
   isolation: isolate;
-  align-self: start;
 }
 
 .features {
   grid-area: features;
+  padding-top: 120px;
 }
 
 @media (max-width: 920px) {
@@ -65,14 +65,18 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "hero"
-      "bar"
+      "shot"
       "features";
     padding-top: 56px;
   }
 
-  .bar-shot {
+  .hero-shot {
     justify-self: center;
-    margin-bottom: 72px;
+    margin-top: 56px;
+  }
+
+  .features {
+    padding-top: 96px;
   }
 }
 
@@ -126,40 +130,114 @@
   font-weight: 600;
 }
 
-/* The capture is drawn at its own pixel size on purpose: it is a pixel-exact render of the
-   live bar, and scaling would soften every edge. A glow sits behind it in the brand colours,
-   and the capture's own transparent corners let the glow show through. */
-.bar-shot::before {
+/* The framed bar. The capture inside is a real render of the live bar, drawn from 1x, 2x
+   and 3x files (see the srcset in index.html), so it stays sharp on any screen. It sits in
+   a frame painted like a dark desktop, with the brand glow behind it, and fades out at the
+   bottom where the crop ends. */
+.hero-shot::before {
   content: "";
   position: absolute;
-  inset: -4% -55% 8%;
+  inset: -14% -40% -10%;
   z-index: -1;
   background:
-    radial-gradient(40% 30% at 50% 22%, rgb(139 92 246 / 0.55), transparent),
-    radial-gradient(35% 25% at 40% 62%, rgb(79 82 214 / 0.4), transparent),
-    radial-gradient(30% 20% at 60% 88%, rgb(110 231 255 / 0.22), transparent);
-  filter: blur(40px);
+    radial-gradient(40% 32% at 40% 25%, rgb(139 92 246 / 0.55), transparent),
+    radial-gradient(35% 28% at 65% 70%, rgb(110 231 255 / 0.2), transparent),
+    radial-gradient(40% 40% at 50% 92%, rgb(79 82 214 / 0.45), transparent);
+  filter: blur(50px);
 }
 
-.bar-shot img {
+/* The desktop: wallpaper made of two colour fields, a fine border and a deep shadow. */
+.screen {
+  position: relative;
+  padding: 30px 46px 0;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background:
+    radial-gradient(120% 80% at 100% 0%, #3b2a7a 0%, transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, #123a5c 0%, transparent 60%),
+    linear-gradient(160deg, #1a1440, #0b0b1c);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.4),
+    0 50px 100px -30px rgb(0 0 0 / 0.9),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+/* Shown at exactly 316 CSS pixels; never let the layout scale it, or the srcset's
+   one-pixel-per-pixel promise breaks and the softness comes back. */
+.screen img {
   display: block;
   width: 316px;
-  border-radius: 12px;
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 0.07),
-    0 40px 80px -20px rgb(0 0 0 / 0.8);
+  max-width: none;
+  height: auto;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), 0 24px 50px rgb(0 0 0 / 0.6);
+  -webkit-mask-image: linear-gradient(#000 80%, transparent);
+  mask-image: linear-gradient(#000 80%, transparent);
 }
 
-.bar-shot figcaption {
-  margin-top: 16px;
+/* The chord being held in the capture, as glassy keycaps over the frame's corner. */
+.chord-chip {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgb(12 12 24 / 0.62);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--faint);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  max-width: 316px;
+  box-shadow: 0 20px 40px -15px rgb(0 0 0 / 0.8);
+}
+
+.chord-chip kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 52px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  background: #18172a;
+  color: var(--text);
+  font: 600 0.95rem/1 var(--font);
+}
+
+.chord-chip kbd.tap {
+  border-color: rgb(245 181 68 / 0.7);
+  color: var(--amber);
+  box-shadow: 0 0 0 4px rgb(245 181 68 / 0.12);
+}
+
+/* Phones: a slimmer frame so the 316-pixel bar still fits a 360-pixel screen. */
+@media (max-width: 420px) {
+  .screen {
+    padding: 16px 6px 0;
+    border-radius: 18px;
+  }
+
+  .chord-chip {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 10px;
+    gap: 5px;
+  }
+
+  .chord-chip kbd {
+    min-width: 40px;
+    height: 34px;
+    padding: 0 8px;
+    font-size: 0.82rem;
+  }
 }
 
 /* A placeholder kept for the day the hero capture is swapped or missing. Not used while
-   bar-floating.png is in place, but documented here so nobody invents a fake screenshot. */
+   the bar-hero images are in place, but documented here so nobody invents a fake one. */
 .shot-placeholder {
   display: grid;
   place-items: center;
@@ -203,11 +281,17 @@
 
 .rows {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (max-width: 980px) {
+  .rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -254,7 +338,7 @@
   margin-top: 12px;
 }
 
-/* A row that spans both columns, for the switcher with its keycaps. */
+/* A row that spans every column, for the switcher with its keycaps and the code sample. */
 .row-wide {
   grid-column: 1 / -1;
 }
