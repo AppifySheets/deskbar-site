@@ -36,7 +36,8 @@ npx serve site
   and never one that shows a real person's name or a private window title. The hero is
   a native capture of the floating bar at `"BarScale": 1.2` on a 150% display (410
   pixels), shown 273 points wide so that file lands pixel for pixel, plus a 273-pixel
-  copy for 1x screens.
+  copy for 1x screens. It is shown as two cuts of the one capture, the top and the lower
+  part, never stitched into a bar that did not exist.
 - Deskbar is "source available", never "open source".
 - Nothing loads from another origin. The Content-Security-Policy meta tag in each page blocks
   it anyway, so a third-party script or font fails in the browser rather than shipping.

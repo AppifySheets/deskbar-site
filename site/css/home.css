@@ -150,17 +150,33 @@
   position: relative;
 }
 
-/* Shown at exactly 273 CSS pixels, so the 410-pixel file lands pixel for pixel on a 150%
-   screen. Never let the layout scale it, or the softness comes back. */
+/* Both pieces are shown at exactly 273 CSS pixels, so the 410-pixel files land pixel for
+   pixel on a 150% screen. Never let the layout scale them, or the softness comes back. */
 .screen img {
   display: block;
   width: 273px;
   max-width: none;
   height: auto;
+}
+
+/* The top piece (pins and rows) fades out where its cut ends; the keycaps hang off it. */
+.bar-top {
+  position: relative;
+}
+
+.bar-top img {
   border-radius: 14px 14px 0 0;
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 80px -20px rgb(0 0 0 / 0.85);
-  -webkit-mask-image: linear-gradient(#000 82%, transparent);
-  mask-image: linear-gradient(#000 82%, transparent);
+  -webkit-mask-image: linear-gradient(#000 84%, transparent);
+  mask-image: linear-gradient(#000 84%, transparent);
+}
+
+/* The lower piece (usage, now playing, the tray strip) fades in from its own cut, a little
+   below, so the two read as two parts of one bar with the middle rows left out. */
+.bar-lower {
+  margin-top: 12px;
+  border-radius: 0 0 14px 14px;
+  -webkit-mask-image: linear-gradient(transparent, #000 26%);
+  mask-image: linear-gradient(transparent, #000 26%);
 }
 
 /* The switching chord as glassy keycaps, floating off the bar's lower right corner. */

@@ -114,27 +114,42 @@
           a 150% display, 410 pixels wide. Windows drew it natively at that size, so the 1.5x
           file is shown pixel for pixel at 273 points, with the text at its true weight.
           Shrinking a bigger render thins the strokes and stretching a smaller one blurs them,
-          which is why neither is done. bar-hero-273.png is the same capture reduced for 1x
+          which is why neither is done. The -273 files are the same capture reduced for 1x
           screens.
+
+          The whole bar is too tall for the first screen, so it is shown as two cuts of that
+          one capture: the top (pins and workspace rows) fading out, and the lower part (usage
+          meters, now playing, tray, volume, notifications and clock) fading in below it. The
+          rows in between are left out; nothing is pieced together into one seamless image.
 
           It was checked for private details before use: the one window title with a person's
           name was shown as plain "Beeper" through Deskbar's own Rename this window for the
-          capture, and the bar was cropped above its meters and now-playing line. If it is
-          ever replaced, replace it with a real capture made the same way, never a made-up one.
+          capture, and the now-playing line shows a public song. If it is ever replaced,
+          replace it with a real capture made the same way, never a made-up one.
         -->
         <figure class="hero-shot">
           <div class="screen">
-            <img
-              src="/img/bar-hero-273.png"
-              srcset="/img/bar-hero-273.png 1x, /img/bar-hero-410.png 1.5x"
-              width="273"
-              height="706"
-              alt="The floating bar: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The current workspace, Deskbar site, is tinted, ringed and opened into a list of its windows with their titles; the rows you came from are ringed in dashes and dots. Groups of workspaces have a line down their left edge."
-            />
-            <!-- The switching chord, drawn crisp in CSS, floating off the bar's lower corner. -->
-            <div class="chord-chip" aria-hidden="true">
-              <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
+            <div class="bar-top">
+              <img
+                src="/img/bar-hero-273.png"
+                srcset="/img/bar-hero-273.png 1x, /img/bar-hero-410.png 1.5x"
+                width="273"
+                height="599"
+                alt="The floating bar: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The current workspace, Deskbar site, is tinted, ringed and opened into a list of its windows with their titles; the rows you came from are ringed in dashes and dots. Groups of workspaces have a line down their left edge."
+              />
+              <!-- The switching chord, drawn crisp in CSS, floating off the bar's corner. -->
+              <div class="chord-chip" aria-hidden="true">
+                <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
+              </div>
             </div>
+            <img
+              class="bar-lower"
+              src="/img/bar-lower-273.png"
+              srcset="/img/bar-lower-273.png 1x, /img/bar-lower-410.png 1.5x"
+              width="273"
+              height="154"
+              alt="The bottom of the same bar: CPU, memory, disk and GPU usage with small graphs, a now-playing line with the track, artist and playback buttons, and the strip with the tray chevron, wifi, a volume dial, the notification bell, the input language and the clock."
+            />
           </div>
         </figure>
 
