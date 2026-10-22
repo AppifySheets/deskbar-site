@@ -79,7 +79,7 @@
 
     <main id="main">
       <!--
-        The stage: the hero text on the left and the bar, framed like a desktop, on the
+        The stage: the hero text on the left and the bar, standing on its own, on the
         right; the features run full width underneath. On narrow screens everything stacks
         into one column (see .stage in home.css).
       -->
@@ -110,11 +110,12 @@
         </section>
 
         <!--
-          The one screenshot: a PrintWindow capture of the live floating bar at its normal
-          settings on a 150% display, 307 pixels wide. That is exactly how Windows draws the
-          bar on such a screen, so the 1.5x file is shown pixel for pixel, with the text at its
-          true weight. Shrinking a bigger render thins the strokes, which is why the hero is
-          not made that way. bar-hero-205.png is the same capture reduced for 1x screens.
+          The one screenshot: a PrintWindow capture of the live floating bar at BarScale 1.2 on
+          a 150% display, 410 pixels wide. Windows drew it natively at that size, so the 1.5x
+          file is shown pixel for pixel at 273 points, with the text at its true weight.
+          Shrinking a bigger render thins the strokes and stretching a smaller one blurs them,
+          which is why neither is done. bar-hero-273.png is the same capture reduced for 1x
+          screens.
 
           It was checked for private details before use: the one window title with a person's
           name was shown as plain "Beeper" through Deskbar's own Rename this window for the
@@ -124,13 +125,13 @@
         <figure class="hero-shot">
           <div class="screen">
             <img
-              src="/img/bar-hero-205.png"
-              srcset="/img/bar-hero-205.png 1x, /img/bar-hero-307.png 1.5x"
-              width="205"
-              height="668"
+              src="/img/bar-hero-273.png"
+              srcset="/img/bar-hero-273.png 1x, /img/bar-hero-410.png 1.5x"
+              width="273"
+              height="706"
               alt="The floating bar: pinned apps along the top, then one row per workspace with its name above the icons of its windows. The current workspace, Deskbar site, is tinted, ringed and opened into a list of its windows with their titles; the rows you came from are ringed in dashes and dots. Groups of workspaces have a line down their left edge."
             />
-            <!-- The switching chord, drawn crisp in CSS over the frame's corner. -->
+            <!-- The switching chord, drawn crisp in CSS, floating off the bar's lower corner. -->
             <div class="chord-chip" aria-hidden="true">
               <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
             </div>

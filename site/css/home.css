@@ -130,57 +130,44 @@
   font-weight: 600;
 }
 
-/* The framed bar. The capture inside is a native render of the live bar, drawn pixel for
-   pixel on a 150% screen (see the srcset in index.html), so its text has its real weight.
-   It sits in a frame painted like a dark desktop, with the brand glow behind it, and fades
-   out at the bottom where the crop ends. */
+/* The bar, standing on its own. The capture is a native render of the live bar, drawn
+   pixel for pixel on a 150% screen (see the srcset in index.html), so its text has its real
+   weight. Only the brand glow sits behind it, and it fades out at the bottom where the crop
+   ends. .screen is just the positioning box for the bar and the keycaps. */
 .hero-shot::before {
   content: "";
   position: absolute;
-  inset: -14% -40% -10%;
+  inset: -10% -45% -6%;
   z-index: -1;
   background:
-    radial-gradient(40% 32% at 40% 25%, rgb(139 92 246 / 0.55), transparent),
-    radial-gradient(35% 28% at 65% 70%, rgb(110 231 255 / 0.2), transparent),
-    radial-gradient(40% 40% at 50% 92%, rgb(79 82 214 / 0.45), transparent);
+    radial-gradient(40% 32% at 45% 25%, rgb(139 92 246 / 0.55), transparent),
+    radial-gradient(35% 28% at 60% 70%, rgb(110 231 255 / 0.18), transparent),
+    radial-gradient(40% 40% at 50% 92%, rgb(79 82 214 / 0.42), transparent);
   filter: blur(50px);
 }
 
-/* The desktop: wallpaper made of two colour fields, a fine border and a deep shadow. */
 .screen {
   position: relative;
-  padding: 24px 34px 0;
-  border-radius: 22px;
-  overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 0.12);
-  background:
-    radial-gradient(120% 80% at 100% 0%, #3b2a7a 0%, transparent 55%),
-    radial-gradient(90% 70% at 0% 100%, #123a5c 0%, transparent 60%),
-    linear-gradient(160deg, #1a1440, #0b0b1c);
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 0.4),
-    0 50px 100px -30px rgb(0 0 0 / 0.9),
-    inset 0 1px 0 rgb(255 255 255 / 0.08);
 }
 
-/* Shown at exactly 205 CSS pixels, so the 307-pixel file lands pixel for pixel on a
-   150% screen. Never let the layout scale it, or the softness comes back. */
+/* Shown at exactly 273 CSS pixels, so the 410-pixel file lands pixel for pixel on a 150%
+   screen. Never let the layout scale it, or the softness comes back. */
 .screen img {
   display: block;
-  width: 205px;
+  width: 273px;
   max-width: none;
   height: auto;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), 0 24px 50px rgb(0 0 0 / 0.6);
-  -webkit-mask-image: linear-gradient(#000 80%, transparent);
-  mask-image: linear-gradient(#000 80%, transparent);
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 80px -20px rgb(0 0 0 / 0.85);
+  -webkit-mask-image: linear-gradient(#000 82%, transparent);
+  mask-image: linear-gradient(#000 82%, transparent);
 }
 
-/* The chord being held in the capture, as glassy keycaps over the frame's corner. */
+/* The switching chord as glassy keycaps, floating off the bar's lower right corner. */
 .chord-chip {
   position: absolute;
-  right: 14px;
-  bottom: 14px;
+  right: -34px;
+  bottom: 40px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -214,10 +201,10 @@
   box-shadow: 0 0 0 4px rgb(245 181 68 / 0.12);
 }
 
-/* Phones: the frame keeps its proportions; at 205 pixels the bar fits any phone. */
+/* Phones: keep the keycaps inside the screen edge. */
 @media (max-width: 420px) {
-  .screen {
-    border-radius: 18px;
+  .chord-chip {
+    right: -8px;
   }
 }
 
