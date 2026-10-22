@@ -1,0 +1,61 @@
+# Publishes deskbar.app to GitHub Pages.
+#
+# The site has no build step: the files in site/ are the site. This workflow uploads that
+# folder as the Pages artifact and deploys it. Nothing else in the repository (README, docs,
+# workflows, checker configs) is published, because only site/ goes into the artifact.
+#
+# When it runs:
+#   - on every push to main, which in practice means every merged pull request (main only
+#     moves through pull requests, and those have already passed check.yml);
+#   - by hand from the Actions tab (Run workflow), to redeploy without a new commit.
+#
+# Repository settings this relies on (Settings, Pages):
+#   - Source: GitHub Actions. Without it the deploy step fails with "Pages not enabled".
+#   - Custom domain: deskbar.app. The domain is a repository setting, not a CNAME file in
+#     the artifact; Actions-based deploys ignore a CNAME file. docs/hosting.md has the DNS.
+
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# The deploy needs to write to Pages and to prove who it is with an OIDC token. It never
+# needs to write to the repository itself.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. A newer push queues behind a running deploy instead of cancelling
+# it, so a deploy is never cut off halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # The github-pages environment only accepts deploys from the default branch, so a
+    # workflow run on any other branch cannot publish. The URL shows on the run page.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # Reads the repository's Pages settings and fails early if Pages is not set up.
+      - uses: actions/configure-pages@v6
+
+      # Packs site/ as the artifact Pages serves. There is no Jekyll step, so the files in
+      # site/ are served as they are.
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      # Publishes the artifact. deploy-pages waits until the new version is live.
+      - id: deployment
+        uses: actions/deploy-pages@v5

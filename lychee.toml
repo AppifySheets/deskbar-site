@@ -2,13 +2,14 @@
 # Reference: https://lychee.cli.rs/usage/config/
 
 # The pages link to each other root-relative and without ".html" (/privacy), the way
-# Cloudflare Pages serves them. The workflow passes --root-dir (it must be an absolute path,
+# GitHub Pages serves them. The workflow passes --root-dir (it must be an absolute path,
 # so it cannot live in this file) to resolve "/" to the site folder, and the fallback
 # extension below maps /privacy to site/privacy.html, so those links are checked against
 # the files.
 fallback_extensions = ["html"]
 
-# A link to a folder ("/" or "/#download") means that folder's index.html, as on Pages.
+# A link to a folder ("/" or "/#download") means that folder's index.html, as on GitHub
+# Pages.
 # Without this lychee checks the folder itself and cannot look for #download inside it.
 index_files = ["index.html"]
 

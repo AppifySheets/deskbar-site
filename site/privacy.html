@@ -2,13 +2,24 @@
 <!--
   Privacy. Keep it short and true. Each sentence about the app has to match the README in
   github.com/AppifySheets/Deskbar (the "Updates" and "Install" sections). Each sentence about
-  the site has to match _headers and docs/hosting.md: if anyone ever adds analytics, a
-  cookie, or Cloudflare features that set cookies, this page is wrong until it is updated.
+  the site has to match the meta tags in the head and docs/hosting.md: if anyone ever adds
+  analytics, a cookie, or a host that sets cookies, this page is wrong until it is updated.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Security policy as meta tags, because GitHub Pages serves fixed response headers that
+      the repository cannot change. Only the site's own images and stylesheets may load: no
+      scripts, fonts, frames, forms or connections. frame-ancestors is ignored in a meta tag,
+      so framing cannot be blocked from here (see docs/hosting.md).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Privacy · Deskbar</title>
     <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app's only network traffic is the update check against GitHub." />
     <meta name="color-scheme" content="dark" />
@@ -43,8 +54,9 @@
         GitHub whether a newer release exists, and accepting an update downloads it from
         GitHub. Those requests reach GitHub like any other web request, with your IP address,
         and GitHub's own privacy statement covers them. You can turn the automatic check off in
-        Manage. This site sets no cookies and runs no scripts or analytics. It is served by
-        Cloudflare, which handles each request in order to deliver the page. If you write to
+        Manage. This site sets no cookies and runs no scripts or analytics. It is hosted on
+        GitHub Pages, which logs visitors' IP addresses for security, under the same GitHub
+        privacy statement. If you write to
         <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>, your message and address are
         used to reply to you and for nothing else.
       </p>

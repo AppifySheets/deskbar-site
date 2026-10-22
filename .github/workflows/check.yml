@@ -7,9 +7,9 @@
 #   links - links that go nowhere: a renamed page, a missing image, a #fragment with no
 #           matching id, or a GitHub URL that moved. Uses lychee (lychee.toml).
 #
-# Nothing here builds or deploys anything. The site has no build step, and Cloudflare Pages
-# deploys it on its own through its GitHub integration (see docs/hosting.md). These two jobs
-# are the gate a pull request has to pass before it is merged.
+# Nothing here builds or deploys anything. The site has no build step, and pages.yml
+# publishes it to GitHub Pages after a merge (see docs/hosting.md). These two jobs are the
+# gate a pull request has to pass before it is merged.
 
 name: Check site
 

@@ -6,7 +6,8 @@
   - Every claim about the app has to be checkable against the README in
     github.com/AppifySheets/Deskbar. When unsure, leave it out.
   - No scripts, no analytics, no cookies, nothing loaded from another origin. The
-    Content-Security-Policy in _headers enforces it, so a stray third-party tag fails loudly.
+    Content-Security-Policy meta tag in the head enforces it, so a stray third-party tag fails
+    loudly.
   - "Source available", never "open source": the licence is PolyForm Strict 1.0.0.
   - Pricing describes the plan as it is. Until the licence key and the Paddle checkout
     exist, the Pro button stays disabled and says so.
@@ -15,6 +16,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Security policy as meta tags, because GitHub Pages serves fixed response headers that
+      the repository cannot change. Only the site's own images and stylesheets may load: no
+      scripts, fonts, frames, forms or connections. frame-ancestors is ignored in a meta tag,
+      so framing cannot be blocked from here (see docs/hosting.md).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Deskbar: the taskbar for your virtual desktops</title>
     <meta
       name="description"

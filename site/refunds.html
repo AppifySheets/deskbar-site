@@ -7,6 +7,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Security policy as meta tags, because GitHub Pages serves fixed response headers that
+      the repository cannot change. Only the site's own images and stylesheets may load: no
+      scripts, fonts, frames, forms or connections. frame-ancestors is ignored in a meta tag,
+      so framing cannot be blocked from here (see docs/hosting.md).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Refunds · Deskbar</title>
     <meta name="description" content="Deskbar Pro's refund policy: try every feature free for 14 days first; purchases are final once the key is issued, except where the law gives you a refund." />
     <meta name="color-scheme" content="dark" />

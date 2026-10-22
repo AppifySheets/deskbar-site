@@ -1,82 +1,108 @@
 # Hosting
 
-deskbar.app is served by Cloudflare Pages straight from this repository. The domain is
-registered at Namecheap, and its nameservers already point at Cloudflare, so the zone
-`deskbar.app` lives in the same Cloudflare account as the Pages project.
+deskbar.app is served by GitHub Pages from this repository. The domain is registered at
+Namecheap, its nameservers point at Cloudflare, and Cloudflare holds the DNS records that
+send it to GitHub. Cloudflare is DNS only here: it does not proxy or serve the site.
 
-## The Pages project
+## How a change goes live
 
-Connected through Cloudflare's GitHub integration, which deploys on every push:
+1. A pull request runs `check.yml` (html-validate and lychee). main requires both.
+2. Merging it pushes to main, which runs `pages.yml`. That uploads `site/` as the Pages
+   artifact and deploys it. The run page shows the live URL when it is done.
+3. To redeploy without a commit, run "Publish site" from the Actions tab.
+
+Only `site/` is published. The README, this file, the workflows and the checker configs are
+never served.
+
+## Repository settings (Settings, Pages)
 
 | Setting | Value |
 |---|---|
-| Project name | `deskbar-site` (gives the fallback address deskbar-site.pages.dev) |
-| Repository | AppifySheets/deskbar-site |
-| Production branch | `main` |
-| Framework preset | None |
-| Build command | none (leave it empty) |
-| Build output directory | `site` |
-| Root directory | leave it empty (the repository root) |
+| Build and deployment, Source | GitHub Actions |
+| Custom domain | `deskbar.app` |
+| Enforce HTTPS | on, once GitHub has issued the certificate (up to 24 hours after DNS works) |
 
-A merge to `main` publishes the site. Every pull request also gets its own preview address,
-posted on the pull request as a check, and preview builds are marked `noindex` by
-Cloudflare, so they stay out of search results.
+The custom domain is a repository setting. A `CNAME` file in `site/` would do nothing,
+because Actions-based deploys ignore it.
 
-Only `site/` is published. The README, this file, the workflow and the checker configs stay
-out of the site because they are outside the output directory.
+The `github-pages` environment accepts deploys from the default branch only, so a workflow
+run on another branch cannot publish.
 
-## The domain
+## DNS at Cloudflare
 
-- `deskbar.app` is a custom domain on the Pages project. Cloudflare creates its DNS record
-  itself when the domain is added there.
-- `www.deskbar.app` redirects permanently to `https://deskbar.app`, path and query kept.
-  A `_redirects` file cannot do this (it does not match on hostname), so it is a Bulk
-  Redirect at the account level, following Cloudflare's own guide
-  ([Redirecting www to domain apex](https://developers.cloudflare.com/pages/how-to/www-redirect/)):
-  a list with one entry, source `www.deskbar.app`, target `https://deskbar.app`, status 301,
-  with Preserve query string, Subpath matching, Preserve path suffix and Include subdomains
-  ticked; a Bulk Redirect rule that uses the list; and a placeholder DNS record so the
-  hostname resolves at all: type `A`, name `www`, address `192.0.2.1`, proxied. That address
-  is a documentation address that never answers; the redirect fires at Cloudflare's edge
-  before any request could reach it.
-- SSL/TLS encryption mode is Full (strict). Always Use HTTPS is on.
+In the deskbar.app zone, with every record set to DNS only (grey cloud, not proxied).
+A proxied record hides the domain from GitHub, so GitHub cannot check it or issue the
+certificate:
 
-## Zone settings that must stay off
+| Type | Name | Content |
+|---|---|---|
+| A | `deskbar.app` | `185.199.108.153` |
+| A | `deskbar.app` | `185.199.109.153` |
+| A | `deskbar.app` | `185.199.110.153` |
+| A | `deskbar.app` | `185.199.111.153` |
+| AAAA | `deskbar.app` | `2606:50c0:8000::153` |
+| AAAA | `deskbar.app` | `2606:50c0:8001::153` |
+| AAAA | `deskbar.app` | `2606:50c0:8002::153` |
+| AAAA | `deskbar.app` | `2606:50c0:8003::153` |
+| CNAME | `www` | `appifysheets.github.io` |
 
-The site promises no cookies and no scripts (see `site/privacy.html`), and its
-Content-Security-Policy blocks any script. Several Cloudflare zone features inject a script
-or set a cookie on every page. If one is switched on, the privacy page becomes untrue and
-the browser blocks the injected script anyway. Keep these off for deskbar.app:
+With both the apex and `www` in place and the custom domain set to the apex, GitHub
+redirects `www.deskbar.app` to `deskbar.app` on its own. No redirect rule is needed.
 
-- Scrape Shield, Email Address Obfuscation. When it is on, Cloudflare rewrites the
-  `mailto:hello@deskbar.app` links and injects a script to decode them; the CSP blocks the
-  script and the email links break.
-- Speed, Rocket Loader.
-- Web Analytics, both for the zone and in the Pages project's own Metrics tab.
-- Security, Bot Fight Mode. Its JavaScript detections inject a script and it can set a
-  bot-management cookie.
-- Zaraz.
+The `www` target is the organisation's address without the repository name. Source:
+[Managing a custom domain for your GitHub Pages site](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
 
-## Files Pages reads from site/
+## Domain verification
 
-- `_headers` sets the security headers on every response: a Content-Security-Policy that
-  allows only the site's own images and stylesheets, HSTS for a year (without preload),
-  nosniff, no framing, a strict referrer policy and an empty permissions policy. It is not
-  served as a page.
-- `_redirects` holds short links (`/download` to the latest GitHub release, `/source` to
-  the Deskbar repository) and a few guessed names for the legal pages. It is not served
-  either.
-- `404.html` is served, with status 404, for any path that does not exist.
-- Pages serves `privacy.html` at `/privacy` and redirects the `.html` form there itself, so
-  the pages link to each other without the extension.
+GitHub recommends verifying the domain for the AppifySheets organisation, so that no other
+GitHub account can point a Pages site at deskbar.app or a subdomain of it. In the
+organisation's Settings, Pages, "Add a domain" shows a TXT record to create at Cloudflare
+(name `_github-pages-challenge-appifysheets`, value given there), then Verify. Never add a
+wildcard record such as `*.deskbar.app`; GitHub warns that it allows takeovers even with
+verification.
+
+## Response headers
+
+GitHub Pages sets its own response headers, and a repository cannot change them. So:
+
+- The Content-Security-Policy and the referrer policy are meta tags in each page's head.
+  They allow only the site's own images and stylesheets: no scripts, fonts, frames, forms
+  or connections.
+- Framing cannot be blocked: `frame-ancestors` is ignored in a meta tag, and
+  `X-Frame-Options` only works as a header. The pages have nothing to click that acts on a
+  visitor's behalf, so this costs little.
+- HSTS and the other headers are whatever GitHub Pages sends.
+
+If those headers ever matter, put Cloudflare's proxy in front (orange cloud on the records,
+SSL/TLS mode Full (strict), response header Transform Rules). The proxy only works once
+GitHub has issued its certificate, so do it after HTTPS is enforced. Also keep these zone
+features off, because they inject scripts or set cookies, which would make the privacy page
+untrue: Email Address Obfuscation, Rocket Loader, Web Analytics, Bot Fight Mode and Zaraz.
+
+## Short links and the 404 page
+
+GitHub Pages has no redirect rules, so each short link is a folder in `site/` with an
+`index.html` that forwards the browser by meta refresh (no script) and shows a plain link
+meanwhile:
+
+| Link | Goes to |
+|---|---|
+| `/download` | the latest release on GitHub |
+| `/source` | the Deskbar repository |
+| `/eula`, `/terms-of-service` | `/terms` |
+| `/refund` | `/refunds` |
+
+`404.html` at the top of `site/` is served, with status 404, for any path that does not
+exist. GitHub Pages serves `privacy.html` at `/privacy`, so the pages link to each other
+without the extension.
 
 ## Checking it after a change
 
 ```powershell
-curl.exe -sI https://deskbar.app/              # 200, with the headers from _headers
+curl.exe -sI https://deskbar.app/              # 200
 curl.exe -sI https://www.deskbar.app/privacy   # 301 to https://deskbar.app/privacy
-curl.exe -sI https://deskbar.app/download      # 302 to the latest GitHub release
+curl.exe -sI https://deskbar.app/privacy       # 200
 curl.exe -sI https://deskbar.app/nope          # 404
 ```
 
-The response to the first one should carry `content-security-policy` and no `set-cookie`.
+None of them should carry a `set-cookie` header.
