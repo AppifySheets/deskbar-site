@@ -1,0 +1,420 @@
+/*
+  deskbar.app stylesheet. One file for every page, no build step, no web fonts.
+
+  The site is dark by design, like the bar it shows: the screenshots are dark captures with
+  real alpha in their corners, and they sit best on a dark page. `color-scheme: dark` tells
+  the browser to draw form controls and scrollbars to match.
+
+  The visual motif is borrowed from the bar itself. Every workspace row on the bar has a
+  coloured rail down its left edge, so feature rows, cards and section headings here carry
+  the same rail, in the same family of colours (the rail-* classes below).
+*/
+
+/* ---- design tokens --------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+
+  /* Page and surfaces: near black with a little indigo in it, taken from the mark. */
+  --bg: #07070d;
+  --bg-raised: #0e0e1a;
+  --surface: rgb(255 255 255 / 0.035);
+  --surface-strong: rgb(255 255 255 / 0.06);
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.14);
+
+  /* Text. --muted still clears 4.5:1 against --bg for body copy. */
+  --text: #ecebf5;
+  --muted: #a8a6bd;
+  --faint: #77758c;
+
+  /* Brand: the mark's indigo-to-violet square and its cyan tile. Amber is the bar's
+     hover and "you would land here" ring. */
+  --indigo: #4f52d6;
+  --violet: #8b5cf6;
+  --lilac: #c4b5fd;
+  --cyan: #6ee7ff;
+  --amber: #f5b544;
+
+  /* Rail colours, picked from the rows in the bar capture. */
+  --rail-violet: #8e4fd6;
+  --rail-teal: #2f9b7f;
+  --rail-amber: #d08a35;
+  --rail-blue: #4560d8;
+  --rail-rose: #c0507a;
+  --rail-cyan: #3fb6d0;
+
+  --radius: 18px;
+  --radius-small: 10px;
+  --page: 1140px;
+  --gutter: 16px;
+
+  /* Segoe UI Variable is what Windows 11 itself uses, which is where every visitor who can
+     run Deskbar already is. The rest of the stack covers everyone else. */
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Code", "Cascadia Mono", Consolas, ui-monospace, monospace;
+}
+
+/* ---- base ------------------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 1.0625rem/1.65 var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* The aurora: two soft colour fields behind the top of every page. Pure gradients, no
+   images and no blur filters, so it costs nothing to paint. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1100px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 78% 8%, rgb(139 92 246 / 0.22), transparent 70%),
+    radial-gradient(45% 40% at 12% 0%, rgb(79 82 214 / 0.2), transparent 70%),
+    radial-gradient(35% 30% at 60% 40%, rgb(110 231 255 / 0.06), transparent 70%);
+}
+
+::selection {
+  background: rgb(139 92 246 / 0.45);
+  color: #fff;
+}
+
+a {
+  color: var(--lilac);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+code,
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+code {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.08em 0.4em;
+  overflow-wrap: anywhere;
+}
+
+/* Glows (the one behind the bar, mostly) reach past the screen edge on purpose. Clipping
+   here, on a full-width element, stops them adding a horizontal scroll on phones without
+   giving them a hard edge inside the page. */
+main {
+  display: block;
+  overflow-x: clip;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--page) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  z-index: 10;
+  background: var(--bg-raised);
+  padding: 8px 14px;
+  border-radius: var(--radius-small);
+}
+
+.skip:focus {
+  left: 8px;
+}
+
+/* ---- header ---------------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgb(7 7 13 / 0.72);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 64px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font: 650 1.125rem/1 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.brand img {
+  width: 30px;
+  height: 30px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 22px;
+  margin-left: auto;
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--text);
+}
+
+/* On a phone only the download link stays in the header; the footer carries the rest. */
+@media (max-width: 620px) {
+  .site-nav .optional {
+    display: none;
+  }
+}
+
+/* ---- buttons --------------------------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-strong);
+  color: var(--text);
+  font: 600 1rem/1 var(--font);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.button:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.button-primary {
+  border-color: rgb(255 255 255 / 0.18);
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    0 10px 30px -8px rgb(139 92 246 / 0.65);
+}
+
+.button-primary:hover {
+  background: linear-gradient(135deg, #5c5fe6, #9a6dfa);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    0 14px 38px -8px rgb(139 92 246 / 0.8);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .button:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* The Pro buy button until the checkout exists: visibly a button, visibly not live. */
+.button[disabled] {
+  cursor: not-allowed;
+  color: var(--faint);
+  background: transparent;
+  border-style: dashed;
+  box-shadow: none;
+  transform: none;
+}
+
+.button svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+/* ---- shared bits used on more than one page ------------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.fineprint {
+  color: var(--faint);
+  font-size: 0.9rem;
+  max-width: 40em;
+  margin: 0;
+}
+
+/* ---- legal and plain pages ------------------------------------------------------------- */
+
+.page {
+  max-width: 760px;
+  padding-top: 88px;
+}
+
+.page h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+
+.page .updated {
+  color: var(--faint);
+  font-size: 0.92rem;
+  margin-bottom: 48px;
+}
+
+.page h2 {
+  font-size: 1.3rem;
+  font-weight: 650;
+  margin: 44px 0 12px;
+  padding-left: 16px;
+  border-left: 4px solid var(--rail-violet);
+}
+
+.page p,
+.page li {
+  color: var(--muted);
+}
+
+.page strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.page ul {
+  padding-left: 1.2em;
+}
+
+.page li + li {
+  margin-top: 8px;
+}
+
+.notfound {
+  text-align: center;
+  padding-top: 140px;
+}
+
+.notfound .actions {
+  justify-content: center;
+}
+
+.notfound p {
+  color: var(--muted);
+}
+
+/* ---- footer ---------------------------------------------------------------------------- */
+
+.site-footer {
+  margin-top: 140px;
+  padding: 40px 0 56px;
+  border-top: 1px solid var(--border);
+  color: var(--faint);
+  font-size: 0.92rem;
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 40px;
+  justify-content: space-between;
+}
+
+.site-footer p {
+  margin: 0;
+  max-width: 34em;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+
+.site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--text);
+}

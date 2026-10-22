@@ -1,0 +1,82 @@
+# Checks for deskbar.app. Runs on every pull request, and again on main after a merge, so a
+# link that broke between the pull request and the merge still shows up.
+#
+# What it guards against:
+#   html  - broken or non-standard markup, missing alt text, bad nesting, invalid
+#           attributes, via html-validate with its "recommended" rules (.htmlvalidate.json).
+#   links - links that go nowhere: a renamed page, a missing image, a #fragment with no
+#           matching id, or a GitHub URL that moved. Uses lychee (lychee.toml).
+#
+# Nothing here builds or deploys anything. The site has no build step, and Cloudflare Pages
+# deploys it on its own through its GitHub integration (see docs/hosting.md). These two jobs
+# are the gate a pull request has to pass before it is merged.
+
+name: Check site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Allows running the checks by hand from the Actions tab, e.g. to re-test external links.
+  workflow_dispatch:
+
+# Read-only token: the jobs only read the repository and fetch public URLs.
+permissions:
+  contents: read
+
+# A new push to the same pull request cancels the run still going for the previous one.
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  html:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Get the pull request's files.
+      - uses: actions/checkout@v7
+
+      # Node for npx. html-validate is a Node tool; no package.json is needed for one CLI.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      # Validate every page in the published folder against .htmlvalidate.json.
+      # The version is pinned so a new rule upstream cannot fail an unrelated pull request;
+      # bump it on purpose. A non-zero exit fails the job and lists each problem by line.
+      - name: Run html-validate
+        run: npx --yes html-validate@11.17.0 "site/**/*.html"
+
+  links:
+    name: Check links
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      # lychee reads lychee.toml from the repository root: it resolves root-relative links
+      # against site/, maps /privacy to privacy.html, checks #fragments, skips deskbar.app
+      # itself (not live yet, and not what a pull request should be judged on), and checks
+      # every other external link for real.
+      #
+      # GITHUB_TOKEN lets lychee ask GitHub with a token, which avoids the low anonymous
+      # rate limit that would otherwise fail the GitHub links at random.
+      #
+      # --root-dir has to be an absolute path, which is why it is given here and not in
+      # lychee.toml: it is what turns a root-relative link like /css/site.css into a file.
+      - name: Run lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --config lychee.toml
+            --root-dir "${{ github.workspace }}/site"
+            --no-progress
+            "site/**/*.html"
+          # Fail the job when a link is broken.
+          fail: true
+          # Also put the report on the run's summary page, not only in the log.
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,25 @@
+# Link checker settings, read by the "links" job in .github/workflows/check.yml.
+# Reference: https://lychee.cli.rs/usage/config/
+
+# The pages link to each other root-relative and without ".html" (/privacy), the way
+# Cloudflare Pages serves them. The workflow passes --root-dir (it must be an absolute path,
+# so it cannot live in this file) to resolve "/" to the site folder, and the fallback
+# extension below maps /privacy to site/privacy.html, so those links are checked against
+# the files.
+fallback_extensions = ["html"]
+
+# Check that #fragments point at real ids (the in-page links: #features, #download...).
+include_fragments = true
+
+# Links to deskbar.app itself (canonical, og:url, the sitemap) point at the live site,
+# which is not what a pull request should be judged on, and they fail before the domain
+# is connected. Everything else, GitHub included, is checked for real.
+exclude = ["^https://deskbar\\.app"]
+
+# mailto: links are not checked: there is no reliable way to test a mailbox.
+include_mail = false
+
+# GitHub can answer bursts of requests from CI with 429. The workflow passes a token, which
+# lifts the limit, and these retries cover the rest without counting a 429 as a pass.
+max_retries = 3
+retry_wait_time = 5

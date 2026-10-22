@@ -1,0 +1,9 @@
+{
+  "$schema": "https://html-validate.org/schemas/config.json",
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "void-style": ["error", { "style": "selfclosing" }],
+    "no-trailing-whitespace": "off",
+    "long-title": "off"
+  }
+}

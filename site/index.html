@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!--
+  deskbar.app home page.
+
+  Rules this page keeps, so later edits keep them too:
+  - Every claim about the app has to be checkable against the README in
+    github.com/AppifySheets/Deskbar. When unsure, leave it out.
+  - No scripts, no analytics, no cookies, nothing loaded from another origin. The
+    Content-Security-Policy in _headers enforces it, so a stray third-party tag fails loudly.
+  - "Source available", never "open source": the licence is PolyForm Strict 1.0.0.
+  - Pricing describes the plan as it is. Until the licence key and the Paddle checkout
+    exist, the Pro button stays disabled and says so.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deskbar: the taskbar for your virtual desktops</title>
+    <meta
+      name="description"
+      content="Deskbar names Windows 11's own virtual desktops and adds a floating bar that shows every desktop's windows at once. Switch with Win+Ctrl+Tab."
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07070d" />
+    <link rel="canonical" href="https://deskbar.app/" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/img/deskbar-mark-256.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/img/deskbar-mark-256.png" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+
+    <!-- Link previews (Slack, Teams, X, LinkedIn and the like). og.png is 1200 by 630. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Deskbar" />
+    <meta property="og:title" content="Deskbar: the taskbar for your virtual desktops" />
+    <meta
+      property="og:description"
+      content="Name Windows' own virtual desktops and see every desktop's windows at once, on one floating bar."
+    />
+    <meta property="og:url" content="https://deskbar.app/" />
+    <meta property="og:image" content="https://deskbar.app/img/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="The Deskbar mark beside the words Deskbar, the taskbar for your virtual desktops, with the top of the floating bar on the right."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/img/deskbar-mark-256.png" width="30" height="30" alt="" />
+          Deskbar
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a class="optional" href="#features">Features</a>
+          <a class="optional" href="#pricing">Pricing</a>
+          <a class="optional" href="https://github.com/AppifySheets/Deskbar">Source</a>
+          <a href="#download">Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!--
+        The stage: hero and features on the left, the bar standing on the right. On narrow
+        screens it collapses to one column (see .stage in home.css).
+      -->
+      <div class="wrap stage">
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow">Deskbar for Windows 11</p>
+          <h1 id="hero-title">
+            The taskbar for your
+            <span class="glow">virtual desktops.</span>
+          </h1>
+          <p class="lede">
+            Deskbar names Windows' own virtual desktops, colours them, and adds a floating bar
+            that shows <strong>every desktop's windows at once</strong>. Click an icon to jump
+            to that window from anywhere. Hold <strong>Win+Ctrl</strong> and tap
+            <strong>Tab</strong> to switch.
+          </p>
+          <div class="actions">
+            <a class="button button-primary" href="https://github.com/AppifySheets/Deskbar/releases/latest">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" /></svg>
+              Download for Windows
+            </a>
+            <a class="button" href="#features">See what it does</a>
+          </div>
+          <p class="fineprint">
+            Free download. One portable exe for Windows 11 on x64, from GitHub Releases. No
+            installer and no admin rights.
+          </p>
+        </section>
+
+        <!--
+          The one screenshot. bar-floating.png comes from docs/images in the Deskbar repo,
+          which holds sanitised captures only. It is shown at its own size on purpose; see
+          .bar-shot in home.css. If it is ever removed, use the .shot-placeholder block, never
+          a made-up capture.
+        -->
+        <figure class="bar-shot">
+          <img
+            src="/img/bar-floating.png"
+            width="316"
+            height="1114"
+            alt="The floating bar: one row per workspace, each with its name above the icons of every window in it. The current workspace's row is tinted and ringed and lists its windows with their titles; the row you came from is ringed in dashes. Groups of workspaces have a line down their left edge, and along the bottom run the taskbar's pinned apps, a tray chevron, wifi, a volume dial, a bell and the clock."
+          />
+          <figcaption>
+            The floating bar, as it sits on a screen. Every workspace is a row; the current one
+            opens into a list of its windows.
+          </figcaption>
+        </figure>
+
+        <section class="features" id="features" aria-labelledby="features-title">
+          <div class="section-head">
+            <span class="kicker">What it does</span>
+            <h2 id="features-title">Every desktop, in one strip.</h2>
+            <p>
+              Windows has had virtual desktops for years, without names you can see or any
+              memory of what goes where. Deskbar is a layer over them that adds what was
+              missing.
+            </p>
+          </div>
+
+          <ul class="rows">
+            <li class="row row-current rail-rose">
+              <h3>All your windows, on every desktop</h3>
+              <p>
+                One row per workspace, each with its name above the icons of every window in
+                it. Click an icon to jump to that window wherever it lives, and click it again
+                to put it away. Drag it to another row to move the window there.
+              </p>
+            </li>
+            <li class="row rail-violet">
+              <h3>Real desktops, with names and colours</h3>
+              <p>
+                Every workspace is one of Windows' own virtual desktops. Quit Deskbar and your
+                windows are still on their desktops, reachable through Task View exactly as
+                before.
+              </p>
+            </li>
+            <li class="row row-wide rail-amber">
+              <h3>Switch the way Alt+Tab switches</h3>
+              <div class="chord" aria-hidden="true">
+                <kbd>Win</kbd><span>+</span><kbd>Ctrl</kbd><span>+</span><kbd class="tap">Tab</kbd>
+              </div>
+              <p>
+                Hold Win+Ctrl and tap Tab to walk your workspaces in most-recently-used order,
+                then let go to land. One tap takes you back to wherever you just were, and
+                focus lands on the window you were last using there, so you arrive typing.
+              </p>
+            </li>
+            <li class="row rail-teal">
+              <h3>Each workspace keeps to itself</h3>
+              <p>
+                While you are in one workspace, its windows are the only ones on your taskbar
+                and the only ones Alt+Tab walks through. A screen share of one workspace shows
+                nothing of the others.
+              </p>
+            </li>
+            <li class="row rail-blue">
+              <h3>It remembers where windows belong</h3>
+              <p>
+                Move a window to a workspace by hand and that is where the app goes next time.
+                Workspaces survive reboots. Deskbar never launches anything and never changes a
+                window's size or position on screen.
+              </p>
+            </li>
+            <li class="row rail-cyan">
+              <h3>See what is waiting elsewhere</h3>
+              <p>
+                Rest on an icon and a card shows the window's title, its app and workspace,
+                and for a window on another desktop, a picture of it at a quarter size.
+              </p>
+            </li>
+            <li class="row rail-violet">
+              <h3>Floating or docked</h3>
+              <p>
+                The bar floats where you drop it, docks to a screen edge, or straddles two
+                screens. It carries your taskbar pins, the clock, volume and notifications, so
+                Windows' own taskbar can stay on auto-hide.
+              </p>
+            </li>
+            <li class="row row-wide rail-teal">
+              <h3>Drive it from scripts</h3>
+              <p>
+                While it runs, Deskbar keeps a small command file that hands commands to the
+                running copy, and nearly everything on the bar's menus has one. A coding agent that has just set up a git worktree can give it a workspace of
+                its own and move the editor there:
+              </p>
+              <pre><code>&amp; "$env:APPDATA\Deskbar\deskbar.cmd" move wt-login --create --title wt-login --wait 20</code></pre>
+            </li>
+            <li class="row row-wide rail-blue">
+              <h3>Nothing installed, nothing sent</h3>
+              <p>
+                One exe and no installer. Deskbar writes nothing outside your own user profile,
+                and its only network traffic is the check for a newer release on GitHub. The
+                automatic check can be switched off in Manage.
+              </p>
+            </li>
+          </ul>
+
+          <blockquote class="note">
+            <p>
+              I built it for myself and it is on my screen all day, every day. A bar you look
+              at all day has to be exactly right or it grates, so the tiny details get the
+              attention.
+            </p>
+            <footer>Petre Chitashvili, who makes Deskbar</footer>
+          </blockquote>
+        </section>
+      </div>
+
+      <!-- Download: how to get it today, what it needs, and the Store slot. -->
+      <section class="band" id="download" aria-labelledby="download-title">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="kicker">Download</span>
+            <h2 id="download-title">One file. No installer.</h2>
+            <p>Deskbar is one portable exe, published on GitHub with every release.</p>
+          </div>
+
+          <div class="download">
+            <div class="card">
+              <h3>Get started</h3>
+              <ol class="steps">
+                <li>
+                  Download <code>Deskbar-&lt;version&gt;-win-x64.exe</code> from the latest
+                  release on GitHub.
+                </li>
+                <li>
+                  Put it <strong>somewhere permanent</strong>, such as
+                  <code>C:\Users\&lt;you&gt;\Programs\Deskbar\</code>, not your Downloads folder.
+                  "Start with Windows" remembers where the exe lives.
+                </li>
+                <li>
+                  Double-click it. Deskbar opens no window; it goes straight to the tray and
+                  puts the bar on screen.
+                </li>
+                <li>
+                  Left-click the tray icon to open Manage and create your first workspace.
+                </li>
+              </ol>
+              <p class="fineprint">
+                The exe is not code-signed yet, so Windows SmartScreen warns the first time you
+                run it. Choose <strong>More info</strong>, then <strong>Run anyway</strong>. Or
+                build it yourself from the source.
+              </p>
+              <div class="actions actions-bottom">
+                <a class="button button-primary" href="https://github.com/AppifySheets/Deskbar/releases/latest">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" /></svg>
+                  Download the latest release
+                </a>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Requirements</h3>
+              <ul class="specs">
+                <li><strong>Windows 11</strong>, build 22000 or newer</li>
+                <li><strong>x64</strong></li>
+                <li>Nothing else. The .NET runtime is bundled in the exe.</li>
+              </ul>
+              <p class="fineprint">
+                Windows only, by design. Deskbar is built on Windows' own virtual desktops and
+                the taskbar's per-desktop filtering, so there is no macOS or Linux version
+                waiting to be written.
+              </p>
+
+              <h3 class="store-title">Microsoft Store</h3>
+              <!--
+                STORE BADGE. To switch it on once the listing exists:
+                1. Put the product ID from Partner Center in place of PRODUCTID below.
+                2. Delete the <p class="store-pending"> line.
+                3. Take the <a class="store-badge"> block out of this comment.
+                The badge image is already in img/store-badge.svg, so nothing loads from
+                Microsoft and the Content-Security-Policy needs no change.
+
+                <a class="store-badge" href="https://apps.microsoft.com/detail/PRODUCTID">
+                  <img src="/img/store-badge.svg" width="161" height="44" alt="Get it from Microsoft Store" />
+                </a>
+              -->
+              <p class="store-pending">Store listing in progress</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--
+        Pricing. Decided: a free tier, a 14-day trial, Deskbar Pro at $19 once with all 2.x
+        updates, licensed per user. Not built yet: the licence key and the Paddle checkout.
+        Not decided yet: which features are free, so this section does not list them.
+      -->
+      <section class="band" id="pricing" aria-labelledby="pricing-title">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="kicker">Pricing</span>
+            <h2 id="pricing-title">Pay once, if you want the rest.</h2>
+            <p>A free tier, a full trial, and one payment for Pro. No subscription.</p>
+          </div>
+
+          <div class="status">
+            <p>
+              <strong>Today every release is free, with everything switched on.</strong> The
+              licence key and the checkout are still being built. When they arrive, this is how
+              it will work.
+            </p>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <h3>Free</h3>
+              <p class="price">$0</p>
+              <ul>
+                <li>Keeps working after the trial, for as long as you like.</li>
+                <li>Which features stay in the free tier is still being settled.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>14-day trial</h3>
+              <p class="price">Every feature</p>
+              <ul>
+                <li>14 days from the first run, with nothing held back.</li>
+                <li>No account and no email address.</li>
+                <li>
+                  When it ends, Deskbar drops to the free tier. Nothing you set up is deleted,
+                  and it comes back the moment you enter a key.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card card-pro">
+              <h3>Deskbar Pro</h3>
+              <p class="price">$19 <small>once</small></p>
+              <ul>
+                <li>Every 2.x update included.</li>
+                <li>Licensed to you: one person, on any number of your own computers.</li>
+                <li>The key is checked offline. Nothing phones home.</li>
+                <li>Paddle will run the checkout and handle VAT and sales tax.</li>
+              </ul>
+              <button class="button" type="button" disabled>Checkout coming</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Source available, worded the way the README words it. -->
+      <section class="band" id="source" aria-labelledby="source-title">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="kicker">Source available</span>
+            <h2 id="source-title">Read every line of it.</h2>
+            <p>
+              The code is public on GitHub under the PolyForm Strict License 1.0.0. You may
+              read it, build it and run it for noncommercial purposes, so you can check for
+              yourself what it does and that it sends nothing. You may not distribute it or
+              publish changed versions. Contributions are welcome under the extra permission in
+              the repository's CONTRIBUTING.md. This is source-available software, not open
+              source.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="button" href="https://github.com/AppifySheets/Deskbar">AppifySheets/Deskbar on GitHub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Deskbar is made by AppifySheets, a brand of Petre Chitashvili.
+          <br />&copy; 2026 Petre Chitashvili. All rights reserved.
+        </p>
+        <nav aria-label="Footer">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms and EULA</a>
+          <a href="/refunds">Refunds</a>
+          <a href="https://github.com/AppifySheets/Deskbar">GitHub</a>
+          <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

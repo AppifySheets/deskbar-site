@@ -1,0 +1,16 @@
+# Redirects for Cloudflare Pages: "source destination status", one per line.
+# Syntax: https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Pages already serves privacy.html at /privacy and redirects /privacy.html there itself,
+# so the pages need no entries here. www to the apex is NOT done here: _redirects cannot
+# match on hostname, so that redirect is a Cloudflare Bulk Redirect (see docs/hosting.md).
+
+# Short links worth putting in a post or a README. 302, because where they point may change
+# (the Store listing, for one).
+/download  https://github.com/AppifySheets/Deskbar/releases/latest  302
+/source    https://github.com/AppifySheets/Deskbar                  302
+
+# Names people guess for the legal pages.
+/eula              /terms    301
+/terms-of-service  /terms    301
+/refund            /refunds  301

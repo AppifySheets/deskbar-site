@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Every public page. Add a <url> here when a page is added. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://deskbar.app/</loc></url>
+  <url><loc>https://deskbar.app/privacy</loc></url>
+  <url><loc>https://deskbar.app/terms</loc></url>
+  <url><loc>https://deskbar.app/refunds</loc></url>
+</urlset>

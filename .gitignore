@@ -1,0 +1,3 @@
+# Local tool caches that are not part of the site.
+.claude-flow/
+node_modules/

@@ -1,0 +1,34 @@
+# Response headers for Cloudflare Pages. Pages reads this file from the root of the output
+# directory and applies each block to the paths that match its first line. It is not served
+# as a page itself. Syntax: https://developers.cloudflare.com/pages/configuration/headers/
+# Comments stay on their own unindented lines; an indented line inside a block is a header.
+#
+# What the block for every path (/*) sets, line by line:
+#
+# Content-Security-Policy: only the site's own images and stylesheets. No scripts, fonts,
+#   frames, forms or connections. The site has none, so anything else is a mistake or an
+#   injection. If Cloudflare ever injects a script on the zone (Email Address Obfuscation,
+#   Rocket Loader, Web Analytics, Bot Fight Mode), the browser blocks it; docs/hosting.md
+#   lists the zone settings to keep off for that reason.
+# Strict-Transport-Security: HTTPS only, for a year, on deskbar.app and every subdomain.
+#   Deliberately without "preload": leaving the browsers' preload list takes months, so
+#   opt in later, on purpose, if wanted.
+# X-Content-Type-Options: the browser must not guess content types.
+# X-Frame-Options: never framed. frame-ancestors in the CSP says the same for new browsers.
+# Referrer-Policy: send only the origin when a visitor follows a link elsewhere.
+# Permissions-Policy: the site uses none of these browser features, so all are off.
+# Cross-Origin-*-Policy: keep this page's context and resources to itself.
+
+/*
+  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+# Images change rarely and are small, so browsers and the edge may keep them for a day.
+/img/*
+  Cache-Control: public, max-age=86400

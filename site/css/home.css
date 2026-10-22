@@ -1,0 +1,545 @@
+/*
+  Styles used only by the home page: the stage (hero, bar and features), feature rows,
+  the author's note, download, pricing and the source section. Tokens and shared rules
+  live in site.css, which every page loads first.
+*/
+
+/* ---- hero and the bar beside it -------------------------------------------------------- */
+
+/* Two columns on a wide screen: the words on the left, and the bar standing on the right
+   the way it stands at the edge of a real screen, running down past the first features.
+   One column on anything narrower, with the bar between the hero and the features. */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 316px;
+  grid-template-areas:
+    "hero bar"
+    "features bar";
+  column-gap: 80px;
+  padding-top: 88px;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Grid items default to min-width: auto, which lets a long unbreakable line (the code
+   sample) widen its whole column past the screen. Zero lets the pre scroll instead. */
+.stage > * {
+  min-width: 0;
+}
+
+/* A faint grid of desktops behind the hero, fading out from its top corner. */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(-1 * var(--gutter)) auto;
+  height: 900px;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(70% 60% at 30% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(70% 60% at 30% 0%, #000 20%, transparent 75%);
+}
+
+.hero {
+  grid-area: hero;
+  padding-bottom: 72px;
+}
+
+.bar-shot {
+  grid-area: bar;
+  margin: 0;
+  position: relative;
+  isolation: isolate;
+  align-self: start;
+}
+
+.features {
+  grid-area: features;
+}
+
+@media (max-width: 920px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "hero"
+      "bar"
+      "features";
+    padding-top: 56px;
+  }
+
+  .bar-shot {
+    justify-self: center;
+    margin-bottom: 72px;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* A tiny rail inside the pill, the same shape as a row's rail on the bar. */
+.eyebrow::before {
+  content: "";
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(var(--cyan), var(--violet));
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.9rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin-bottom: 26px;
+}
+
+/* The second half of the headline picks up the mark's gradient. */
+.hero h1 .glow {
+  background: linear-gradient(100deg, #fff 0%, var(--lilac) 35%, var(--violet) 65%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lede {
+  font-size: clamp(1.125rem, 2.2vw, 1.3rem);
+  color: var(--muted);
+  max-width: 36em;
+  margin-bottom: 34px;
+}
+
+.lede strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* The capture is drawn at its own pixel size on purpose: it is a pixel-exact render of the
+   live bar, and scaling would soften every edge. A glow sits behind it in the brand colours,
+   and the capture's own transparent corners let the glow show through. */
+.bar-shot::before {
+  content: "";
+  position: absolute;
+  inset: -4% -55% 8%;
+  z-index: -1;
+  background:
+    radial-gradient(40% 30% at 50% 22%, rgb(139 92 246 / 0.55), transparent),
+    radial-gradient(35% 25% at 40% 62%, rgb(79 82 214 / 0.4), transparent),
+    radial-gradient(30% 20% at 60% 88%, rgb(110 231 255 / 0.22), transparent);
+  filter: blur(40px);
+}
+
+.bar-shot img {
+  display: block;
+  width: 316px;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.07),
+    0 40px 80px -20px rgb(0 0 0 / 0.8);
+}
+
+.bar-shot figcaption {
+  margin-top: 16px;
+  color: var(--faint);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 316px;
+}
+
+/* A placeholder kept for the day the hero capture is swapped or missing. Not used while
+   bar-floating.png is in place, but documented here so nobody invents a fake screenshot. */
+.shot-placeholder {
+  display: grid;
+  place-items: center;
+  width: 316px;
+  height: 720px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  color: var(--faint);
+  text-align: center;
+  padding: 24px;
+}
+
+/* ---- feature rows ---------------------------------------------------------------------- */
+
+.section-head {
+  margin-bottom: 40px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 680;
+  letter-spacing: -0.035em;
+  margin-bottom: 12px;
+}
+
+.section-head p {
+  color: var(--muted);
+  max-width: 38em;
+  margin: 0;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--cyan);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 640px) {
+  .rows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* One feature, drawn like one workspace row: a rail, a caption line, then the body. */
+.row {
+  position: relative;
+  padding: 22px 22px 22px 30px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.012));
+}
+
+.row::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 22px;
+  bottom: 22px;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--rail, var(--rail-violet));
+}
+
+.row h3 {
+  font-size: 1.125rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.row p {
+  color: var(--muted);
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+.row p + p,
+.row p + pre {
+  margin-top: 12px;
+}
+
+/* A row that spans both columns, for the switcher with its keycaps. */
+.row-wide {
+  grid-column: 1 / -1;
+}
+
+.rail-violet { --rail: var(--rail-violet); }
+.rail-teal { --rail: var(--rail-teal); }
+.rail-amber { --rail: var(--rail-amber); }
+.rail-blue { --rail: var(--rail-blue); }
+.rail-rose { --rail: var(--rail-rose); }
+.rail-cyan { --rail: var(--rail-cyan); }
+
+/* The current workspace on the bar is ringed; the featured row gets the same treatment. */
+.row-current {
+  border-color: rgb(196 181 253 / 0.35);
+  background: linear-gradient(180deg, rgb(139 92 246 / 0.14), rgb(139 92 246 / 0.03));
+}
+
+/* Keycaps for the chord. */
+.chord {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 16px;
+  color: var(--faint);
+  font-size: 1.25rem;
+}
+
+.chord kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 64px;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 3px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #23223a, #15142400);
+  background-color: #18172a;
+  color: var(--text);
+  font: 600 1rem/1 var(--font);
+  box-shadow: 0 8px 20px -10px rgb(0 0 0 / 0.9);
+}
+
+.chord kbd.tap {
+  border-color: rgb(245 181 68 / 0.7);
+  color: var(--amber);
+  box-shadow:
+    0 0 0 4px rgb(245 181 68 / 0.12),
+    0 8px 20px -10px rgb(0 0 0 / 0.9);
+}
+
+pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background: #0b0b14;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  overflow-wrap: normal;
+}
+
+/* ---- the author's note ----------------------------------------------------------------- */
+
+.note {
+  margin: 120px 0 0;
+  padding: 0 0 0 28px;
+  border-left: 4px solid;
+  border-image: linear-gradient(var(--cyan), var(--violet)) 1;
+  max-width: 50em;
+}
+
+.note p {
+  font: 500 clamp(1.2rem, 2.6vw, 1.55rem)/1.45 var(--font-display);
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.note footer {
+  color: var(--faint);
+  font-size: 0.95rem;
+}
+
+/* ---- sections below the stage ---------------------------------------------------------- */
+
+.band {
+  padding: 120px 0 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 860px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.012));
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 650;
+  margin-bottom: 6px;
+}
+
+/* .card p would otherwise mute the price too; prices stay full strength. */
+.card .price {
+  color: var(--text);
+  font: 700 2.6rem/1.1 var(--font-display);
+  letter-spacing: -0.04em;
+  margin: 10px 0 16px;
+}
+
+.card .price small {
+  font: 500 1rem/1 var(--font);
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.card p,
+.card li {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.card ul {
+  margin: 0 0 24px;
+  padding-left: 1.1em;
+}
+
+.card li + li {
+  margin-top: 6px;
+}
+
+.card .button {
+  margin-top: auto;
+}
+
+.card-pro {
+  border-color: rgb(196 181 253 / 0.4);
+  background: linear-gradient(180deg, rgb(139 92 246 / 0.16), rgb(79 82 214 / 0.04));
+  box-shadow: 0 30px 80px -40px rgb(139 92 246 / 0.7);
+}
+
+.status {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  border: 1px solid rgb(245 181 68 / 0.3);
+  border-radius: var(--radius-small);
+  background: rgb(245 181 68 / 0.06);
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.status::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  background: var(--amber);
+}
+
+.status p {
+  margin: 0;
+}
+
+/* Download: steps on the left, requirements and the Store slot on the right. */
+.download {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 860px) {
+  .download {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.steps {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 44px;
+  color: var(--muted);
+}
+
+.steps li + li {
+  margin-top: 16px;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font: 600 0.85rem/1 var(--font);
+}
+
+.steps strong,
+.specs strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.specs {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.specs li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.specs li:first-child {
+  padding-top: 0;
+}
+
+/* The Microsoft Store slot. While the listing is in progress this pill stands in for the
+   badge; index.html has the real badge in a comment right next to it. */
+.store-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.store-badge img {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+/* Small spacing fixes inside the download cards. */
+.actions-bottom {
+  margin: 24px 0 0;
+}
+
+.store-title {
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
