@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <!--
   Privacy. Keep it short and true. Each sentence about the app has to match the README in
-  github.com/AppifySheets/Deskbar (the "Updates" and "Install" sections). Each sentence about
+  github.com/AppifySheets/Deskbar (the "Updates", "Install" and "From the Microsoft Store"
+  sections). The Store copy's licence read is not in the README; it is described from the code
+  (src/Deskbar.App/Entitlement.cs and App.StartUpdateChecks: at start, then on the update
+  timer while the automatic check is on). Each sentence about
   the site has to match the meta tags in the head and docs/hosting.md: if anyone ever adds
   analytics, a cookie, or a host that sets cookies, this page is wrong until it is updated.
 -->
@@ -21,7 +24,7 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Privacy · Deskbar</title>
-    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app's only network traffic is the update check against GitHub." />
+    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app talks only to GitHub, or for the Store copy to the Microsoft Store, about updates and its licence." />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07070d" />
     <link rel="canonical" href="https://deskbar.app/privacy" />
@@ -44,30 +47,58 @@
 
     <main id="main" class="wrap page">
       <h1>Privacy</h1>
-      <p class="updated">Last updated 22 October 2026</p>
+      <p class="updated">Last updated 25 October 2026</p>
 
       <p>
-        Deskbar, the app, collects nothing about you and sends nothing about you anywhere. Your
-        workspaces, window names, rules and time per workspace stay in files under
-        <code>%APPDATA%\Deskbar</code> on your own computer. Its only network traffic is the
-        update check: every five minutes, and whenever you choose Check for updates, it asks
-        GitHub whether a newer release exists, and accepting an update downloads it from
-        GitHub. Those requests reach GitHub like any other web request, with your IP address,
-        and GitHub's own privacy statement covers them. You can turn the automatic check off in
-        Manage. This site sets no cookies and runs no scripts or analytics. It is hosted on
-        GitHub Pages, which logs visitors' IP addresses for security, under the same GitHub
-        privacy statement. If you write to
-        <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>, your message and address are
-        used to reply to you and for nothing else.
+        Deskbar, the app, collects nothing about you and sends nothing about you anywhere. This
+        is true of both copies: the free one from GitHub and the one from the Microsoft Store.
+        Your workspaces, window names, rules and time per workspace stay in files under
+        <code>%APPDATA%\Deskbar</code> on your own computer. To show your windows on the bar,
+        the app reads the titles of the windows you have open. That happens on your computer
+        only, and none of it is sent anywhere. The only network requests either copy makes are
+        the ones described below.
+      </p>
+      <p>
+        If Deskbar ever starts collecting diagnostic or usage data, this page will say what is
+        collected and how to turn it off before the release that starts it.
       </p>
 
-      <h2>When Deskbar Pro goes on sale</h2>
+      <h2>The free copy from GitHub</h2>
       <p>
-        Paddle will sell Deskbar Pro as the reseller and will handle your payment details under
-        its own privacy policy. We receive your name, your email address and the country of
-        purchase, and use them to send your licence key and to answer you about that purchase.
-        The key itself contains your email address, and the app checks it on your computer
-        without contacting anyone.
+        Its only network traffic is the update check: every five minutes, and whenever you
+        choose Check for updates, it asks GitHub whether a newer release exists, and accepting
+        an update downloads it from GitHub. Those requests reach GitHub like any other web
+        request, with your IP address, and GitHub's own privacy statement covers them. You can
+        turn the automatic check off in Manage.
+      </p>
+
+      <h2>The Microsoft Store copy</h2>
+      <p>
+        It never contacts GitHub. It asks the Microsoft Store for its own licence, to know
+        whether it is Deskbar Pro or in its trial: once when it starts, and every five minutes
+        while the automatic check is on. On the same five-minute timer, and whenever you choose
+        Check for updates, it asks the Store whether an update exists, and the Store installs
+        it. Those requests go to Microsoft, under
+        <a href="https://privacy.microsoft.com/privacystatement">Microsoft's privacy statement</a>.
+        You can turn the automatic check off in Manage.
+      </p>
+
+      <h2>Buying Deskbar Pro</h2>
+      <p>
+        Deskbar Pro is not on sale yet. It will be sold through the Microsoft Store, with
+        Microsoft as the reseller and merchant of record, so your payment details go to
+        Microsoft under Microsoft's privacy statement. There is no licence key: the Store's
+        licence on your Microsoft account is what makes the Store copy Pro. Microsoft does not
+        send us your name or email address for an ordinary purchase. We see only total sales
+        and payouts.
+      </p>
+
+      <h2>This site</h2>
+      <p>
+        This site sets no cookies and runs no scripts or analytics. It is hosted on GitHub
+        Pages, which logs visitors' IP addresses for security, under GitHub's privacy statement.
+        If you write to <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>, your message
+        and address are used to reply to you and for nothing else.
       </p>
 
       <h2>Who to ask</h2>

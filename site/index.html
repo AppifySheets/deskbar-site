@@ -9,8 +9,8 @@
     Content-Security-Policy meta tag in the head enforces it, so a stray third-party tag fails
     loudly.
   - "Source available", never "open source": the licence is PolyForm Strict 1.0.0.
-  - Pricing describes the plan as it is. Until the licence key and the Paddle checkout
-    exist, the Pro button stays disabled and says so.
+  - Pricing describes the plan as it is. Until the Microsoft Store listing is live, the Pro
+    button stays disabled and says so.
 -->
 <html lang="en">
   <head>
@@ -329,23 +329,26 @@
       </section>
 
       <!--
-        Pricing. Decided: a free tier, a 14-day trial, Deskbar Pro at $19 once with all 2.x
-        updates, licensed per user. Not built yet: the licence key and the Paddle checkout.
-        Not decided yet: which features are free, so this section does not list them.
+        Pricing. Decided on 2026-10-24: Deskbar Pro is the Microsoft Store copy, US$18.99 once
+        (the Store price tier nearest $19, converted by Microsoft elsewhere) with all 2.x
+        updates, licensed per user, with the Store's own 15-day trial and no licence key. The
+        free version is the exe on GitHub Releases. It has every feature today; which features
+        it keeps later is not decided, so this section does not list them. Keep it consistent
+        with terms.html and refunds.html.
       -->
       <section class="band" id="pricing" aria-labelledby="pricing-title">
         <div class="wrap">
           <div class="section-head">
             <span class="kicker">Pricing</span>
             <h2 id="pricing-title">Pay once, if you want the rest.</h2>
-            <p>A free tier, a full trial, and one payment for Pro. No subscription.</p>
+            <p>A free version, a full trial, and one payment for Pro. No subscription.</p>
           </div>
 
           <div class="status">
             <p>
-              <strong>Today every release is free, with everything switched on.</strong> The
-              licence key and the checkout are still being built. When they arrive, this is how
-              it will work.
+              <strong>Today every release is free, with everything switched on.</strong>
+              Deskbar Pro will be sold through the Microsoft Store once its listing is live.
+              This is how it will work.
             </p>
           </div>
 
@@ -354,34 +357,48 @@
               <h3>Free</h3>
               <p class="price">$0</p>
               <ul>
-                <li>Keeps working after the trial, for as long as you like.</li>
-                <li>Which features stay in the free tier is still being settled.</li>
+                <li>
+                  The exe from
+                  <a href="https://github.com/AppifySheets/Deskbar/releases">GitHub Releases</a>,
+                  for as long as you like.
+                </li>
+                <li>
+                  Today it has every feature. A later release will limit it, and which features
+                  stay free is still being settled.
+                </li>
               </ul>
             </div>
 
             <div class="card">
-              <h3>14-day trial</h3>
+              <h3>15-day trial</h3>
               <p class="price">Every feature</p>
               <ul>
-                <li>14 days from the first run, with nothing held back.</li>
-                <li>No account and no email address.</li>
+                <li>The Microsoft Store's own free trial, with every Pro feature on.</li>
+                <li>The Store starts and times it, not the app.</li>
                 <li>
-                  When it ends, Deskbar drops to the free tier. Nothing you set up is deleted,
-                  and it comes back the moment you enter a key.
+                  If it ends and you have not bought, the Store copy works as the free version.
+                  Nothing you set up is deleted.
                 </li>
               </ul>
             </div>
 
             <div class="card card-pro">
               <h3>Deskbar Pro</h3>
-              <p class="price">$19 <small>once</small></p>
+              <p class="price">$18.99 <small>once</small></p>
               <ul>
+                <li>US$18.99 in the United States. Microsoft sets the price in other countries.</li>
                 <li>Every 2.x update included.</li>
-                <li>Licensed to you: one person, on any number of your own computers.</li>
-                <li>The key is checked offline. Nothing phones home.</li>
-                <li>Paddle will run the checkout and handle VAT and sales tax.</li>
+                <li>
+                  Licensed to you: one person, on any number of your own Windows devices, as far
+                  as the Microsoft Store allows for your account.
+                </li>
+                <li>
+                  No licence key. The Store's licence on your Microsoft account is what makes the
+                  Store copy Pro.
+                </li>
+                <li>Microsoft sells it and handles payment, VAT and sales tax.</li>
               </ul>
-              <button class="button" type="button" disabled>Checkout coming</button>
+              <button class="button" type="button" disabled>Coming to the Microsoft Store</button>
             </div>
           </div>
         </div>
