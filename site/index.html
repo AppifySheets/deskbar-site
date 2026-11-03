@@ -9,8 +9,8 @@
     Content-Security-Policy meta tag in the head enforces it, so a stray third-party tag fails
     loudly.
   - "Source available", never "open source": the licence is PolyForm Strict 1.0.0.
-  - Pricing describes the plan as it is. Until the Microsoft Store listing is live, the Pro
-    button stays disabled and says so.
+  - Pricing describes the plan as it is. The Microsoft Store listing went live on 2026-11-03,
+    so the Pro button and the Store badge link to it.
 -->
 <html lang="en">
   <head>
@@ -311,18 +311,13 @@
 
               <h3 class="store-title">Microsoft Store</h3>
               <!--
-                STORE BADGE. To switch it on once the listing exists:
-                1. Put the product ID from Partner Center in place of PRODUCTID below.
-                2. Delete the <p class="store-pending"> line.
-                3. Take the <a class="store-badge"> block out of this comment.
-                The badge image is already in img/store-badge.svg, so nothing loads from
-                Microsoft and the Content-Security-Policy needs no change.
-
-                <a class="store-badge" href="https://apps.microsoft.com/detail/PRODUCTID">
-                  <img src="/img/store-badge.svg" width="161" height="44" alt="Get it from Microsoft Store" />
-                </a>
+                The badge links to the listing (product ID 9PJX26NGFPNF from Partner Center). Its
+                image is the local copy in img/store-badge.svg, so nothing loads from Microsoft and
+                the Content-Security-Policy needs no change.
               -->
-              <p class="store-pending">Store listing in progress</p>
+              <a class="store-badge" href="https://apps.microsoft.com/detail/9PJX26NGFPNF">
+                <img src="/img/store-badge.svg" width="161" height="44" alt="Get it from Microsoft Store" />
+              </a>
             </div>
           </div>
         </div>
@@ -347,8 +342,7 @@
           <div class="status">
             <p>
               <strong>Today every release is free, with everything switched on.</strong>
-              Deskbar Pro will be sold through the Microsoft Store once its listing is live.
-              This is how it will work.
+              Deskbar Pro is on the Microsoft Store. This is how it works.
             </p>
           </div>
 
@@ -398,7 +392,7 @@
                 </li>
                 <li>Microsoft sells it and handles payment, VAT and sales tax.</li>
               </ul>
-              <button class="button" type="button" disabled>Coming to the Microsoft Store</button>
+              <a class="button button-primary" href="https://apps.microsoft.com/detail/9PJX26NGFPNF">Get it from the Microsoft Store</a>
             </div>
           </div>
         </div>
