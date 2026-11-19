@@ -209,12 +209,63 @@
                 focus lands on the window you were last using there, so you arrive typing.
               </p>
             </li>
+            <!--
+              Added 2026-11-19 for Deskbar 2.5: the strips along the top of each screen, tiling,
+              tasks with timers, and time spent per workspace. Each is worded from the Deskbar
+              README sections "Reading it", "The workspace row menu", "Tasks" and "Manage".
+              Tiling is not labelled Pro: the README still says "(Deskbar Pro)", but tiling is
+              free in every copy for now (Deskbar commit e150c49), and the pricing section
+              below already says every feature is on today.
+            -->
+            <li class="row rail-cyan">
+              <h3>Your windows along the top of each screen</h3>
+              <p>
+                A thin strip across the top of every screen lists that screen's windows in the
+                workspace you are in, with their titles. Maximized windows stop below it. If you
+                would rather keep the list on the bar, the Window list menu moves it into the
+                workspace's row or under the rows.
+              </p>
+            </li>
+            <li class="row rail-rose">
+              <h3>Tile a workspace with one button</h3>
+              <p>
+                The tile button at the top of the bar lays the workspace's windows out in a grid
+                on each screen while you are on it. Drag the line between two tiles to resize
+                them, and Even out tiles puts the sizes back. The gap between tiles is set in
+                Manage.
+              </p>
+            </li>
+            <!--
+              Until tiling, this row said Deskbar "never changes a window's size or position on
+              screen". Tiling does, when you ask it to, so the claim is narrowed to untiled
+              workspaces.
+            -->
             <li class="row rail-blue">
               <h3>It remembers where windows belong</h3>
               <p>
                 Move a window to a workspace by hand and that is where the app goes next time.
-                Workspaces survive reboots. Deskbar never launches anything and never changes a
-                window's size or position on screen.
+                Workspaces survive reboots. Deskbar never launches anything, and unless you tile a
+                workspace it leaves every window's size and position alone.
+              </p>
+            </li>
+            <li class="row row-wide rail-amber">
+              <h3>Park a workspace, and get called back to it</h3>
+              <p>
+                The stopwatch at the bottom of the bar parks the workspace you are on for 1, 5,
+                10 or 30 minutes. Its row shows a small pie that empties as the time runs out,
+                and blinks when the task comes due. If the bar is out of sight, a small card in
+                the corner of the screen tells you, without taking the focus. Come back to the
+                workspace for two seconds and the timer ends; the task stays open until you mark
+                it done. Scripts and coding agents can set one too:
+              </p>
+              <pre><code>&amp; "$env:APPDATA\Deskbar\deskbar.cmd" task add "Wait for CI" --in 10m</code></pre>
+            </li>
+            <li class="row rail-violet">
+              <h3>See where your time went</h3>
+              <p>
+                Manage's Time tab shows how long you spent in each workspace today, this week and
+                over the last thirty days, by group or by workspace. Only keyboard and mouse
+                input counts, so a desktop left open overnight adds nothing.
               </p>
             </li>
             <li class="row rail-cyan">
@@ -224,15 +275,16 @@
                 and for a window on another desktop, a picture of it at a quarter size.
               </p>
             </li>
-            <li class="row rail-violet">
+            <li class="row rail-teal">
               <h3>Floating or docked</h3>
               <p>
                 The bar floats where you drop it, docks to a screen edge, or straddles two
                 screens. It carries your taskbar pins, the clock, volume and notifications, so
-                Windows' own taskbar can stay on auto-hide.
+                Windows' own taskbar can stay on auto-hide, and apps flashing for attention get
+                an amber dot on the bar instead of holding that taskbar up.
               </p>
             </li>
-            <li class="row row-wide rail-teal">
+            <li class="row row-wide rail-violet">
               <h3>Drive it from scripts</h3>
               <p>
                 While it runs, Deskbar keeps a small command file that hands commands to the
