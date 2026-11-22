@@ -16,6 +16,9 @@ is documentation and checks.
 | `site/img/` | The hero capture (native 1.5x and a 1x copy), the mark, the share image, the Store badge |
 | `site/download/`, `site/source/` and others | Short links, each a page that forwards the browser |
 | `docs/hosting.md` | How the site is hosted: GitHub Pages settings and the DNS at Cloudflare |
+| `docs/last-sync.md` | The Deskbar commit the site was last brought up to date with |
+| `.claude/skills/update-site/` | The skill Claude Code follows to bring the site up to date with Deskbar (`/update-site`) |
+| `tools/shoot/` | Scripts and the brief for filming screencasts in the `deskbartest` account |
 | `.github/workflows/check.yml` | HTML validation and link checking on every pull request |
 | `.github/workflows/pages.yml` | Publishes `site/` to GitHub Pages on every push to main |
 
