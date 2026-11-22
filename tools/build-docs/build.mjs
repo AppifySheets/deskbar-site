@@ -2,12 +2,15 @@
 //
 // Input: a folder of markdown pages, each starting with front matter between two `---` lines
 // (`title`, `summary`, `order`, optional `clip`). Output: <outDir>/index.html (the list) and
-// <outDir>/<slug>/index.html (one page each), wrapped in page.html. No scripts end up on
-// the pages; the CSP in page.html would block them anyway.
+// <outDir>/<slug>.html (one page each), wrapped in page.html. The pages are linked as
+// /docs/<slug> without an extension: GitHub Pages serves docs/<slug>.html for that URL
+// directly, the way /privacy maps to privacy.html. A folder with an index.html would answer
+// /docs/<slug> with a 301 to /docs/<slug>/ instead. No scripts end up on the pages; the CSP
+// in page.html would block them anyway.
 //
 // CLI: node tools/build-docs/build.mjs --docs <dir> --out site/docs --media site/media --tag <tag>
 import { readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
-import { join, dirname, basename } from 'node:path';
+import { join, dirname, basename, resolve } from 'node:path';
 import { posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Marked } from 'marked';
@@ -78,7 +81,20 @@ const renderMarkdown = (page, allPages, tag) => {
         return `<h${depth} id="${escapeHtml(slugify(inner))}">${inner}</h${depth}>\n`;
       },
       // Raw HTML in the source is shown as text, never passed through.
-      html({ text }) { return escapeHtml(text); }
+      html({ text }) { return escapeHtml(text); },
+      // marked writes void elements as <hr>, <br> and <img ...>, but the repo's html-validate
+      // config wants them self-closed (void-style: selfclosing), so these three write the
+      // closing slash. The image keeps marked's src handling (encodeURI) and escapes the alt
+      // text and title; marked leaves the alt text raw.
+      hr() { return '<hr />\n'; },
+      br() { return '<br />'; },
+      image({ href, title, text, tokens }) {
+        const alt = tokens ? this.parser.parseInline(tokens, this.parser.textRenderer) : text;
+        const src = (() => { try { return encodeURI(href); } catch { return null; } })();
+        if (src === null) return escapeHtml(alt);
+        const t = title ? ` title="${escapeHtml(title)}"` : '';
+        return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"${t} />`;
+      }
     }
   });
   return marked.parse(page.body);
@@ -98,15 +114,17 @@ const navHtml = (allPages, currentSlug) =>
 
 // The clips are short, silent, looping screencasts that play on their own by design (they
 // are the point of the page, and `muted` keeps them from making noise), so html-validate's
-// no-autoplay rule is switched off for exactly this element.
-const videoHtml = clip =>
+// no-autoplay rule is switched off for exactly this element. `controls` gives the pause
+// button. The aria-label names the clip for screen readers, since a bare <video> has no
+// accessible name of its own.
+const videoHtml = (clip, title) =>
   `<!-- [html-validate-disable-next no-autoplay -- silent looping screencast] -->
-<video src="/media/${clip}.mp4" poster="/media/${clip}.jpg" autoplay muted loop playsinline controls preload="metadata"></video>`;
+<video src="/media/${clip}.mp4" poster="/media/${clip}.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Screencast: ${escapeHtml(title)}"></video>`;
 
 /** One page as a whole HTML document. */
 export const renderPage = (page, allPages, { tag }) => {
   const content = `<h1>${escapeHtml(page.title)}</h1>\n<p class="lead">${escapeHtml(page.summary)}</p>\n` +
-    (page.clip ? `<figure class="clip">${videoHtml(page.clip)}</figure>\n` : '') +
+    (page.clip ? `<figure class="clip">${videoHtml(page.clip, page.title)}</figure>\n` : '') +
     renderMarkdown(page, allPages, tag);
   return fill(template(), {
     title: `${escapeHtml(page.title)} · Deskbar docs`,
@@ -131,10 +149,20 @@ export const renderIndex = (allPages, { tag } = {}) => {
   });
 };
 
-/** Reads docsDir, checks it, and writes the site pages into outDir. */
+/**
+ * Reads docsDir, checks it, and writes the site pages into outDir.
+ * outDir is deleted and written afresh, so it must be a folder named `docs` (site/docs in
+ * practice): a mistyped --out such as `site` or `.` is refused before anything is removed.
+ */
 export const build = ({ docsDir, outDir, mediaDir, tag }) => {
+  if (basename(resolve(outDir)) !== 'docs')
+    throw new Error(`refusing to replace ${outDir}: the output folder must be named "docs"`);
   const files = readdirSync(docsDir).filter(f => f.endsWith('.md')).sort();
   const pages = files.map(f => parsePage(readFileSync(join(docsDir, f), 'utf8'), f));
+
+  // A page named index.md would be written over the list of pages (docs/index.html).
+  if (pages.some(p => p.slug === 'index'))
+    throw new Error('index.md cannot be a page: docs/index.html is the list of pages');
 
   // Two pages with one order would make the list ambiguous.
   pages.forEach((p, i) => {
@@ -153,10 +181,8 @@ export const build = ({ docsDir, outDir, mediaDir, tag }) => {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'index.html'), renderIndex(pages, { tag }));
-  rendered.forEach(([slug, html]) => {
-    mkdirSync(join(outDir, slug), { recursive: true });
-    writeFileSync(join(outDir, slug, 'index.html'), html);
-  });
+  // docs/<slug>.html, served at /docs/<slug> (see the comment at the top of this file).
+  rendered.forEach(([slug, html]) => writeFileSync(join(outDir, `${slug}.html`), html));
   return { pages: pages.length };
 };
 
