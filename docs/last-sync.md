@@ -11,11 +11,15 @@ time per workspace, arranging rows, Claude Code ([deskbar-site #7](https://githu
 free for personal use and Deskbar Pro for work, Report a problem in the privacy page
 ([deskbar-site #8](https://github.com/AppifySheets/deskbar-site/pull/8)).
 
-Clips and docs (deskbar-site #10, not yet merged): the nine clips were filmed on Deskbar commit
-`e8d79e6808` (2.5.110). The docs pages come from
-[Deskbar #415](https://github.com/AppifySheets/Deskbar/pull/415) (head f809a92, not yet merged).
-The site's copy is still covered up to a3137645 above.
+Clips and docs: the wall and the docs went live with
+[deskbar-site #10](https://github.com/AppifySheets/deskbar-site/pull/10). On 2026-11-23 a re-shoot on
+Deskbar v2.5.189 (`406f275`) replaced `claude-many` and `session-start`, which had not shown their
+feature, and replaced the stopwatch clip `task-due` with `tasks-bar`. The home page's tasks row was
+rewritten from the README's Tasks section. That re-shoot did not review the rest of the copy, so the
+commit covered above stays at a3137645.
 
-Pending: merge and release Deskbar #414 and #415, then re-run the checks on
-[deskbar-site #10](https://github.com/AppifySheets/deskbar-site/pull/10). Re-film after the
-see-through bar (#414) and the tasks rework ship.
+Filmed but not on the site yet: `tasks-window` and `tasks-matrix` (raws in
+`C:\Users\Public\deskbar-shoot\raw`). Add them when a docs page names them.
+
+Pending: a full run from a3137645 (goals, the see-through bar, anything else since), and stills for
+the docs pages with no clip, which needs `still:` support in `tools/build-docs`.
