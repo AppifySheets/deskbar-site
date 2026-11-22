@@ -123,6 +123,22 @@
   font-size: 0.98rem;
 }
 
+/* Wide layout only: the large tile spans two rows, so it is a flex column and its video
+   grows into the spare height. object-fit crops the clip's edges instead of leaving an
+   empty band. min-height 0 lets the video shrink back if the row is short. */
+@media (min-width: 861px) {
+  .tile-large {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tile-large video {
+    flex: 1;
+    min-height: 0;
+    object-fit: cover;
+  }
+}
+
 @media (max-width: 860px) {
   .wall-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
