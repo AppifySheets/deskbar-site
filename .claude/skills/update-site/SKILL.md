@@ -125,7 +125,9 @@ reason to use Deskbar, not one feature among many. In the docs that means a "Wor
 Claude sessions" page near the top of the navigation, and on every page where it applies, a line on
 how a session uses the feature (a session's own workspace, `deskbar.cmd` from a session, the row that
 flashes when a session finishes or waits, `task add` from a session, quick find over session tabs).
-The `claude-flash` clip is among the first a visitor sees. Every claim still comes from the README:
+The `claude-flash` clip is among the first a visitor sees. This is how Petre himself works, many
+sessions at once all day, so the docs can say it in his voice, as the home page's quote does; ask
+him for the wording and any numbers rather than inventing them. Every claim still comes from the README:
 its "Claude Code" section and "Agentic AI multiplies the contexts, it does not replace them".
 
 ## Mistakes already made once
