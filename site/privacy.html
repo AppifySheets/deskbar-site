@@ -4,7 +4,10 @@
   github.com/AppifySheets/Deskbar (the "Updates", "Install" and "From the Microsoft Store"
   sections). The Store copy's licence read is not in the README; it is described from the code
   (src/Deskbar.App/Entitlement.cs and App.StartUpdateChecks: at start, then on the update
-  timer while the automatic check is on). Each sentence about
+  timer while the automatic check is on; since 2026-11-22 it also reads whether the Deskbar Pro
+  add-on is owned, in Deskbar's StoreLicence and ProEntitlement). Problem reports are described
+  from the README's "Reporting a problem" section and relay/README.md (a Cloudflare Worker at
+  report.deskbar.app files each report as an issue in a private GitHub repository). Each sentence about
   the site has to match the meta tags in the head and docs/hosting.md: if anyone ever adds
   analytics, a cookie, or a host that sets cookies, this page is wrong until it is updated.
 -->
@@ -24,7 +27,7 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Privacy · Deskbar</title>
-    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app talks only to GitHub, or for the Store copy to the Microsoft Store, about updates and its licence." />
+    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app talks to GitHub or the Microsoft Store about updates and its licence, and sends a problem report only when you press Send." />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07070d" />
     <link rel="canonical" href="https://deskbar.app/privacy" />
@@ -47,11 +50,12 @@
 
     <main id="main" class="wrap page">
       <h1>Privacy</h1>
-      <p class="updated">Last updated 25 October 2026</p>
+      <p class="updated">Last updated 22 November 2026</p>
 
       <p>
-        Deskbar, the app, collects nothing about you and sends nothing about you anywhere. This
-        is true of both copies: the free one from GitHub and the one from the Microsoft Store.
+        Deskbar, the app, collects nothing about you and sends nothing about you anywhere unless
+        you send a problem report yourself. This is true of both copies: the one from GitHub and
+        the one from the Microsoft Store.
         Your workspaces, window names, rules and time per workspace stay in files under
         <code>%APPDATA%\Deskbar</code> on your own computer. To show your windows on the bar,
         the app reads the titles of the windows you have open. That happens on your computer
@@ -63,9 +67,9 @@
         collected and how to turn it off before the release that starts it.
       </p>
 
-      <h2>The free copy from GitHub</h2>
+      <h2>The copy from GitHub</h2>
       <p>
-        Its only network traffic is the update check: every five minutes, and whenever you
+        Apart from problem reports you send, its only network traffic is the update check: every five minutes, and whenever you
         choose Check for updates, it asks GitHub whether a newer release exists, and accepting
         an update downloads it from GitHub. Those requests reach GitHub like any other web
         request, with your IP address, and GitHub's own privacy statement covers them. You can
@@ -74,9 +78,10 @@
 
       <h2>The Microsoft Store copy</h2>
       <p>
-        It never contacts GitHub. It asks the Microsoft Store for its own licence, to know
-        whether it is Deskbar Pro or in its trial: once when it starts, and every five minutes
-        while the automatic check is on. On the same five-minute timer, and whenever you choose
+        It never contacts GitHub for updates. It asks the Microsoft Store for its own licence,
+        to know whether you own the Deskbar Pro add-on: once when it starts, and every five
+        minutes while the automatic check is on. The answer stays on your computer; it decides
+        only whether the bar shows its reminder about Pro. On the same five-minute timer, and whenever you choose
         Check for updates, it asks the Store whether an update exists, and the Store installs
         it. Those requests go to Microsoft, under
         <a href="https://privacy.microsoft.com/privacystatement">Microsoft's privacy statement</a>.
@@ -85,12 +90,33 @@
 
       <h2>Buying Deskbar Pro</h2>
       <p>
-        Deskbar Pro is sold through the Microsoft Store, with
+        Deskbar Pro is an add-on sold through the Microsoft Store, with
         Microsoft as the reseller and merchant of record, so your payment details go to
         Microsoft under Microsoft's privacy statement. There is no licence key: the Store's
-        licence on your Microsoft account is what makes the Store copy Pro. Microsoft does not
+        licence for the add-on on your Microsoft account is what makes a copy Pro. Microsoft does not
         send us your name or email address for an ordinary purchase. We see only total sales
         and payouts.
+      </p>
+
+      <h2>Reporting a problem</h2>
+      <p>
+        Report a problem, on the tray menu and the bar's menu, sends a report only when you press
+        Send, and needs no account or sign-in. It carries what you type, any screenshots you add,
+        the contact line if you fill it in, the app's version and Windows build, whether the copy
+        is from the Store, and whether it has Deskbar Pro. The debug dump is ticked by default: it
+        describes your screens, the bar and every window on them, titles included. View what it
+        contains opens it in Notepad before anything is sent, and you can untick it.
+      </p>
+      <p>
+        The report goes over https to <code>report.deskbar.app</code>, a small relay we run on
+        Cloudflare, which files it in a private GitHub repository that only the Deskbar team can
+        read. It is never posted anywhere public. Those services see the request like any other,
+        with your IP address, under
+        <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's</a> and
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's</a>
+        privacy statements. We use a report to fix the problem and, if you left a contact, to
+        answer you. If it cannot be sent, it is saved under <code>%APPDATA%\Deskbar\reports</code>
+        on your computer and goes nowhere until you choose Try again.
       </p>
 
       <h2>This site</h2>

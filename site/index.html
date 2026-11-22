@@ -9,8 +9,9 @@
     Content-Security-Policy meta tag in the head enforces it, so a stray third-party tag fails
     loudly.
   - "Source available", never "open source": the licence is PolyForm Strict 1.0.0.
-  - Pricing describes the plan as it is. The Microsoft Store listing went live on 2026-11-03,
-    so the Pro button and the Store badge link to it.
+  - Pricing describes the plan as it is. Since 2026-11-22 Deskbar is free for personal use in
+    every copy, the Store listing included, and using it for work asks for Deskbar Pro, an
+    add-on bought inside the Store copy. Keep it consistent with terms.html and refunds.html.
 -->
 <html lang="en">
   <head>
@@ -111,10 +112,11 @@
             </a>
             <a class="button" href="#features">See what it does</a>
           </div>
+          <!-- The sentence after the first is the app's own reminder line, word for word. -->
           <p class="fineprint">
-            Deskbar Pro on the Microsoft Store: US$18.99 once, with a 15-day free trial. Or the
-            free version: one portable exe for Windows 11 on x64 from GitHub Releases, with no
-            installer and no admin rights.
+            Free for personal use, with every feature, from the Microsoft Store or as one portable
+            exe from GitHub Releases. Using it for work? Deskbar Pro is $18.99 once, with
+            priority support.
           </p>
         </section>
 
@@ -327,10 +329,15 @@
             </li>
             <li class="row row-wide rail-blue">
               <h3>Nothing installed, nothing sent</h3>
+              <!--
+                Since Deskbar #387 the app can send a problem report, but only when you press
+                Send, so "its only network traffic is the update check" was no longer true. The
+                privacy page has the details.
+              -->
               <p>
-                One exe and no installer. Deskbar writes nothing outside your own user profile,
-                and its only network traffic is the check for a newer release on GitHub. The
-                automatic check can be switched off in Manage.
+                One exe and no installer. Deskbar writes nothing outside your own user profile and
+                sends nothing about you. It checks for updates, which can be switched off in
+                Manage, and a problem report leaves your computer only when you press Send.
               </p>
             </li>
           </ul>
@@ -417,75 +424,76 @@
       </section>
 
       <!--
-        Pricing. Decided on 2026-10-24: Deskbar Pro is the Microsoft Store copy, US$18.99 once
-        (the Store price tier nearest $19, converted by Microsoft elsewhere) with all 2.x
-        updates, licensed per user, with the Store's own 15-day trial and no licence key. The
-        free version is the exe on GitHub Releases. It has every feature today; which features
-        it keeps later is not decided, so this section does not list them. Keep it consistent
-        with terms.html and refunds.html.
+        Pricing. Decided on 2026-11-22: Deskbar is free for personal use, with every feature on
+        in every copy (the exe from GitHub Releases and the Microsoft Store listing, which is
+        now free and has no trial). Using it for work asks for Deskbar Pro: US$18.99 once, a
+        durable add-on bought inside the Store copy (product ID DeskbarPro, Store ID
+        9N5D13B3PR87), with priority support for problem reports. Nothing is locked; a copy
+        without Pro shows a reminder line at most once a day after two weeks and 20 hours of
+        use (Deskbar #388, #390). Corporate licensing (invoices, seats, keys) is not decided
+        (Deskbar #384), so nothing here offers it. Keep it consistent with terms.html and
+        refunds.html.
       -->
       <section class="band" id="pricing" aria-labelledby="pricing-title">
         <div class="wrap">
           <div class="section-head">
             <span class="kicker">Pricing</span>
-            <h2 id="pricing-title">Pay once, if you want the rest.</h2>
-            <p>A free version, a full trial, and one payment for Pro. No subscription.</p>
+            <h2 id="pricing-title">Free for personal use.</h2>
+            <p>Every feature, in every copy. Deskbar Pro is for using it at work. No subscription.</p>
           </div>
 
           <div class="status">
             <p>
-              <strong>Today every release is free, with everything switched on.</strong>
-              Deskbar Pro is on the Microsoft Store. This is how it works.
+              <strong>Nothing is locked.</strong> A copy without Pro shows one line at the bottom
+              of the bar, at most once a day and only after a couple of weeks of real use: "Free
+              for personal use. Using it for work? Deskbar Pro is $18.99 once, with priority
+              support." Not now hides it until tomorrow.
             </p>
           </div>
 
           <div class="cards">
             <div class="card">
-              <h3>Free</h3>
-              <p class="price">$0</p>
+              <h3>Personal use</h3>
+              <p class="price">Free</p>
               <ul>
+                <li>Every feature, with no time limit and no trial to run out.</li>
                 <li>
-                  The exe from
-                  <a href="https://github.com/AppifySheets/Deskbar/releases">GitHub Releases</a>,
-                  for as long as you like.
-                </li>
-                <li>
-                  Today it has every feature. A later release will limit it, and which features
-                  stay free is still being settled.
-                </li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3>15-day trial</h3>
-              <p class="price">Every feature</p>
-              <ul>
-                <li>The Microsoft Store's own free trial, with every Pro feature on.</li>
-                <li>The Store starts and times it, not the app.</li>
-                <li>
-                  If it ends and you have not bought, the Store copy works as the free version.
-                  Nothing you set up is deleted.
+                  From the Microsoft Store, or the exe from
+                  <a href="https://github.com/AppifySheets/Deskbar/releases">GitHub Releases</a>.
+                  Both are the same app.
                 </li>
               </ul>
             </div>
 
             <div class="card card-pro">
-              <h3>Deskbar Pro</h3>
+              <h3>Deskbar Pro, for work</h3>
               <p class="price">$18.99 <small>once</small></p>
               <ul>
                 <li>US$18.99 in the United States. Microsoft sets the price in other countries.</li>
+                <li>Priority support: problem reports from a Pro copy are marked priority.</li>
                 <li>Every 2.x update included.</li>
                 <li>
                   Licensed to you: one person, on any number of your own Windows devices, as far
                   as the Microsoft Store allows for your account.
                 </li>
+              </ul>
+              <a class="button button-primary" href="https://apps.microsoft.com/detail/9PJX26NGFPNF">Get it from the Microsoft Store</a>
+            </div>
+
+            <div class="card">
+              <h3>How to buy it</h3>
+              <ul>
                 <li>
-                  No licence key. The Store's licence on your Microsoft account is what makes the
-                  Store copy Pro.
+                  Pro is an add-on bought inside the Microsoft Store copy: Get Pro opens the
+                  Store's own purchase dialog. No licence key.
+                </li>
+                <li>
+                  Running the exe from GitHub? Install the Store copy and buy it there. Your
+                  workspaces and settings come along, because both copies keep them in
+                  <code>%APPDATA%\Deskbar</code>.
                 </li>
                 <li>Microsoft sells it and handles payment, VAT and sales tax.</li>
               </ul>
-              <a class="button button-primary" href="https://apps.microsoft.com/detail/9PJX26NGFPNF">Get it from the Microsoft Store</a>
             </div>
           </div>
         </div>
