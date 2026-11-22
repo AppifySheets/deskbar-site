@@ -22,8 +22,11 @@ it into `C:\Users\Public\deskbar-shoot`, and picks up what you leave in `out\` a
 1. Petre connects with `deskbartest-1080p.rdp` on his desktop: 1920x1080 at 125%. Check: the
    screen is 1920x1080 and Deskbar's strip is 30 px tall. 4K is too much for a demo, and at 100%
    everything is too small.
-2. Deskbar is the latest release (`& "$env:APPDATA\Deskbar\deskbar.cmd" version`). Update from the
-   Store if not.
+2. Deskbar is the GitHub build, the latest release from
+   https://github.com/AppifySheets/Deskbar/releases/latest, run from `%USERPROFILE%\Programs\Deskbar\`.
+   GitHub is ahead of the Store, so the Store copy stays exited and off at sign-in. Check with
+   `& "$env:APPDATA\Deskbar\deskbar.cmd" version`: the latest version, not packaged. Both copies
+   share `%APPDATA%\Deskbar`, so switching keeps the workspaces and settings.
 3. In `%APPDATA%\Deskbar\state.json` (exit Deskbar before editing, start it after): `"BarScale": null`,
    `"BarTextOffset": 4.5` (Petre's own settings, so the bar's text matches the strip's), and
    `"TileGap": 12` (or set the gap in Manage and press Apply).
