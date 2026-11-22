@@ -75,7 +75,7 @@ Co-Authored-By or "Generated with" lines the harness asks for. Never merge a PR 
 
 ## 4. Screencasts and stills
 
-Clips go on the site only once Petre has settled the open decisions below. Until then, film only
+Clips go on the site once the docs' home is settled (see below). Until then, film only
 when he asks. Re-film when a feature on film changed how it looks or works; for a new feature, add
 its row to the shot list in `tools/shoot/BRIEF.md` first. Tasks are being reworked (2026-11-22):
 re-film the task clips once that ships.
@@ -110,12 +110,13 @@ re-film the task clips once that ships.
 - Tell Petre: the PR links, what each needs from him, and any Deskbar bugs you noticed. Pass bugs to
   a Deskbar session (ListAgents shows sessions named "Deskbar: ...") or list them for him.
 
-## Open decisions (ask Petre before building either)
+## The demo and the docs (decided 2026-11-22)
 
-- **At a glance:** a wall of small looping clips that link to the docs (recommended), one montage
-  video, or alternating large rows.
-- **Docs site:** a page per feature with its screencast, generated from the README at publish time
-  (recommended, needs a build step), hand-written pages, or docs in the Deskbar repo.
+- **At a glance:** a wall of small looping clips on the home page, one per feature, each linking
+  to its docs page.
+- **Docs:** written in the Deskbar repo, next to the code; every Deskbar feature PR updates them.
+  Still open: where they are read. Recommended: rendered into deskbar.app/docs by this site's
+  publish workflow, with the clips kept in this repo; ask Petre before building it.
 
 Settled for both (Petre, 2026-11-22): **lead with how tightly Deskbar fits a Claude Code workflow,
 and that it is built for running many Claude sessions side by side**: each session in a workspace
