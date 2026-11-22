@@ -1,30 +1,56 @@
-# Builds the feature docs pages (site/docs/) from docs/features in Deskbar's latest release.
+# Builds the feature docs pages (site/docs/) from docs/features in a Deskbar release: the
+# latest one, or the tag given in the `tag` input.
 #
 # Used by pages.yml (before the upload) and by both jobs in check.yml (before validating and
 # link-checking). It is a composite action, not a reusable workflow, because each job runs on
 # its own runner and needs the built pages in its own checkout. The calling job must have
 # checked out this repository first.
 #
-# Fails when the latest release has no docs/features, when a clip a page names is missing
-# from site/media, or when the builder's tests fail. Callers let that fail the run.
+# Fails when the release has no docs/features, when a clip a page names is missing from
+# site/media, or when the builder's tests fail. Callers let that fail the run.
 
 name: Build feature docs
-description: Fetch Deskbar's docs/features at its latest release tag and render them into site/docs.
+description: Fetch Deskbar's docs/features at a release tag (the latest by default) and render them into site/docs.
+
+inputs:
+  # The escape hatch for a Deskbar release that breaks the build: a manual run can pin a
+  # tag known to work (e.g. v2.5.95) while the release is fixed. Empty means the latest
+  # GitHub release, which is what every automatic run uses.
+  tag:
+    description: Deskbar tag to build the docs from. Empty means the latest release.
+    required: false
+    default: ""
+  # Whether to run the builder's own tests. check.yml runs them; pages.yml turns them off
+  # with "false", because the tests fetch html-validate through npx (a dependency tree
+  # that is not locked), and the deploy job holds pages:write and id-token:write. The
+  # code that reaches main has already passed the same tests in check.yml.
+  test:
+    description: Run the builder's tests before building ("true" or "false").
+    required: false
+    default: "true"
 
 runs:
   using: composite
   steps:
-    # Which Deskbar release the pages describe: its latest GitHub release tag. The token lets
-    # gh read the public repo without the anonymous rate limit. The tag is assigned before
-    # it is written to the output, because a pipeline's exit status would hide a gh failure.
-    - name: Find Deskbar's latest release tag
+    # Which Deskbar release the pages describe: the `tag` input if one was given, otherwise
+    # the latest GitHub release. The token lets gh read the public repo without the
+    # anonymous rate limit. The tag is assigned before it is written to the output, because
+    # a pipeline's exit status would hide a gh failure. The input reaches the script through
+    # an environment variable, never pasted into it, so a tag cannot inject shell.
+    - name: Find the Deskbar release tag
       id: tag
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
+        PINNED: ${{ inputs.tag }}
       run: |
-        tag=$(gh release view --repo AppifySheets/Deskbar --json tagName -q .tagName)
-        test -n "$tag" || { echo "::error::Could not find Deskbar's latest release"; exit 1; }
+        if [ -n "$PINNED" ]; then
+          tag="$PINNED"
+          echo "Building the docs from the pinned tag $tag"
+        else
+          tag=$(gh release view --repo AppifySheets/Deskbar --json tagName -q .tagName)
+          test -n "$tag" || { echo "::error::Could not find Deskbar's latest release"; exit 1; }
+        fi
         echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
     # Fetch only docs/features at that tag: a shallow, blob-less, sparse clone, so none of
@@ -36,9 +62,9 @@ runs:
       run: |
         git clone --depth 1 --branch "$TAG" --filter=blob:none --sparse https://github.com/AppifySheets/Deskbar deskbar
         git -C deskbar sparse-checkout set docs/features
-        # A release that predates the feature docs would otherwise fail later with a
-        # confusing "no pages" error; say plainly which tag is missing them.
-        test -d deskbar/docs/features || { echo "::error::Deskbar $TAG has no docs/features yet; the feature pages land with Deskbar PR #415"; exit 1; }
+        # A tag without the feature docs would otherwise fail later with a confusing
+        # "no pages" error; say plainly which tag is missing them.
+        test -d deskbar/docs/features || { echo "::error::Deskbar $TAG has no docs/features"; exit 1; }
 
     # Node runs the page builder (tools/build-docs).
     - uses: actions/setup-node@v7
@@ -52,15 +78,17 @@ runs:
       run: npm ci
 
     # The builder's own tests. They run before the build so a broken builder fails here, with
-    # its own message, instead of producing odd pages.
+    # its own message, instead of producing odd pages. Skipped when the caller passes
+    # test: "false" (see the input above).
     - name: Test the docs builder
+      if: inputs.test == 'true'
       shell: bash
       working-directory: tools/build-docs
       run: npm test
 
     # Render the markdown into site/docs/. --media is where the builder looks for the clips
-    # the pages name; a missing clip fails the build. --tag is shown on the pages as the
-    # release they describe.
+    # the pages name; a missing clip fails the build. --tag is the release the pages
+    # describe, used for the links into the Deskbar repo.
     - name: Build the docs pages
       shell: bash
       env:

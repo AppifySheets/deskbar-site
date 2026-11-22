@@ -1,5 +1,5 @@
-# Checks for deskbar.app. Runs on every pull request, and again on main after a merge, so a
-# link that broke between the pull request and the merge still shows up.
+# Checks for deskbar.app. Runs on every pull request, again on main after a merge (so a
+# link that broke between the pull request and the merge still shows up), and once a day.
 #
 # What it guards against:
 #   html  - broken or non-standard markup, missing alt text, bad nesting, invalid
@@ -8,9 +8,15 @@
 #           matching id, or a GitHub URL that moved. Uses lychee (lychee.toml).
 #
 # Nothing here deploys anything, but both jobs first build the feature docs (site/docs/)
-# from the latest Deskbar release, so those pages are validated and link-checked too.
-# pages.yml publishes the site to GitHub Pages after a merge (see docs/hosting.md). These
-# two jobs are the gate a pull request has to pass before it is merged.
+# from the latest Deskbar release (or a tag given to a manual run), so those pages are
+# validated and link-checked too. pages.yml publishes the site to GitHub Pages after a
+# merge and every day (see docs/hosting.md). These two jobs are the gate a pull request
+# has to pass before it is merged.
+#
+# The daily run is for the docs pages: they change with each Deskbar release and reach the
+# live site through pages.yml's daily publish without any pull request here, so a release
+# that breaks them shows up as a red run of this workflow. GitHub turns scheduled runs off
+# after 60 days without activity in the repository; re-enable them from the Actions tab.
 
 name: Check site
 
@@ -20,6 +26,17 @@ on:
     branches: [main]
   # Allows running the checks by hand from the Actions tab, e.g. to re-test external links.
   workflow_dispatch:
+    inputs:
+      # Builds the docs from this Deskbar tag instead of the latest release, e.g. to check
+      # that a known-good tag still passes while a broken release is being fixed.
+      deskbar_tag:
+        description: Deskbar tag to build the docs from (empty means the latest release)
+        required: false
+        default: ""
+  # Daily, at the same odd minute as pages.yml's publish, so a Deskbar release that breaks
+  # the docs pages turns this workflow red on the day it goes live.
+  schedule:
+    - cron: "17 6 * * *"
 
 # Read-only token: the jobs only read the repository and fetch public URLs.
 permissions:
@@ -36,11 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # Get the pull request's files.
+      # Get the files under test: the pull request's, or main's on a push or daily run.
       - uses: actions/checkout@v7
 
-      # Build site/docs/ from Deskbar's latest release (see the action for the steps and why).
+      # Build site/docs/ from Deskbar's latest release, or from the tag a manual run gives
+      # (see the action for the steps and why). The builder's tests run here too.
       - uses: ./.github/actions/build-docs
+        with:
+          tag: ${{ inputs.deskbar_tag }}
 
       # Validate every page in the published folder against .htmlvalidate.json.
       # The version is pinned so a new rule upstream cannot fail an unrelated pull request;
@@ -53,10 +73,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      # Get the files under test: the pull request's, or main's on a push or daily run.
       - uses: actions/checkout@v7
 
-      # Build site/docs/ from Deskbar's latest release (see the action for the steps and why).
+      # Build site/docs/ from Deskbar's latest release, or from the tag a manual run gives
+      # (see the action for the steps and why). The builder's tests run here too.
       - uses: ./.github/actions/build-docs
+        with:
+          tag: ${{ inputs.deskbar_tag }}
 
       # lychee reads lychee.toml from the repository root: it resolves root-relative links
       # against site/, maps /privacy to privacy.html, checks #fragments, skips deskbar.app

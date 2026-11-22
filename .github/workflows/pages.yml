@@ -1,19 +1,23 @@
 # Publishes deskbar.app to GitHub Pages.
 #
 # The pages in site/ are the site, apart from site/docs/, which is built in this workflow.
-# This workflow uploads that folder as the Pages artifact and deploys it. Nothing else in the repository (README, docs,
-# workflows, checker configs) is published, because only site/ goes into the artifact.
+# This workflow uploads that folder as the Pages artifact and deploys it. Nothing else in
+# the repository (README, docs, workflows, checker configs) is published, because only
+# site/ goes into the artifact.
 #
 # When it runs:
 #   - on every push to main, which in practice means every merged pull request (main only
 #     moves through pull requests, and those have already passed check.yml);
-#   - by hand from the Actions tab (Run workflow), to redeploy without a new commit;
+#   - by hand from the Actions tab (Run workflow), to redeploy without a new commit, with
+#     an optional Deskbar tag to build the docs from when the latest release breaks them;
 #   - daily at 06:17 UTC, so a new Deskbar release reaches the feature docs within a day
-#     without a site commit.
+#     without a site commit. GitHub turns scheduled runs off after 60 days without
+#     activity in the repository; re-enable them from the Actions tab.
 #
 # site/docs/ is not in the repository: every run builds it from docs/features in the latest
-# Deskbar release (tools/build-docs). If the fetch or the build fails, the run fails and
-# Pages keeps the last deploy.
+# Deskbar release, or the tag given to a manual run (tools/build-docs). If the fetch or the
+# build fails, the run fails and Pages keeps the last deploy. check.yml runs the same build
+# daily as well, with the builder's tests and the HTML and link checks this job skips.
 #
 # Repository settings this relies on (Settings, Pages):
 #   - Source: GitHub Actions. Without it the deploy step fails with "Pages not enabled".
@@ -25,7 +29,17 @@ name: Publish site
 on:
   push:
     branches: [main]
+  # Run workflow in the Actions tab: redeploys without a new commit.
   workflow_dispatch:
+    inputs:
+      # The escape hatch when a Deskbar release breaks the docs build: publish the docs
+      # from a tag known to work (e.g. v2.5.95) until the release is fixed. Empty means
+      # the latest release, as on every automatic run. The daily run goes back to the
+      # latest release, so pin again or fix the release before the next one.
+      deskbar_tag:
+        description: Deskbar tag to build the docs from (empty means the latest release)
+        required: false
+        default: ""
   schedule:
     # Daily, at an odd minute to stay off the busy top of the hour.
     - cron: "17 6 * * *"
@@ -54,11 +68,21 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Get main's files, the site as merged.
       - uses: actions/checkout@v7
 
-      # Build site/docs/ from Deskbar's latest release (see the action for the steps and why).
+      # Build site/docs/ from Deskbar's latest release, or from the tag a manual run gives
+      # (see the action for the steps and why). test: "false" skips the builder's tests,
+      # which fetch html-validate through npx (an unlocked dependency tree) and so should
+      # not run in a job holding pages:write and id-token:write. check.yml runs them on
+      # every pull request, on main and daily.
       - uses: ./.github/actions/build-docs
+        with:
+          tag: ${{ inputs.deskbar_tag }}
+          test: "false"
 
+      # Reads the repository's Pages settings for the steps below, and fails early if
+      # Pages is not set up for this repository (Source: GitHub Actions).
       - uses: actions/configure-pages@v6
 
       # Packs site/ as the artifact Pages serves. There is no Jekyll step, so the files in
