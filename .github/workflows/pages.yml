@@ -1,7 +1,7 @@
 # Publishes deskbar.app to GitHub Pages.
 #
-# The pages in site/ are the site, apart from site/docs/, which is built in this workflow. This workflow uploads that
-# folder as the Pages artifact and deploys it. Nothing else in the repository (README, docs,
+# The pages in site/ are the site, apart from site/docs/, which is built in this workflow.
+# This workflow uploads that folder as the Pages artifact and deploys it. Nothing else in the repository (README, docs,
 # workflows, checker configs) is published, because only site/ goes into the artifact.
 #
 # When it runs:
@@ -56,54 +56,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # ---- Build the feature docs (site/docs/) from the Deskbar repo ----
-      # Runs before the upload so the artifact contains the built pages. A failed fetch or build
-      # fails the run, and Pages keeps serving the last successful deploy.
-      # Which Deskbar release the pages describe: its latest GitHub release tag. The token lets gh
-      # read the public repo without the anonymous rate limit.
-      - name: Find Deskbar's latest release tag
-        id: tag
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: echo "tag=$(gh release view --repo AppifySheets/Deskbar --json tagName -q .tagName)" >> "$GITHUB_OUTPUT"
+      # Build site/docs/ from Deskbar's latest release (see the action for the steps and why).
+      - uses: ./.github/actions/build-docs
 
-      # Fetch only docs/features at that tag: a shallow, blob-less, sparse clone, so none of the
-      # app's source is downloaded.
-      - name: Fetch Deskbar's feature docs at that tag
-        env:
-          TAG: ${{ steps.tag.outputs.tag }}
-        run: |
-          git clone --depth 1 --branch "$TAG" --filter=blob:none --sparse https://github.com/AppifySheets/Deskbar deskbar
-          git -C deskbar sparse-checkout set docs/features
-          # A release that predates the feature docs would otherwise fail later with a confusing
-          # "no pages" error; say plainly which tag is missing them.
-          test -d deskbar/docs/features || { echo "::error::Deskbar $TAG has no docs/features yet; the feature pages land with Deskbar PR #415"; exit 1; }
-
-      # Node runs the page builder (tools/build-docs). Version matches the html-validate setup.
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-
-      # Install the builder's one dependency (marked) exactly as locked in package-lock.json.
-      - name: Install the docs builder
-        working-directory: tools/build-docs
-        run: npm ci
-
-      # The builder's own tests. They run before the build so a broken builder fails here, with
-      # its own message, instead of producing odd pages.
-      - name: Test the docs builder
-        working-directory: tools/build-docs
-        run: npm test
-
-      # Render the markdown into site/docs/. --media is where the builder looks for the clips the
-      # pages name; a missing clip fails the build. --tag is shown on the pages as the release
-      # they describe.
-      - name: Build the docs pages
-        env:
-          TAG: ${{ steps.tag.outputs.tag }}
-        run: node tools/build-docs/build.mjs --docs deskbar/docs/features --out site/docs --media site/media --tag "$TAG"
-
-      # Reads the repository's Pages settings and fails early if Pages is not set up.
       - uses: actions/configure-pages@v6
 
       # Packs site/ as the artifact Pages serves. There is no Jekyll step, so the files in
