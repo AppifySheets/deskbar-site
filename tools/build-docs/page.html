@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  Shell for every generated docs page (built by tools/build-docs/build.mjs into site/docs/).
+  The head, header and footer follow site/privacy.html. Slots, written in double curly
+  braces and filled by build.mjs: title, description, canonical (the page's own URL), nav
+  (the list of pages) and content (the page). Never write a slot inside this comment: it
+  would be filled too.
+  The CSP differs from the other pages in one way: media-src, so the screencasts can play.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; media-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07070d" />
+    <link rel="canonical" href="{{canonical}}" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/docs.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/img/deskbar-mark-256.png" width="30" height="30" alt="" />
+          Deskbar
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="/docs/">Docs</a>
+          <a href="/#download">Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap docs">
+      {{nav}}
+      <article class="docs-page">
+        {{content}}
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Deskbar is made by AppifySheets, a brand of Petre Chitashvili.
+          <br />&copy; 2026 Petre Chitashvili. All rights reserved.
+        </p>
+        <nav aria-label="Footer">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms and EULA</a>
+          <a href="/refunds">Refunds</a>
+          <a href="https://github.com/AppifySheets/Deskbar">GitHub</a>
+          <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -4,3 +4,5 @@ node_modules/
 
 # Scratch workspace of the subagent-driven-development skill (ledgers, briefs, reports).
 .superpowers/
+site/docs/
+tools/build-docs/node_modules/
