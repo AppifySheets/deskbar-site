@@ -117,10 +117,13 @@ re-film the task clips once that ships.
 - **Docs site:** a page per feature with its screencast, generated from the README at publish time
   (recommended, needs a build step), hand-written pages, or docs in the Deskbar repo.
 
-Settled for both (Petre, 2026-11-22): **lead with how tightly Deskbar fits a Claude Code workflow.**
-It is the strongest reason to use Deskbar, not one feature among many. In the docs that means a
-Claude Code page near the top of the navigation, and on every page where it applies, a line on how
-a session uses the feature (a session's own workspace, `deskbar.cmd` from a session, the row that
+Settled for both (Petre, 2026-11-22): **lead with how tightly Deskbar fits a Claude Code workflow,
+and that it is built for running many Claude sessions side by side**: each session in a workspace
+of its own, the bar showing at a glance which one finished or is waiting, one chord or one click to
+get there, nothing a session opens landing on the workspace you are looking at. It is the strongest
+reason to use Deskbar, not one feature among many. In the docs that means a "Working with many
+Claude sessions" page near the top of the navigation, and on every page where it applies, a line on
+how a session uses the feature (a session's own workspace, `deskbar.cmd` from a session, the row that
 flashes when a session finishes or waits, `task add` from a session, quick find over session tabs).
 The `claude-flash` clip is among the first a visitor sees. Every claim still comes from the README:
 its "Claude Code" section and "Agentic AI multiplies the contexts, it does not replace them".
