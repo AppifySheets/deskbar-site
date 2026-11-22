@@ -73,7 +73,7 @@
           <a class="optional" href="#features">Features</a>
           <a class="optional" href="#pricing">Pricing</a>
           <a class="optional" href="https://github.com/AppifySheets/Deskbar">Source</a>
-          <a class="optional" href="/docs/">Docs</a>
+          <a href="/docs/">Docs</a>
           <a href="#download">Download</a>
         </nav>
       </div>
@@ -172,65 +172,84 @@
           autoplaying, so they need no click; pause and full screen live on the docs pages.
           The first tile is larger (tile-large). The no-autoplay rule of html-validate is
           switched off for each video only, with the comment right before it.
+
+          Stopping them needs no script (the page has none). Each tile also holds its poster as
+          a still image (img.still, hidden by default). The "Stop the clips" checkbox in the
+          header swaps every video for its still through CSS (.wall:has(#stop-clips:checked)
+          in home.css), and a visitor whose system asks for reduced motion gets the stills
+          from the start. That is the pause control WCAG 2.2.2 asks for moving content.
         -->
         <section class="wall" id="see-it" aria-labelledby="wall-title">
           <div class="section-head">
             <span class="kicker">See it work</span>
             <h2 id="wall-title">Every feature, in a few seconds each.</h2>
             <p>Real recordings of Deskbar on a demo Windows account. Click a tile for how it works.</p>
+            <label class="stop-clips">
+              <input type="checkbox" id="stop-clips" />
+              Stop the clips
+            </label>
           </div>
           <div class="wall-grid">
             <a class="tile tile-large" href="/docs/claude-sessions">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/claude-many.mp4" poster="/media/claude-many.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/claude-many.jpg" alt="" width="960" height="540" />
               <h3>Many Claude sessions, one bar</h3>
               <p>Run several Claude Code sessions, each in its own workspace. The bar shows which one finished or needs you, and one click takes you there.</p>
             </a>
             <a class="tile" href="/docs/switching">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/switch.mp4" poster="/media/switch.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/switch.jpg" alt="" width="960" height="540" />
               <h3>Switch the way Alt+Tab switches</h3>
               <p>Hold Win+Ctrl and tap Tab to walk your workspaces, most recent first.</p>
             </a>
             <a class="tile" href="/docs/quick-find">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/quick-find.mp4" poster="/media/quick-find.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/quick-find.jpg" alt="" width="960" height="540" />
               <h3>Find anything open</h3>
               <p>Win+Alt+Space, a few letters, Enter. It lands on the tab, in the workspace it lives in.</p>
             </a>
             <a class="tile" href="/docs/tiling">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/tiling-drop.mp4" poster="/media/tiling-drop.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/tiling-drop.jpg" alt="" width="960" height="540" />
               <h3>Tile a workspace</h3>
               <p>Drop a window on another's edge to put it beside it, or on its middle to swap them.</p>
             </a>
             <a class="tile" href="/docs/strips">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/strip-and-pin.mp4" poster="/media/strip-and-pin.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/strip-and-pin.jpg" alt="" width="960" height="540" />
               <h3>Your windows along the top</h3>
               <p>Each screen lists its windows in a strip. Pinned workspaces sit at its end: one click in, one click back.</p>
             </a>
             <a class="tile" href="/docs/scripts">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/session-start.mp4" poster="/media/session-start.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/session-start.jpg" alt="" width="960" height="540" />
               <h3>A session opens its own windows</h3>
               <p><code>deskbar.cmd start Research -- notepad</code> puts the window in Research while you stay where you are.</p>
             </a>
             <a class="tile" href="/docs/tasks">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/task-due.mp4" poster="/media/task-due.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/task-due.jpg" alt="" width="960" height="540" />
               <h3>Park a workspace</h3>
               <p>The stopwatch parks the workspace you're on. When the time is up, its row blinks.</p>
             </a>
             <a class="tile" href="/docs/the-bar">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/hover-card.mp4" poster="/media/hover-card.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/hover-card.jpg" alt="" width="960" height="540" />
               <h3>See what is waiting</h3>
               <p>Rest on an icon to see the window's title, its workspace and a picture of it.</p>
             </a>
             <a class="tile" href="/docs/arranging">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/arrange.mp4" poster="/media/arrange.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/arrange.jpg" alt="" width="960" height="540" />
               <h3>Arrange the bar</h3>
               <p>Drag rows to reorder them, or drop one on another to make a group.</p>
             </a>
