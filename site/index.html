@@ -234,10 +234,10 @@
             </a>
             <a class="tile" href="/docs/tasks">
               <!-- [html-validate-disable-next no-autoplay] -->
-              <video src="/media/task-due.mp4" poster="/media/task-due.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
-              <img class="still" src="/media/task-due.jpg" alt="" width="960" height="540" />
-              <h3>Park a workspace</h3>
-              <p>The stopwatch parks the workspace you're on. When the time is up, its row blinks.</p>
+              <video src="/media/tasks-bar.mp4" poster="/media/tasks-bar.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/tasks-bar.jpg" alt="" width="960" height="540" />
+              <h3>Tasks on the bar</h3>
+              <p>Notes per workspace, sorted by important and urgent. Click one to go there.</p>
             </a>
             <a class="tile" href="/docs/the-bar">
               <!-- [html-validate-disable-next no-autoplay] -->
@@ -342,17 +342,18 @@
                 The layout you make is kept, across restarts too.
               </p>
             </li>
+            <!-- Tasks: README "Tasks" (v2.5.189 replaced the stopwatch with this list). -->
             <li class="row row-wide rail-amber">
-              <h3>Park a workspace, and get called back to it</h3>
+              <h3>A task list at the bottom of the bar</h3>
               <p>
-                The stopwatch at the bottom of the bar parks the workspace you are on for 1, 5,
-                10 or 30 minutes. Its row shows a small pie that empties as the time runs out,
-                and blinks when the task comes due. If the bar is out of sight, a small card in
-                the corner of the screen tells you, without taking the focus. Come back to the
-                workspace for two seconds and the timer ends; the task stays open until you mark
-                it done. Scripts and coding agents can set one too:
+                Type a note into the box at the bottom of the bar and press Enter, and it lands
+                on the workspace you are on. Click a line to go to its workspace. Two toggles on
+                each line mark a task important or urgent, which sorts the list into Covey's four
+                quadrants, and lines drag up or down. Tick a note to close it, with six seconds
+                to undo. The tasks window holds every task, with comments and a Matrix view. A
+                script or a Claude Code session can add one to its own workspace:
               </p>
-              <pre><code>&amp; "$env:APPDATA\Deskbar\deskbar.cmd" task add "Wait for CI" --in 10m</code></pre>
+              <pre><code>&amp; "$env:APPDATA\Deskbar\deskbar.cmd" task add "Wait for CI"</code></pre>
             </li>
             <li class="row rail-violet">
               <h3>See where your time went</h3>

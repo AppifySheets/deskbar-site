@@ -71,13 +71,20 @@ name, with what each must show:
 | `strip-and-pin` | click the pinned Messengers item on the strip to go in, the same item to come back |
 | `switch` | hold Win+Ctrl, tap Tab three times, release; the switcher walks and lands |
 | `quick-find` | Win+Alt+Space, type a few letters, Enter lands on the tab in its workspace |
-| `task-due-start`, `task-due` | park a workspace from the stopwatch; when due its row blinks (cut the wait) |
-| `claude-many` | three Claude sessions in Website, Research and Invoices; two finish while you're on Website; a click lands on one |
-| `session-start` | from Website's terminal run `deskbar.cmd start Research -- notepad`; Notepad opens in Research, you stay on Website |
+| `tasks-bar` | the bar's task list with five or so notes on different workspaces: add one in the box, flag one important and one urgent with the line's toggles (each jumps to its quadrant), drag one up, tick one and let it leave |
+| `tasks-window` | open the tasks window from "+N more"; a status chip, then Workspace: one workspace; click a line and land on its workspace. Have a goal in place so the toolbar shows Goal: all |
+| `tasks-matrix` | in the tasks window switch to Matrix; drag a line from IV into I (it takes both flags), then one within a cell |
+| `claude-many` | three Claude Code sessions, each a VS Code window with the Claude panel or terminal visible, in Website, Research and Invoices. Start a short prompt in Research and Invoices, go to Website and start one there. While you work in Website, the other two finish: their rows flash orange and their task lines show on the bar. Click Research's row and land in its session with the reply visible |
+| `session-start` | Website's VS Code with its terminal big enough to read, beside the bar. Type and run `& "$env:APPDATA\Deskbar\deskbar.cmd" start Research -- notepad`; Notepad's icon appears in Research's row while you stay on Website; then click it and land there |
+
+Framing for every clip: the action and the bar must both be in a 1320x742 region of the screen (the site
+crops to that and scales it to 960x540). Put the window that matters right next to the bar, sized to that
+region, and keep the pointer inside it. A clip whose subject is a small window with empty space around it
+reads as nothing on a phone.
 | `hover-card` | rest the pointer on an icon in another workspace's row; the card shows |
 | `arrange` | open Arrange workspaces, drag Music onto Research, name the group "Reading", Done, then put things back |
 
-Stills: `bar` (floating, by hwnd), `bar-docked`, `tiled-screen`, `stopwatch-menu`, `quick-find`
+Stills: `bar` (floating, by hwnd), `bar-docked`, `tiled-screen`, `tasks-window`, `quick-find`
 (window only), `manage-time` (crop to the table).
 
 Clips are 10 to 20 seconds. Start recording a second before the first action, stop a second after.
