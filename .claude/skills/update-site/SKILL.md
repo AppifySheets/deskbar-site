@@ -77,7 +77,6 @@ Co-Authored-By or "Generated with" lines the harness asks for. Never merge a PR 
 
 The clips are on the home page's wall (see below). Re-film when a feature on film changed how it
 looks or works; for a new feature, add its row to the shot list in `tools/shoot/BRIEF.md` first.
-Pending: re-film after the see-through bar (Deskbar #414) and the tasks rework ship.
 
 1. Copy `tools/shoot/*` to `C:\Users\Public\deskbar-shoot` (both accounts can read it).
 2. Petre connects to the `deskbartest` account with `deskbartest-1080p.rdp` on his desktop (1920x1080
@@ -98,7 +97,7 @@ Pending: re-film after the see-through bar (Deskbar #414) and the tasks rework s
    crop around the action (1080p source), so the UI stays readable. When the action spans more, take
    a larger region, up to about 1320x742, and scale it down to 960x540 with lanczos. Tiling is the
    whole screen at 1440 wide. Trims and hard cuts only, no speed changes. CRF 23, up to 26 to keep
-   `site/media/` under 3 MB:
+   `site/media/` under 3 MB in total:
    ```bash
    ffmpeg -ss <offset> -t <dur> -i raw/<clip>.mkv -an \
      -vf "crop=<w>:<h>:<x>:<y>,scale=960:540:flags=lanczos" -c:v libx264 \
@@ -125,10 +124,12 @@ Pending: re-film after the see-through bar (Deskbar #414) and the tasks rework s
   (`npm ci` and `npm test` inside it). Both workflows run it through
   `.github/actions/build-docs`, from Deskbar's latest release tag, so the docs show what shipped.
   The publish workflow also runs daily at 06:17 UTC to pick up a new release.
-- **Finding clips to re-film:** Deskbar feature PRs name any clip to re-film in their body, as a
-  line starting "re-film:". Read the bodies of Deskbar PRs merged since the last sync
+- **Finding clips to re-film:** by a rule in the Deskbar project's Claude memory (2026-11-22), every
+  feature PR names any clip to re-film in its body, e.g. "re-film: tiling-drop". It is not a PR
+  template, so some PRs will lack it. Read the bodies of Deskbar PRs merged since the last sync
   (`gh pr list -R AppifySheets/Deskbar --state merged --search "merged:>=<date>" --json number,title,body`)
-  and collect those lines. Also re-film any feature whose look changed even when no PR says so.
+  and collect those lines. Also judge from what each merged feature PR changed on screen, and
+  re-film any feature whose look changed even when no PR says so.
 - **Adding a tile:** film the clip and put `<stem>.mp4` and `<stem>.jpg` in `site/media/`; add an
   `a.tile` to the wall in `site/index.html`, copying a neighbour's markup; then set `clip: <stem>`
   in the front matter of the docs page in the Deskbar repo. The docs build fails on a `clip:` with
