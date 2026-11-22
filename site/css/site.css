@@ -236,7 +236,8 @@ main {
   color: var(--text);
 }
 
-/* On a phone only the download link stays in the header; the footer carries the rest. */
+/* On a phone only Docs and the download link stay in the header; the footer carries the
+   rest. */
 @media (max-width: 620px) {
   .site-nav .optional {
     display: none;
