@@ -210,42 +210,42 @@
               </p>
             </li>
             <!--
-              Added 2026-11-19 for Deskbar 2.5: the strips along the top of each screen, tiling,
-              tasks with timers, and time spent per workspace. Each is worded from the Deskbar
-              README sections "Reading it", "The workspace row menu", "Tasks" and "Manage".
+              Added 2026-11-19 to 2026-11-22 for Deskbar 2.5: everything that shipped since the
+              site launched on 2026-10-22 and is worth a row (quick find, the strips and pinned
+              workspaces, tiling, tasks, time spent, arranging, Claude Code). Each row is worded
+              from the Deskbar README section named in the comment above it.
               Tiling is not labelled Pro: the README still says "(Deskbar Pro)", but tiling is
               free in every copy for now (Deskbar commit e150c49), and the pricing section
               below already says every feature is on today.
             -->
+            <!-- Quick find: README section "Quick find". -->
+            <li class="row rail-blue">
+              <h3>Find anything open, on any desktop</h3>
+              <p>
+                Win+Alt+Space opens a search over every window, every browser tab and every VS
+                Code tab on every workspace. Type a few letters in any order, and the results sit
+                under the workspace they are in. Enter takes you straight there, to the tab and
+                not just its window.
+              </p>
+            </li>
+            <!-- The strips and pinned workspaces: README "Reading it". -->
             <li class="row rail-cyan">
               <h3>Your windows along the top of each screen</h3>
               <p>
                 A thin strip across the top of every screen lists that screen's windows in the
-                workspace you are in, with their titles. Maximized windows stop below it. If you
-                would rather keep the list on the bar, the Window list menu moves it into the
-                workspace's row or under the rows.
+                workspace you are in, with their titles. Pin a workspace you keep jumping into
+                and it gets an item at the end of every strip and a button on the taskbar: one
+                click takes you in, the next takes you back.
               </p>
             </li>
+            <!-- Tiling: README "The workspace row menu", Tile windows. -->
             <li class="row rail-rose">
               <h3>Tile a workspace with one button</h3>
               <p>
-                The tile button at the top of the bar lays the workspace's windows out in a grid
-                on each screen while you are on it. Drag the line between two tiles to resize
-                them, and Even out tiles puts the sizes back. The gap between tiles is set in
-                Manage.
-              </p>
-            </li>
-            <!--
-              Until tiling, this row said Deskbar "never changes a window's size or position on
-              screen". Tiling does, when you ask it to, so the claim is narrowed to untiled
-              workspaces.
-            -->
-            <li class="row rail-blue">
-              <h3>It remembers where windows belong</h3>
-              <p>
-                Move a window to a workspace by hand and that is where the app goes next time.
-                Workspaces survive reboots. Deskbar never launches anything, and unless you tile a
-                workspace it leaves every window's size and position alone.
+                The tile button at the top of the bar lays the workspace's windows out on each
+                screen. Drop a tile on the edge of another to put it above, below or beside it,
+                or on its middle to swap the two. Drag the line between tiles to resize them.
+                The layout you make is kept, across restarts too.
               </p>
             </li>
             <li class="row row-wide rail-amber">
@@ -273,6 +273,38 @@
               <p>
                 Rest on an icon and a card shows the window's title, its app and workspace,
                 and for a window on another desktop, a picture of it at a quarter size.
+              </p>
+            </li>
+            <!--
+              Until tiling, this row said Deskbar "never changes a window's size or position on
+              screen". Tiling does, when you ask it to, so the claim is narrowed to untiled
+              workspaces.
+            -->
+            <li class="row rail-blue">
+              <h3>It remembers where windows belong</h3>
+              <p>
+                Move a window to a workspace by hand and that is where the app goes next time.
+                Workspaces survive reboots. Deskbar never launches anything on its own, and unless
+                you tile a workspace it leaves every window's size and position alone.
+              </p>
+            </li>
+            <!-- Arranging and folding: README "Arranging the bar" and "Fold row". -->
+            <li class="row rail-amber">
+              <h3>Arrange the bar by dragging</h3>
+              <p>
+                Turn on Arrange workspaces and drag rows to reorder them, or drop one onto another
+                to make a group. Fold a workspace you are not working in down to its name and a
+                window count; the amber dot still shows when something there wants you.
+              </p>
+            </li>
+            <!-- Claude Code: README "Claude Code" under "Driving it from scripts". -->
+            <li class="row rail-rose">
+              <h3>Claude Code sessions call you back</h3>
+              <p>
+                Deskbar teaches Claude Code to open its links and windows in the session's own
+                workspace, not the one you are looking at. When a session finishes or waits for
+                you while you are elsewhere, its workspace's name and rail flash orange on the
+                bar until you go there.
               </p>
             </li>
             <li class="row rail-teal">
