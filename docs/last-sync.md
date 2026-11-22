@@ -11,5 +11,11 @@ time per workspace, arranging rows, Claude Code ([deskbar-site #7](https://githu
 free for personal use and Deskbar Pro for work, Report a problem in the privacy page
 ([deskbar-site #8](https://github.com/AppifySheets/deskbar-site/pull/8)).
 
-Not yet on the site: the screencasts (filmed, waiting for the tasks rework and the
-at-a-glance and docs decisions in the skill's "Open decisions").
+Clips and docs (deskbar-site #10, not yet merged): the nine clips were filmed on Deskbar commit
+`e8d79e6808` (2.5.110). The docs pages come from
+[Deskbar #415](https://github.com/AppifySheets/Deskbar/pull/415) (head f809a92, not yet merged).
+The site's copy is still covered up to a3137645 above.
+
+Pending: merge and release Deskbar #414 and #415, then re-run the checks on
+[deskbar-site #10](https://github.com/AppifySheets/deskbar-site/pull/10). Re-film after the
+see-through bar (#414) and the tasks rework ship.

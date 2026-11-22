@@ -75,10 +75,9 @@ Co-Authored-By or "Generated with" lines the harness asks for. Never merge a PR 
 
 ## 4. Screencasts and stills
 
-Clips go on the site once the docs' home is settled (see below). Until then, film only
-when he asks. Re-film when a feature on film changed how it looks or works; for a new feature, add
-its row to the shot list in `tools/shoot/BRIEF.md` first. Tasks are being reworked (2026-11-22):
-re-film the task clips once that ships.
+The clips are on the home page's wall (see below). Re-film when a feature on film changed how it
+looks or works; for a new feature, add its row to the shot list in `tools/shoot/BRIEF.md` first.
+Pending: re-film after the see-through bar (Deskbar #414) and the tasks rework ship.
 
 1. Copy `tools/shoot/*` to `C:\Users\Public\deskbar-shoot` (both accounts can read it).
 2. Petre connects to the `deskbartest` account with `deskbartest-1080p.rdp` on his desktop (1920x1080
@@ -95,10 +94,14 @@ re-film the task clips once that ships.
    Then open full-size crops of anything that lists things (quick find lists every open window and
    tab, a menu, a Manage tab) and read every line.
 6. Cut the site versions from the lossless raws, not from the mp4s. `python -I tools/shoot/find-offset.py
-   <clips>` finds each clip's start in its raw when the notes don't give it. Full-screen clips at
-   1440 wide; close-ups cropped to the action at 960x540 (1080p source) so the UI stays readable:
+   <clips>` finds each clip's start in its raw when the notes don't give it. Close-ups are a 960x540
+   crop around the action (1080p source), so the UI stays readable. When the action spans more, take
+   a larger region, up to about 1320x742, and scale it down to 960x540 with lanczos. Tiling is the
+   whole screen at 1440 wide. Trims and hard cuts only, no speed changes. CRF 23, up to 26 to keep
+   `site/media/` under 3 MB:
    ```bash
-   ffmpeg -ss <offset> -t <dur> -i raw/<clip>.mkv -an -vf "crop=960:540:<x>:<y>" -c:v libx264 \
+   ffmpeg -ss <offset> -t <dur> -i raw/<clip>.mkv -an \
+     -vf "crop=<w>:<h>:<x>:<y>,scale=960:540:flags=lanczos" -c:v libx264 \
      -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart site/media/<clip>.mp4
    ```
    Posters as JPEG (`-frames:v 1 -q:v 4`), from a frame that shows the feature.
@@ -110,13 +113,26 @@ re-film the task clips once that ships.
 - Tell Petre: the PR links, what each needs from him, and any Deskbar bugs you noticed. Pass bugs to
   a Deskbar session (ListAgents shows sessions named "Deskbar: ...") or list them for him.
 
-## The demo and the docs (decided 2026-11-22)
+## The demo and the docs (decided 2026-11-22, built)
 
-- **At a glance:** a wall of small looping clips on the home page, one per feature, each linking
-  to its docs page.
-- **Docs:** written in the Deskbar repo, next to the code; every Deskbar feature PR updates them.
-  Still open: where they are read. Recommended: rendered into deskbar.app/docs by this site's
-  publish workflow, with the clips kept in this repo; ask Petre before building it.
+- **Wall:** the home page's `<section class="wall" id="see-it">` holds nine looping clips, one
+  `a.tile` each (the first is `tile-large`), each linking to its docs page. The files are
+  `site/media/<stem>.mp4` and `.jpg`: claude-many, switch, quick-find, tiling-drop, strip-and-pin,
+  session-start, task-due, hover-card, arrange.
+- **Docs:** written in the Deskbar repo as `docs/features/*.md`, next to the code. `tools/build-docs/`
+  renders them into `site/docs/`, which is generated and never committed:
+  `node tools/build-docs/build.mjs --docs <deskbar>/docs/features --out site/docs --media site/media --tag <tag>`
+  (`npm ci` and `npm test` inside it). Both workflows run it through
+  `.github/actions/build-docs`, from Deskbar's latest release tag, so the docs show what shipped.
+  The publish workflow also runs daily at 06:17 UTC to pick up a new release.
+- **Finding clips to re-film:** Deskbar feature PRs name any clip to re-film in their body, as a
+  line starting "re-film:". Read the bodies of Deskbar PRs merged since the last sync
+  (`gh pr list -R AppifySheets/Deskbar --state merged --search "merged:>=<date>" --json number,title,body`)
+  and collect those lines. Also re-film any feature whose look changed even when no PR says so.
+- **Adding a tile:** film the clip and put `<stem>.mp4` and `<stem>.jpg` in `site/media/`; add an
+  `a.tile` to the wall in `site/index.html`, copying a neighbour's markup; then set `clip: <stem>`
+  in the front matter of the docs page in the Deskbar repo. The docs build fails on a `clip:` with
+  no file in `site/media/`, so a missing or misnamed clip is caught before publish.
 
 Settled for both (Petre, 2026-11-22): **lead with how tightly Deskbar fits a Claude Code workflow,
 and that it is built for running many Claude sessions side by side**: each session in a workspace
@@ -126,7 +142,7 @@ reason to use Deskbar, not one feature among many. In the docs that means a "Wor
 Claude sessions" page near the top of the navigation, and on every page where it applies, a line on
 how a session uses the feature (a session's own workspace, `deskbar.cmd` from a session, the row that
 flashes when a session finishes or waits, `task add` from a session, quick find over session tabs).
-The `claude-flash` clip is among the first a visitor sees. This is how Petre himself works, many
+The `claude-many` clip is among the first a visitor sees. This is how Petre himself works, many
 sessions at once all day, so the docs can say it in his voice, as the home page's quote does; ask
 him for the wording and any numbers rather than inventing them. Every claim still comes from the README:
 its "Claude Code" section and "Agentic AI multiplies the contexts, it does not replace them".

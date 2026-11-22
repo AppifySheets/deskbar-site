@@ -43,7 +43,10 @@ it into `C:\Users\Public\deskbar-shoot`, and picks up what you leave in `out\` a
    - `Music`: Explorer on Music. Park your own terminal here, minimised.
    - `Messengers`: Edge on Wikipedia "Instant messaging", then `pin-workspace Messengers`.
    Give each workspace its own colour.
-8. Take `still.ps1 -Name setup-check -Screen` and message the site session. **Wait for its go.**
+8. Before each clip, visit every demo workspace for a few seconds so no row has faded. Turn
+   Windows notifications off for the shoot and back on after. Answer Deskbar's update prompts
+   "Not now" during a shoot.
+9. Take `still.ps1 -Name setup-check -Screen` and message the site session. **Wait for its go.**
 
 ## Scripts (in C:\Users\Public\deskbar-shoot; run with `powershell -ExecutionPolicy Bypass -File`)
 
@@ -68,8 +71,11 @@ name, with what each must show:
 | `strip-and-pin` | click the pinned Messengers item on the strip to go in, the same item to come back |
 | `switch` | hold Win+Ctrl, tap Tab three times, release; the switcher walks and lands |
 | `quick-find` | Win+Alt+Space, type a few letters, Enter lands on the tab in its workspace |
-| `task-timer-start`, `task-timer-due` | park a workspace from the stopwatch; when due its row blinks (cut the wait) |
-| `claude-flash` | a Claude Code session in Research finishes while you're on Website; Research flashes |
+| `task-due-start`, `task-due` | park a workspace from the stopwatch; when due its row blinks (cut the wait) |
+| `claude-many` | three Claude sessions in Website, Research and Invoices; two finish while you're on Website; a click lands on one |
+| `session-start` | from Website's terminal run `deskbar.cmd start Research -- notepad`; Notepad opens in Research, you stay on Website |
+| `hover-card` | rest the pointer on an icon in another workspace's row; the card shows |
+| `arrange` | open Arrange workspaces, drag Music onto Research, name the group "Reading", Done, then put things back |
 
 Stills: `bar` (floating, by hwnd), `bar-docked`, `tiled-screen`, `stopwatch-menu`, `quick-find`
 (window only), `manage-time` (crop to the table).
