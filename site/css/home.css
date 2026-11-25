@@ -14,6 +14,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "hero shot"
+    "claude claude"
     "wall wall"
     "features features";
   column-gap: 72px;
@@ -59,6 +60,45 @@
 .features {
   grid-area: features;
   padding-top: 120px;
+}
+
+/* The Claude Code workflow, right under the hero (added 2026-11-25). */
+.claude {
+  grid-area: claude;
+  padding-top: 120px;
+}
+
+/* The heading between the workflow's two lists. */
+.subhead {
+  margin: 56px 0 20px;
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+/* The life of one task: the same rows as the features, numbered in order with a small
+   counter before each caption, so the list reads as steps. */
+.rows-flow {
+  counter-reset: flow;
+}
+
+.rows-flow .row {
+  counter-increment: flow;
+}
+
+.rows-flow .row h3::before {
+  content: counter(flow);
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  border-radius: 7px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font: 600 0.8rem/1 var(--font);
+  vertical-align: 2px;
 }
 
 /* ---- the wall of clips ----------------------------------------------------------------- */
@@ -244,6 +284,7 @@
     grid-template-areas:
       "hero"
       "shot"
+      "claude"
       "wall"
       "features";
     padding-top: 56px;
@@ -255,6 +296,7 @@
   }
 
   .features,
+  .claude,
   .wall {
     padding-top: 96px;
   }
@@ -303,6 +345,15 @@
   color: var(--muted);
   max-width: 36em;
   margin-bottom: 34px;
+}
+
+/* The hero's second paragraph (the desktops under the sessions) sits closer to the first. */
+.lede:has(+ .lede-second) {
+  margin-bottom: 14px;
+}
+
+.lede-second {
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
 }
 
 .lede strong {

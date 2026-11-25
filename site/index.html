@@ -28,10 +28,10 @@
       content="default-src 'none'; img-src 'self'; media-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Deskbar: the taskbar for your virtual desktops</title>
+    <title>Deskbar: every Claude Code session on one bar</title>
     <meta
       name="description"
-      content="Deskbar names Windows 11's own virtual desktops and adds a floating bar that shows every desktop's windows at once. Switch with Win+Ctrl+Tab."
+      content="Run many Claude Code sessions side by side on Windows 11. Each one works in a workspace of its own and asks you through a task on the bar. One click takes you to it."
     />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07070d" />
@@ -45,10 +45,10 @@
     <!-- Link previews (Slack, Teams, X, LinkedIn and the like). og.png is 1200 by 630. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Deskbar" />
-    <meta property="og:title" content="Deskbar: the taskbar for your virtual desktops" />
+    <meta property="og:title" content="Deskbar: every Claude Code session on one bar" />
     <meta
       property="og:description"
-      content="Name Windows' own virtual desktops and see every desktop's windows at once, on one floating bar."
+      content="Hand tasks to Claude Code from the bar. Each session works in its own workspace, and the bar shows which one finished or is waiting on you."
     />
     <meta property="og:url" content="https://deskbar.app/" />
     <meta property="og:image" content="https://deskbar.app/img/og.png" />
@@ -70,6 +70,8 @@
           Deskbar
         </a>
         <nav class="site-nav" aria-label="Main">
+          <a class="optional" href="#claude">Claude Code</a>
+          <a class="optional" href="#work">For work</a>
           <a class="optional" href="#features">Features</a>
           <a class="optional" href="#pricing">Pricing</a>
           <a class="optional" href="https://github.com/AppifySheets/Deskbar">Source</a>
@@ -87,15 +89,27 @@
       -->
       <div class="wrap stage">
         <section class="hero" aria-labelledby="hero-title">
-          <p class="eyebrow">Deskbar for Windows 11</p>
+          <!--
+            The hero leads with Claude Code (Petre, 2026-11-25: "emphasize claude workflow").
+            Running many sessions side by side is the strongest reason to use Deskbar, so it
+            comes first; the virtual-desktop taskbar it is built on follows in the second
+            paragraph. Every claim is from the README's "Tasks" and "Claude Code" sections.
+          -->
+          <p class="eyebrow">Deskbar for Windows 11 and Claude Code</p>
           <h1 id="hero-title">
-            The taskbar for your
-            <span class="glow">virtual desktops.</span>
+            Every Claude session,
+            <span class="glow">on one bar.</span>
           </h1>
           <p class="lede">
-            Deskbar names Windows' own virtual desktops, colours them, and adds a floating bar
-            that shows <strong>every desktop's windows at once</strong>. Click an icon to jump
-            to that window from anywhere. Hold <strong>Win+Ctrl</strong> and tap
+            Hand a task to Claude Code from the bar. Each session works in
+            <strong>a workspace of its own</strong>, keeps its task up to date, and asks you
+            through it when the next move is yours. The bar shows which session is working,
+            which finished and <strong>which is waiting on you</strong>, and one double-click
+            takes you there.
+          </p>
+          <p class="lede lede-second">
+            Underneath is a taskbar for Windows' own virtual desktops: every desktop's windows
+            at once, named and coloured. Hold <strong>Win+Ctrl</strong> and tap
             <strong>Tab</strong> to switch.
           </p>
           <!--
@@ -111,7 +125,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" /></svg>
               Free download
             </a>
-            <a class="button" href="#features">See what it does</a>
+            <a class="button" href="#claude">See how it works</a>
           </div>
           <!-- The sentence after the first is the app's own reminder line, word for word. -->
           <p class="fineprint">
@@ -166,6 +180,107 @@
         </figure>
 
         <!--
+          The Claude Code workflow, right under the hero (added 2026-11-25). The first list is
+          the life of one task, numbered through .rows-flow in home.css; the second is what
+          keeps many sessions from falling out of sight. Worded from the README's "Tasks" and
+          "Claude Code" sections; every feature here was in a release by v2.6.18 (the manager
+          in v2.6.14, linking duplicates in v2.6.18). Keep both lists in full lines of three.
+        -->
+        <section class="claude" id="claude" aria-labelledby="claude-title">
+          <div class="section-head">
+            <span class="kicker">With Claude Code</span>
+            <h2 id="claude-title">Hand it over. Get called back.</h2>
+            <p>
+              Deskbar is built for running many Claude Code sessions at once. Every session
+              keeps a task on the bar, and that task is how you and the session talk: what it is
+              doing, what it needs from you, and what it has finished. The
+              <a href="/docs/claude-sessions">Claude Code sessions</a> page has the details.
+            </p>
+          </div>
+
+          <ol class="rows rows-flow">
+            <li class="row row-current rail-rose">
+              <h3>Hand a task to Claude</h3>
+              <p>
+                Type a note into the box on the bar and pick Start Claude on this. A background
+                Claude Code session starts in the task's folder, with the task as its first
+                message, and opens a window. A session you start yourself, in VS Code or a
+                terminal, joins a task or makes its own.
+              </p>
+            </li>
+            <li class="row rail-violet">
+              <h3>It works in a workspace of its own</h3>
+              <p>
+                Deskbar teaches every Claude Code session on the machine to open its links,
+                programs and windows in its own workspace. Nothing it opens lands on the
+                workspace you are looking at.
+              </p>
+            </li>
+            <li class="row rail-teal">
+              <h3>You see where each one stands</h3>
+              <p>
+                Each session keeps a short status line on its task. Tasks with a live session
+                sit together under Claude working, and a pull request a session opens shows up
+                on its task by itself.
+              </p>
+            </li>
+            <li class="row rail-amber">
+              <h3>It asks you through the task</h3>
+              <p>
+                When the next move is yours, the task turns orange and moves to Waiting on you
+                with the question. The pull request or page to open is a link right there. A
+                session that finishes or waits while you are elsewhere makes its workspace's
+                name flash orange on the bar.
+              </p>
+            </li>
+            <li class="row rail-blue">
+              <h3>One double-click to get there</h3>
+              <p>
+                Double-click a task to land on its workspace with the session's window in front.
+                A window that was closed opens again, attached to the session, and a session
+                that had ended is resumed first.
+              </p>
+            </li>
+            <li class="row rail-cyan">
+              <h3>It marks it done, you close it</h3>
+              <p>
+                A finished task gets a green tick, and only you close a task. Once a done task's
+                background session has sat idle for a minute, Deskbar stops it and keeps the
+                conversation, so a double-click brings it back.
+              </p>
+            </li>
+          </ol>
+
+          <h3 class="subhead">With many sessions, nothing falls out of sight</h3>
+          <ul class="rows">
+            <li class="row rail-violet">
+              <h3>Sessions come back after a restart</h3>
+              <p>
+                When an open task's session is gone after a reboot, a crash or a closed VS Code
+                window, Deskbar resumes it in the background and says so in the task's thread.
+                One cut off mid-turn is told to carry on.
+              </p>
+            </li>
+            <li class="row rail-amber">
+              <h3>A stalled session comes back to you</h3>
+              <p>
+                A Claude task no session has worked on for 15 minutes is handed back to you with
+                Claude's last status line. A session that stopped at "ready to merge" without
+                asking is not left out of sight.
+              </p>
+            </li>
+            <li class="row rail-rose">
+              <h3>A manager for the whole board</h3>
+              <p>
+                The Manager button starts one background Claude session a day that reads every
+                open task, nudges sessions that stopped and lists what waits on you. It acts only
+                through task commands, and it cannot close, delete or finish a task.
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <!--
           The wall: nine short recordings of Deskbar on a demo Windows account, one tile each.
           Each tile is a link to that feature's page under /docs/, so the tile holds only
           non-interactive content (a video with no controls). The clips are muted, looping and
@@ -197,6 +312,20 @@
               <h3>Many Claude sessions, one bar</h3>
               <p>Run several Claude Code sessions, each in its own workspace. The bar shows which one finished or needs you, and one click takes you there.</p>
             </a>
+            <a class="tile" href="/docs/scripts">
+              <!-- [html-validate-disable-next no-autoplay] -->
+              <video src="/media/session-start.mp4" poster="/media/session-start.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/session-start.jpg" alt="" width="960" height="540" />
+              <h3>A session opens its own windows</h3>
+              <p><code>deskbar.cmd start Research -- notepad</code> puts the window in Research while you stay where you are.</p>
+            </a>
+            <a class="tile" href="/docs/tasks">
+              <!-- [html-validate-disable-next no-autoplay] -->
+              <video src="/media/tasks-bar.mp4" poster="/media/tasks-bar.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
+              <img class="still" src="/media/tasks-bar.jpg" alt="" width="960" height="540" />
+              <h3>Tasks on the bar</h3>
+              <p>Your notes and your Claude sessions' tasks, per workspace, sorted by important and urgent. Click one to go there.</p>
+            </a>
             <a class="tile" href="/docs/switching">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/switch.mp4" poster="/media/switch.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
@@ -225,20 +354,6 @@
               <h3>Your windows along the top</h3>
               <p>Each screen lists its windows in a strip. Pinned workspaces sit at its end: one click in, one click back.</p>
             </a>
-            <a class="tile" href="/docs/scripts">
-              <!-- [html-validate-disable-next no-autoplay] -->
-              <video src="/media/session-start.mp4" poster="/media/session-start.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
-              <img class="still" src="/media/session-start.jpg" alt="" width="960" height="540" />
-              <h3>A session opens its own windows</h3>
-              <p><code>deskbar.cmd start Research -- notepad</code> puts the window in Research while you stay where you are.</p>
-            </a>
-            <a class="tile" href="/docs/tasks">
-              <!-- [html-validate-disable-next no-autoplay] -->
-              <video src="/media/tasks-bar.mp4" poster="/media/tasks-bar.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
-              <img class="still" src="/media/tasks-bar.jpg" alt="" width="960" height="540" />
-              <h3>Tasks on the bar</h3>
-              <p>Notes per workspace, sorted by important and urgent. Click one to go there.</p>
-            </a>
             <a class="tile" href="/docs/the-bar">
               <!-- [html-validate-disable-next no-autoplay] -->
               <video src="/media/hover-card.mp4" poster="/media/hover-card.jpg" autoplay muted loop playsinline width="960" height="540" aria-hidden="true"></video>
@@ -258,7 +373,7 @@
 
         <section class="features" id="features" aria-labelledby="features-title">
           <div class="section-head">
-            <span class="kicker">What it does</span>
+            <span class="kicker">Under every session</span>
             <h2 id="features-title">Every desktop, in one strip.</h2>
             <p>
               Windows has had virtual desktops for years, without names you can see or any
@@ -342,19 +457,6 @@
                 The layout you make is kept, across restarts too.
               </p>
             </li>
-            <!-- Tasks: README "Tasks" (v2.5.189 replaced the stopwatch with this list). -->
-            <li class="row row-wide rail-amber">
-              <h3>A task list at the bottom of the bar</h3>
-              <p>
-                Type a note into the box at the bottom of the bar and press Enter, and it lands
-                on the workspace you are on. Click a line to go to its workspace. Two toggles on
-                each line mark a task important or urgent, which sorts the list into Covey's four
-                quadrants, and lines drag up or down. Tick a note to close it, with six seconds
-                to undo. The tasks window holds every task, with comments and a Matrix view. A
-                script or a Claude Code session can add one to its own workspace:
-              </p>
-              <pre><code>&amp; "$env:APPDATA\Deskbar\deskbar.cmd" task add "Wait for CI"</code></pre>
-            </li>
             <li class="row rail-violet">
               <h3>See where your time went</h3>
               <p>
@@ -392,14 +494,19 @@
                 window count; the amber dot still shows when something there wants you.
               </p>
             </li>
-            <!-- Claude Code: README "Claude Code" under "Driving it from scripts". -->
+            <!--
+              Tasks: README "Tasks". Since 2026-11-25 the Claude side of tasks (sessions,
+              questions, the manager) lives in the Claude Code section above; this row keeps
+              the board itself. It took the place of the Claude Code row to keep the lines of
+              three whole.
+            -->
             <li class="row rail-rose">
-              <h3>Claude Code sessions call you back</h3>
+              <h3>A task board on the bar</h3>
               <p>
-                Deskbar teaches Claude Code to open its links and windows in the session's own
-                workspace, not the one you are looking at. When a session finishes or waits for
-                you while you are elsewhere, its workspace's name and rail flash orange on the
-                bar until you go there.
+                Type a note into the box at the bottom of the bar and it lands on the workspace
+                you are on. Mark tasks important or urgent to sort them into Covey's four
+                quadrants, give one subtasks, or snooze it until tomorrow. The tasks panel adds
+                comments, a Matrix view and stats on how the work is going.
               </p>
             </li>
             <li class="row rail-teal">
@@ -445,6 +552,70 @@
           </blockquote>
         </section>
       </div>
+
+      <!--
+        For work (added 2026-11-25). Petre's direction: Deskbar is a personal productivity tool
+        and also the way a company brings all its staff to AI. Only what ships today is
+        claimed here. Team features (per-person permissions, aliases, seats, invoices) are not
+        in Deskbar yet and corporate licensing is still open (Deskbar #384), so the last card
+        offers a conversation, not a plan. Rewrite it when those land.
+      -->
+      <section class="band" id="work" aria-labelledby="work-title">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="kicker">For you, and for your staff</span>
+            <h2 id="work-title">Bring everyone at work to Claude.</h2>
+            <p>
+              Deskbar started as one person's desk for running many Claude sessions at once. The
+              same task board is an easy way in for people who have never opened a terminal:
+              they write what they need as a task, and the session's questions come back to that
+              task.
+            </p>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <h3>On your own desk</h3>
+              <ul>
+                <li>Free for personal use, with every feature, the manager included.</li>
+                <li>Works with the Claude Code you already have and your own sign-in.</li>
+                <li>
+                  Every session Deskbar starts uses the model you set (Opus until you pick
+                  another), not whatever a settings file says that day.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>A first session, no terminal to learn</h3>
+              <ul>
+                <li>
+                  Start Claude on this, on any task. Where Claude Code is not installed yet,
+                  Deskbar offers to run its official installer and opens a terminal to sign in
+                  once.
+                </li>
+                <li>
+                  After that the task carries the work: its status, its questions and the links
+                  to open. A double-click opens the session to answer.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card card-pro">
+              <h3>Rolling it out at work</h3>
+              <ul>
+                <li>
+                  Using Deskbar for work asks for Deskbar Pro: $18.99 once per person, from the
+                  Microsoft Store, with priority support.
+                </li>
+                <li>Each person signs in to Claude Code with their own account.</li>
+                <li>Planning it for a team or a whole company? Tell us what you need.</li>
+              </ul>
+              <a class="button button-primary" href="mailto:hello@deskbar.app">Write to hello@deskbar.app</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Download: how to get it today, what it needs, and the Store slot. -->
       <section class="band" id="download" aria-labelledby="download-title">
