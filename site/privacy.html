@@ -7,7 +7,14 @@
   timer while the automatic check is on; since 2026-11-22 it also reads whether the Deskbar Pro
   add-on is owned, in Deskbar's StoreLicence and ProEntitlement). Problem reports are described
   from the README's "Reporting a problem" section and relay/README.md (a Cloudflare Worker at
-  report.deskbar.app files each report as an issue in a private GitHub repository). Each sentence about
+  report.deskbar.app files each report as an issue in a private GitHub repository). The favicon
+  request for bookmarked web links (added 2026-11-26, ahead of the release that ships workspace
+  bookmarks) is described from the bookmarks design and plan in the Deskbar repo
+  (docs/superpowers/specs/2026-11-26-workspace-bookmarks-design.md and the plan of the same date)
+  and src/Deskbar.Windows/Shell/Favicons.cs: a plain GET of /favicon.ico at the link's origin, no
+  cookies or credentials, user agent "Deskbar", cached under %APPDATA%\Deskbar\bookmark-icons,
+  a failure retried on the next start. If that code changes what it sends, this page has to
+  change with it. Each sentence about
   the site has to match the meta tags in the head and docs/hosting.md: if anyone ever adds
   analytics, a cookie, or a host that sets cookies, this page is wrong until it is updated.
 -->
@@ -27,7 +34,7 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Privacy · Deskbar</title>
-    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app talks to GitHub or the Microsoft Store about updates and its licence, and sends a problem report only when you press Send." />
+    <meta name="description" content="What Deskbar and deskbar.app collect: nothing about you. The app talks to GitHub or the Microsoft Store about updates and its licence, asks a site you bookmark for its icon, and sends a problem report only when you press Send." />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07070d" />
     <link rel="canonical" href="https://deskbar.app/privacy" />
@@ -51,7 +58,7 @@
 
     <main id="main" class="wrap page">
       <h1>Privacy</h1>
-      <p class="updated">Last updated 22 November 2026</p>
+      <p class="updated">Last updated 26 November 2026</p>
 
       <p>
         Deskbar, the app, collects nothing about you and sends nothing about you anywhere unless
@@ -70,7 +77,8 @@
 
       <h2>The copy from GitHub</h2>
       <p>
-        Apart from problem reports you send, its only network traffic is the update check: every five minutes, and whenever you
+        Apart from problem reports you send and the icons of web links you bookmark (both
+        described below), its only network traffic is the update check: every five minutes, and whenever you
         choose Check for updates, it asks GitHub whether a newer release exists, and accepting
         an update downloads it from GitHub. Those requests reach GitHub like any other web
         request, with your IP address, and GitHub's own privacy statement covers them. You can
@@ -87,6 +95,20 @@
         it. Those requests go to Microsoft, under
         <a href="https://privacy.microsoft.com/privacystatement">Microsoft's privacy statement</a>.
         You can turn the automatic check off in Manage.
+      </p>
+
+      <h2>Bookmarked web links</h2>
+      <p>
+        Both copies do this. When you bookmark a web link on a workspace, Deskbar asks that
+        website for its icon: one request for <code>/favicon.ico</code> at the same address. It
+        keeps the icon on your computer, under <code>%APPDATA%\Deskbar\bookmark-icons</code>, and
+        does not ask again. If the request fails, the bookmark shows a letter instead, and Deskbar
+        tries again the next time it starts.
+      </p>
+      <p>
+        The request goes only to the site you bookmarked. It carries no cookies and no sign-in
+        details, and it names itself as Deskbar. The site sees it like any other web request, with
+        your IP address. Bookmarks of programs and installed apps make no request.
       </p>
 
       <h2>Buying Deskbar Pro</h2>
