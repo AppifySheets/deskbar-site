@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  Task link: https://deskbar.app/task#<task id>. Deskbar's task links point here because
+  GitHub, and most other places a link is written, keep only http and https links: GitHub
+  drops a deskbar:// link from a pull request altogether (measured with its markdown API on
+  2026-11-26). This page hands the id on to the deskbar: protocol that Deskbar registers on
+  the PC, and Deskbar opens the task in its own window.
+
+  The id travels in the #fragment, which the browser never sends to a server, so no task
+  id reaches GitHub Pages or anyone's logs. Reading the fragment takes a script, the only
+  one on the site, kept in its own file (open.js) so the security policy allows exactly
+  that and nothing else.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Security policy as meta tags, because GitHub Pages serves fixed response headers. As on
+      every page, plus script-src 'self' for open.js: no inline script, nothing from another
+      site, no connections.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>Open a task · Deskbar</title>
+    <meta name="robots" content="noindex" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07070d" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="/task/open.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/img/deskbar-mark-256.png" width="30" height="30" alt="" />
+          Deskbar
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="/docs/">Docs</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap page">
+      <h1 id="heading">Opening the task in Deskbar</h1>
+      <p id="status">
+        This link opens a task in Deskbar on your PC. It needs JavaScript to read the task
+        from the link.
+      </p>
+      <p>
+        Your browser may ask whether to open Deskbar first. If nothing happens, check that
+        Deskbar is installed and running on this PC.
+      </p>
+      <div class="actions">
+        <a class="button button-primary" id="open" href="/">Open in Deskbar</a>
+        <a class="button" href="/#download">Download Deskbar</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Deskbar is made by AppifySheets, a brand of Petre Chitashvili.
+          <br />&copy; 2026 Petre Chitashvili. All rights reserved.
+        </p>
+        <nav aria-label="Footer">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms and EULA</a>
+          <a href="/refunds">Refunds</a>
+          <a href="https://github.com/AppifySheets/Deskbar">GitHub</a>
+          <a href="mailto:hello@deskbar.app">hello@deskbar.app</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -3,8 +3,9 @@
 The website for [Deskbar](https://github.com/AppifySheets/Deskbar), the taskbar for your
 virtual desktops, served at [deskbar.app](https://deskbar.app).
 
-It is plain HTML and CSS with no framework, no build step, no scripts, no analytics and no
-cookies. Everything that gets published lives in [`site/`](site/); the rest of the repository
+It is plain HTML and CSS with no framework, no build step, no analytics and no cookies, and
+one small script: `site/task/open.js`, which reads a task link's id from after the `#` and
+hands it to the Deskbar app (see the task link row below). Everything that gets published lives in [`site/`](site/); the rest of the repository
 is documentation and checks.
 
 | Path | What it is |
@@ -15,6 +16,7 @@ is documentation and checks.
 | `site/css/` | `site.css` for every page, `home.css` for the home page only |
 | `site/img/` | The hero capture (native 1.5x and a 1x copy), the mark, the share image, the Store badge |
 | `site/download/`, `site/source/` and others | Short links, each a page that forwards the browser |
+| `site/task/` | Task links, `https://deskbar.app/task#<task id>`: hands the link to the `deskbar:` protocol the app registers, so the task opens in Deskbar. The only page with a script, allowed by its own `script-src 'self'` |
 | `docs/hosting.md` | How the site is hosted: GitHub Pages settings and the DNS at Cloudflare |
 | `docs/last-sync.md` | The Deskbar commit the site was last brought up to date with |
 | `.claude/skills/update-site/` | The skill Claude Code follows to bring the site up to date with Deskbar (`/update-site`) |
