@@ -107,6 +107,11 @@ looks or works; for a new feature, add its row to the shot list in `tools/shoot/
 
 ## 5. Finish
 
+- Refresh the home page's "In use" numbers and charts on Petre's machine:
+  `python -I tools/usage-charts/build.py` (last 14 full days). It reads only timestamps and
+  entrypoints from `~/.claude/projects` and `deskbar.cmd task stats`, and rewrites the block
+  between the `usage-charts` markers in `site/index.html`. Look at the result before committing.
+
 - Write the Deskbar commit you covered and the latest release into `docs/last-sync.md`, with a line
   on what the run covered and what it left out.
 - Tell Petre: the PR links, what each needs from him, and any Deskbar bugs you noticed. Pass bugs to

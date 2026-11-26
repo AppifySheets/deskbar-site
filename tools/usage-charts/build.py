@@ -4,7 +4,8 @@ Builds the "How I use it" charts on deskbar.app's home page from Petre's own mac
 What it reads (all local, nothing is fetched):
   - Claude Code's session transcripts, ~/.claude/projects/<project>/<session>.jsonl. Only the
     timestamp, type and entrypoint of each line are read, never the content. A session counts
-    as working in a 10-minute slot when Claude wrote a reply into its transcript in that slot. Scripted runs
+    in a 10-minute slot when Claude wrote a reply into its transcript in that slot. Sessions
+    resumed after a reboot reply too, so a peak can be a resume wave as well as new work. Scripted runs
     (entrypoint sdk-cli, sdk-ts and the like) are left out; claude-vscode is a VS Code session,
     cli is a terminal or background session (the ones Deskbar starts with claude --bg).
     Subagent transcripts live one folder deeper and are not counted.
@@ -65,7 +66,7 @@ def session_slots(first_day, last_day):
                 # Only Claude's own replies count as work. Lines a session writes when VS Code
                 # restores it, or when it is resumed, would otherwise make a reload of thirty
                 # idle sessions look like thirty at work.
-                if b'"type":"assistant"' not in line[:600] and b'"type":"assistant"' not in line:
+                if b'"type":"assistant"' not in line:
                     continue
                 m, e = TS.search(line), EP.search(line)
                 if not m:
@@ -73,12 +74,13 @@ def session_slots(first_day, last_day):
                 # Read per line: a VS Code session that Deskbar later resumes in the background
                 # keeps its transcript, and its later lines say cli.
                 entry = e and e.group(1).decode()
+                if entry not in ("claude-vscode", "cli"):
+                    continue  # scripted runs, and lines that do not say where they ran
                 t = dt.datetime.fromisoformat(m.group(1).decode().replace("Z", "+00:00")).astimezone()
                 if not first_day <= t.date() <= last_day:
                     continue
                 slots[t.replace(minute=t.minute // 10 * 10, second=0, microsecond=0, tzinfo=None)][sid] = entry
-    # Keep interactive sessions only (VS Code, and terminal or background); scripted runs drop out.
-    return {k: {s: e for s, e in v.items() if e in ("claude-vscode", "cli")} for k, v in slots.items()}
+    return slots
 
 
 def busiest_per_day(slots, days):
@@ -101,12 +103,14 @@ def label_day(d):
 
 def ticks(top):
     """Clean y-axis ticks: 0 to a round number at or above the top value."""
-    step = next(s for s in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500) if top / s <= 5)
+    step = next((s for s in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000) if top / s <= 5),
+                10 ** len(str(top)))
     return list(range(0, (top // step + 1) * step + 1, step)) if top % step else list(range(0, top + 1, step))
 
 
-def columns_svg(title_id, days, series, stacked, value_label):
-    """Column chart in SVG. series: [(name, colour, [values per day])]. Stacked or grouped."""
+def columns_svg(title_id, days, series, stacked, peak_label):
+    """Column chart in SVG. series: [(name, colour, [values per day])]. Stacked or grouped.
+    peak_label(total, series name or None) words the one direct label on the top day."""
     # 560 wide: drawn at about 540 px in its card, so the SVG's text sizes are close to CSS px.
     w, h, left, bottom, top_pad = 560, 250, 34, 28, 24
     totals = [sum(s[2][i] for s in series) if stacked else max(s[2][i] for s in series) for i in range(len(days))]
@@ -131,8 +135,12 @@ def columns_svg(title_id, days, series, stacked, value_label):
             for k, (_, colour, vals) in enumerate(series):
                 v = vals[i]
                 if v:
-                    last = k == len(series) - 1 or all(series[j][2][i] == 0 for j in range(k + 1, len(series)))
-                    out.append(bar(bx, y(base + v), bw, y(base) - y(base + v) - (0 if base == 0 else 2), colour, last))
+                    last = all(series[j][2][i] == 0 for j in range(k + 1, len(series)))
+                    # Above another segment, leave the 2px surface gap but keep at least 2px of
+                    # mark, so a 1 on a tall scale still shows.
+                    gap = 0 if base == 0 else 2
+                    height = max(y(base) - y(base + v) - gap, 2)
+                    out.append(bar(bx, y(base) - gap - height, bw, height, colour, last))
                     base += v
         else:
             bw = min(18, band * 0.32)
@@ -143,8 +151,12 @@ def columns_svg(title_id, days, series, stacked, value_label):
                     out.append(bar(gx + k * (bw + 2), y(v), bw, y(0) - y(v), colour, True))
         out.append("</g>")
         out.append(f'<text class="tick" x="{x0 + band / 2:.1f}" y="{h - 8}" text-anchor="middle">{label_day(d) if len(days) <= 8 or (len(days) - 1 - i) % 2 == 0 else ""}</text>')
-    # One direct label, on the day that tops the chart.
-    out.append(f'<text class="peak" x="{left + peak * band + band / 2:.1f}" y="{y(totals[peak]) - 7:.1f}" text-anchor="middle">{totals[peak]} {value_label}</text>')
+    # One direct label, on the day that tops the chart, naming the series that tops it in a
+    # grouped chart. Nothing to label on an empty chart.
+    if totals[peak]:
+        top = None if stacked else max(series, key=lambda s: s[2][peak])[0]
+        out.append(f'<text class="peak" x="{left + peak * band + band / 2:.1f}" y="{y(totals[peak]) - 7:.1f}" '
+                   f'text-anchor="middle">{esc(peak_label(totals[peak], top))}</text>')
     out.append("</svg>")
     return "".join(out)
 
@@ -191,8 +203,13 @@ def main():
 
     stats = deskbar("task", "stats", "--days", str(a.days))
     tasks = deskbar("task", "list") + deskbar("task", "list", "--closed")
-    claude_share = sum(1 for t in tasks if t.get("claudes")) / max(len(tasks), 1)
     by_day = {d["date"]: d for d in stats["days"]}
+    # Share of the tasks added in the same window that a Claude session worked on ("claudes"
+    # is true once any session has joined or started on a task). It includes tasks a session
+    # opened for its own work, which is how most of Petre's tasks come about.
+    with_claude = {t["id"] for t in tasks if t.get("claudes")}
+    added_ids = {x["id"] for d in days for x in by_day.get(d.isoformat(), {}).get("added", [])}
+    claude_share = len(added_ids & with_claude) / max(len(added_ids), 1)
     # The task chart covers the last unbroken run of days with task activity, at most 7 days,
     # so it starts when the board came into daily use instead of on a row of empty days.
     active = lambda d: by_day.get(d.isoformat(), {}).get("added") or by_day.get(d.isoformat(), {}).get("finished")
@@ -208,29 +225,28 @@ def main():
     s1 = [("In VS Code", VSCODE, [r["vscode"] for r in busiest]),
           ("In the background or a terminal", BACKGROUND, [r["background"] for r in busiest])]
     s2 = [("Added", ADDED, added), ("Finished", FINISHED, finished)]
-    share = round(claude_share * 4) if round(claude_share * 4) in (1, 2, 3, 4) else None
-    share_text = f"{share} in 4" if share else f"{claude_share:.0%}"
+    share_text = f"{int(claude_share * 100)}%"  # floored, so it never rounds up into a claim
 
     frag = f"""
           <!-- Generated by tools/usage-charts/build.py on {dt.date.today().isoformat()} from Petre's machine,
                {label_day(days[0])} to {label_day(days[-1])} {days[-1].year}. Edit the script, not this block. -->
           <ul class="stats">
             <li><span class="stat-value">{len(sessions)}</span><span class="stat-label">Claude sessions in {a.days} days</span></li>
-            <li><span class="stat-value">{most['vscode'] + most['background']}</span><span class="stat-label">at work in the same ten minutes, at the busiest</span></li>
-            <li><span class="stat-value">{max(bg_counts)}</span><span class="stat-label">in the background in the same ten minutes</span></li>
-            <li><span class="stat-value">{share_text}</span><span class="stat-label">tasks handed to a Claude session</span></li>
+            <li><span class="stat-value">{most['vscode'] + most['background']}</span><span class="stat-label">replying in the same ten minutes, at the busiest</span></li>
+            <li><span class="stat-value">{max(bg_counts)}</span><span class="stat-label">in the background or a terminal in the same ten minutes</span></li>
+            <li><span class="stat-value">{share_text}</span><span class="stat-label">of the tasks added in {a.days} days had a Claude session on them</span></li>
           </ul>
           <div class="charts">
             <figure class="chart">
-              <figcaption id="chart-sessions">Claude sessions at work in the same ten minutes, at each day's busiest moment</figcaption>
+              <figcaption id="chart-sessions">Claude sessions replying in the same ten minutes, at each day's busiest moment</figcaption>
               {legend(s1)}
-              {columns_svg("chart-sessions", days, s1, True, "at once")}
+              {columns_svg("chart-sessions", days, s1, True, lambda n, _: f"{n} in ten minutes")}
               {table(days, s1, "Day")}
             </figure>
             <figure class="chart">
               <figcaption id="chart-tasks">Tasks added and finished each day: {sum(finished)} finished since {label_day(tdays[0])}</figcaption>
               {legend(s2)}
-              {columns_svg("chart-tasks", tdays, s2, False, "added")}
+              {columns_svg("chart-tasks", tdays, s2, False, lambda n, name: f"{n} {name.lower()}")}
               {table(tdays, s2, "Day")}
             </figure>
           </div>
