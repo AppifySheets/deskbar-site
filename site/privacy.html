@@ -13,7 +13,11 @@
   (docs/superpowers/specs/2026-11-26-workspace-bookmarks-design.md and the plan of the same date)
   and src/Deskbar.Windows/Shell/Favicons.cs: a plain GET of /favicon.ico at the link's origin, no
   cookies or credentials, user agent "Deskbar", cached under %APPDATA%\Deskbar\bookmark-icons,
-  a failure retried on the next start. If that code changes what it sends, this page has to
+  a failure retried on the next start. Since Deskbar task 5f3b1255 (2026-11-26, Petre's choice,
+  because Portainer answers 404 at /favicon.ico): when that request fails, one GET of the
+  bookmarked page without its fragment, then one GET of the icon its link rel="icon" names, only
+  when that icon has the same scheme, host and port. At most three requests, no redirect
+  followed. If that code changes what it sends, this page has to
   change with it. Each sentence about
   the site has to match the meta tags in the head and docs/hosting.md: if anyone ever adds
   analytics, a cookie, or a host that sets cookies, this page is wrong until it is updated.
@@ -100,15 +104,19 @@
       <h2>Bookmarked web links</h2>
       <p>
         Both copies do this. When you bookmark a web link on a workspace, Deskbar asks that
-        website for its icon: one request for <code>/favicon.ico</code> at the same address. It
-        keeps the icon on your computer, under <code>%APPDATA%\Deskbar\bookmark-icons</code>, and
-        does not ask again. If the request fails, the bookmark shows a letter instead, and Deskbar
-        tries again the next time it starts.
+        website for its icon, first with a request for <code>/favicon.ico</code> at the same
+        address. If the site has no icon there, Deskbar loads the bookmarked page once, without the
+        part of the link after <code>#</code>, reads which icon the page names, and fetches that
+        icon, but only when it is on the same site: the same address and port. That is at most
+        three requests. Deskbar keeps the icon on your computer, under
+        <code>%APPDATA%\Deskbar\bookmark-icons</code>, and does not ask again. If no icon comes
+        back, the bookmark shows a letter instead, and Deskbar tries again the next time it starts.
       </p>
       <p>
-        The request goes only to the site you bookmarked. It carries no cookies and no sign-in
-        details, and it names itself as Deskbar. The site sees it like any other web request, with
-        your IP address. Bookmarks of programs and installed apps make no request.
+        The requests go only to the site you bookmarked, and Deskbar follows no redirect to
+        anywhere else. They carry no cookies and no sign-in details, and they name themselves as
+        Deskbar. The site sees them like any other web request, with your IP address. Bookmarks of
+        programs and installed apps make no request.
       </p>
 
       <h2>Buying Deskbar Pro</h2>
