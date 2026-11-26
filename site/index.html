@@ -28,10 +28,10 @@
       content="default-src 'none'; img-src 'self'; media-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Deskbar: every Claude Code session on one bar</title>
+    <title>Deskbar: the manager for your Claude sessions</title>
     <meta
       name="description"
-      content="Run many Claude Code sessions side by side on Windows 11. Each one works in a workspace of its own and asks you through a task on the bar. A double-click takes you to it."
+      content="For people who let Claude Code do the work, many sessions at a time. Hand each one a task, let it work in its own workspace, and answer only what needs you."
     />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07070d" />
@@ -45,10 +45,10 @@
     <!-- Link previews (Slack, Teams, X, LinkedIn and the like). og.png is 1200 by 630. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Deskbar" />
-    <meta property="og:title" content="Deskbar: every Claude Code session on one bar" />
+    <meta property="og:title" content="Deskbar: the manager for your Claude sessions" />
     <meta
       property="og:description"
-      content="Hand tasks to Claude Code from the bar. Each session works in its own workspace, and the bar shows which one finished or is waiting on you."
+      content="For people who let Claude Code do the work, many sessions at a time. The bar shows which one finished or is waiting on you."
     />
     <meta property="og:url" content="https://deskbar.app/" />
     <meta property="og:image" content="https://deskbar.app/img/og.png" />
@@ -70,11 +70,10 @@
           Deskbar
         </a>
         <nav class="site-nav" aria-label="Main">
-          <a class="optional" href="#claude">Claude Code</a>
+          <a class="optional" href="#claude">How it works</a>
+          <a class="optional" href="#use">In use</a>
           <a class="optional" href="#work">For work</a>
-          <a class="optional" href="#features">Features</a>
           <a class="optional" href="#pricing">Pricing</a>
-          <a class="optional" href="https://github.com/AppifySheets/Deskbar">Source</a>
           <a href="/docs/">Docs</a>
           <a href="#download">Download</a>
         </nav>
@@ -90,27 +89,27 @@
       <div class="wrap stage">
         <section class="hero" aria-labelledby="hero-title">
           <!--
-            The hero leads with Claude Code (Petre, 2026-11-25: "emphasize claude workflow").
-            Running many sessions side by side is the strongest reason to use Deskbar, so it
-            comes first; the virtual-desktop taskbar it is built on follows in the second
-            paragraph. Every claim is from the README's "Tasks" and "Claude Code" sections.
+            The hero says what Deskbar is for (Petre, 2026-11-26): "it's not a desktop manager,
+            it's a claude manager", for someone who relies on Claude to do the work and runs
+            many sessions at once. The virtual desktops it is built on come second. Every claim
+            about the app is from the README's "Tasks" and "Claude Code" sections.
           -->
-          <p class="eyebrow">Deskbar for Windows 11 and Claude Code</p>
+          <p class="eyebrow">For people who run many Claude sessions</p>
           <h1 id="hero-title">
-            Every Claude session,
-            <span class="glow">on one bar.</span>
+            The manager for your
+            <span class="glow">Claude sessions.</span>
           </h1>
           <p class="lede">
-            Hand a task to Claude Code from the bar. Each session works in
-            <strong>a workspace of its own</strong>, keeps its task up to date, and asks you
-            through it when the next move is yours. The bar shows which session is working,
-            which finished and <strong>which is waiting on you</strong>, and one double-click
-            takes you there.
+            Deskbar is for people who let <strong>Claude Code do the work</strong>, many sessions
+            at a time. Write what you need as a task and a session takes it. Each one works in a
+            workspace of its own, keeps its task current, and comes back to you only when
+            <strong>the next move is yours</strong>: a pull request to merge, a choice to make, a
+            page to check. The bar shows every session at once, and a double-click takes you to
+            any of them.
           </p>
           <p class="lede lede-second">
-            Underneath is a taskbar for Windows' own virtual desktops: every desktop's windows
-            at once, named and coloured. Hold <strong>Win+Ctrl</strong> and tap
-            <strong>Tab</strong> to switch.
+            It runs on Windows 11, on Windows' own virtual desktops: one per line of work, and
+            <strong>Win+Ctrl+Tab</strong> to switch.
           </p>
           <!--
             Store first (Petre, 2026-11-03): the paid Store copy is the primary button, the free
@@ -188,8 +187,8 @@
         -->
         <section class="claude" id="claude" aria-labelledby="claude-title">
           <div class="section-head">
-            <span class="kicker">With Claude Code</span>
-            <h2 id="claude-title">Hand it over. Get called back.</h2>
+            <span class="kicker">How it works</span>
+            <h2 id="claude-title">You write the task. Claude does the work.</h2>
             <p>
               Deskbar is built for running many Claude Code sessions at once. Every session
               keeps a task on the bar, and that task is how you and the session talk: what it is
@@ -279,6 +278,50 @@
               </p>
             </li>
           </ul>
+        </section>
+
+        <!--
+          In use (added 2026-11-26, Petre: "include charts for how I'm using it" and "how many
+          claudes I have running in the bg"). Petre's own numbers, as counts only. The block
+          between the usage-charts markers is generated by tools/usage-charts/build.py on his
+          machine; rerun it on a site update rather than editing the numbers by hand. The
+          charts are inline SVG with native tooltips and a table view, because the page runs
+          no scripts.
+        -->
+        <section class="use" id="use" aria-labelledby="use-title">
+          <div class="section-head">
+            <span class="kicker">In use</span>
+            <h2 id="use-title">One person, a desk full of Claudes.</h2>
+            <p>
+              These are the numbers from the machine Deskbar is made on, where its maker hands
+              most of his work to Claude. Every Claude Code session he runs, in VS Code or in the
+              background, counts here; nothing else about them leaves the machine.
+            </p>
+          </div>
+          <!-- usage-charts:start -->
+          <!-- Generated by tools/usage-charts/build.py on 2026-11-26 from Petre's machine,
+               12 Nov to 25 Nov 2026. Edit the script, not this block. -->
+          <ul class="stats">
+            <li><span class="stat-value">321</span><span class="stat-label">Claude sessions in 14 days</span></li>
+            <li><span class="stat-value">29</span><span class="stat-label">at work in the same ten minutes, at the busiest</span></li>
+            <li><span class="stat-value">18</span><span class="stat-label">in the background in the same ten minutes</span></li>
+            <li><span class="stat-value">3 in 4</span><span class="stat-label">tasks handed to a Claude session</span></li>
+          </ul>
+          <div class="charts">
+            <figure class="chart">
+              <figcaption id="chart-sessions">Claude sessions at work in the same ten minutes, at each day's busiest moment</figcaption>
+              <ul class="chart-legend"><li><svg class="key" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" rx="3" fill="#8b5cf6" /></svg>In VS Code</li><li><svg class="key" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" rx="3" fill="#d08a35" /></svg>In the background or a terminal</li></ul>
+              <svg class="chart-svg" viewBox="0 0 560 250" role="img" aria-labelledby="chart-sessions"><line class="grid" x1="34" x2="560" y1="222.0" y2="222.0" /><text class="tick" x="26" y="226.0" text-anchor="end">0</text><line class="grid" x1="34" x2="560" y1="156.0" y2="156.0" /><text class="tick" x="26" y="160.0" text-anchor="end">10</text><line class="grid" x1="34" x2="560" y1="90.0" y2="90.0" /><text class="tick" x="26" y="94.0" text-anchor="end">20</text><line class="grid" x1="34" x2="560" y1="24.0" y2="24.0" /><text class="tick" x="26" y="28.0" text-anchor="end">30</text><g><title>12 Nov: 7 in vs code, 0 in the background or a terminal</title><rect class="hit" x="34.0" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M41.5,222.0V179.8Q41.5,175.8 45.5,175.8H60.1Q64.1,175.8 64.1,179.8V222.0Z" /></g><text class="tick" x="52.8" y="242" text-anchor="middle"></text><g><title>13 Nov: 5 in vs code, 0 in the background or a terminal</title><rect class="hit" x="71.6" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M79.1,222.0V193.0Q79.1,189.0 83.1,189.0H97.6Q101.6,189.0 101.6,193.0V222.0Z" /></g><text class="tick" x="90.4" y="242" text-anchor="middle">13 Nov</text><g><title>14 Nov: 8 in vs code, 0 in the background or a terminal</title><rect class="hit" x="109.1" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M116.7,222.0V173.2Q116.7,169.2 120.7,169.2H135.2Q139.2,169.2 139.2,173.2V222.0Z" /></g><text class="tick" x="127.9" y="242" text-anchor="middle"></text><g><title>15 Nov: 8 in vs code, 0 in the background or a terminal</title><rect class="hit" x="146.7" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M154.2,222.0V173.2Q154.2,169.2 158.2,169.2H172.8Q176.8,169.2 176.8,173.2V222.0Z" /></g><text class="tick" x="165.5" y="242" text-anchor="middle">15 Nov</text><g><title>16 Nov: 5 in vs code, 0 in the background or a terminal</title><rect class="hit" x="184.3" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M191.8,222.0V193.0Q191.8,189.0 195.8,189.0H210.3Q214.3,189.0 214.3,193.0V222.0Z" /></g><text class="tick" x="203.1" y="242" text-anchor="middle"></text><g><title>17 Nov: 4 in vs code, 0 in the background or a terminal</title><rect class="hit" x="221.9" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M229.4,222.0V199.6Q229.4,195.6 233.4,195.6H247.9Q251.9,195.6 251.9,199.6V222.0Z" /></g><text class="tick" x="240.6" y="242" text-anchor="middle">17 Nov</text><g><title>18 Nov: 10 in vs code, 0 in the background or a terminal</title><rect class="hit" x="259.4" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M266.9,222.0V160.0Q266.9,156.0 270.9,156.0H285.5Q289.5,156.0 289.5,160.0V222.0Z" /></g><text class="tick" x="278.2" y="242" text-anchor="middle"></text><g><title>19 Nov: 7 in vs code, 0 in the background or a terminal</title><rect class="hit" x="297.0" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M304.5,222.0V179.8Q304.5,175.8 308.5,175.8H323.1Q327.1,175.8 327.1,179.8V222.0Z" /></g><text class="tick" x="315.8" y="242" text-anchor="middle">19 Nov</text><g><title>20 Nov: 5 in vs code, 0 in the background or a terminal</title><rect class="hit" x="334.6" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M342.1,222.0V193.0Q342.1,189.0 346.1,189.0H360.6Q364.6,189.0 364.6,193.0V222.0Z" /></g><text class="tick" x="353.4" y="242" text-anchor="middle"></text><g><title>21 Nov: 1 in vs code, 0 in the background or a terminal</title><rect class="hit" x="372.1" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M379.7,222.0V219.4Q379.7,215.4 383.7,215.4H398.2Q402.2,215.4 402.2,219.4V222.0Z" /></g><text class="tick" x="390.9" y="242" text-anchor="middle">21 Nov</text><g><title>22 Nov: 17 in vs code, 1 in the background or a terminal</title><rect class="hit" x="409.7" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M417.2,222.0V109.8Q417.2,109.8 417.2,109.8H439.8Q439.8,109.8 439.8,109.8V222.0Z" /><path fill="#d08a35" d="M417.2,107.8V107.2Q417.2,103.2 421.2,103.2H435.8Q439.8,103.2 439.8,107.2V107.8Z" /></g><text class="tick" x="428.5" y="242" text-anchor="middle"></text><g><title>23 Nov: 29 in vs code, 0 in the background or a terminal</title><rect class="hit" x="447.3" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M454.8,222.0V34.6Q454.8,30.6 458.8,30.6H473.3Q477.3,30.6 477.3,34.6V222.0Z" /></g><text class="tick" x="466.1" y="242" text-anchor="middle">23 Nov</text><g><title>24 Nov: 1 in vs code, 8 in the background or a terminal</title><rect class="hit" x="484.9" y="24" width="37.6" height="198" /><path fill="#8b5cf6" d="M492.4,222.0V215.4Q492.4,215.4 492.4,215.4H514.9Q514.9,215.4 514.9,215.4V222.0Z" /><path fill="#d08a35" d="M492.4,213.4V166.6Q492.4,162.6 496.4,162.6H510.9Q514.9,162.6 514.9,166.6V213.4Z" /></g><text class="tick" x="503.6" y="242" text-anchor="middle"></text><g><title>25 Nov: 0 in vs code, 18 in the background or a terminal</title><rect class="hit" x="522.4" y="24" width="37.6" height="198" /><path fill="#d08a35" d="M529.9,222.0V107.2Q529.9,103.2 533.9,103.2H548.5Q552.5,103.2 552.5,107.2V222.0Z" /></g><text class="tick" x="541.2" y="242" text-anchor="middle">25 Nov</text><text class="peak" x="466.1" y="23.6" text-anchor="middle">29 at once</text></svg>
+              <details class="chart-table"><summary>The numbers</summary><table><thead><tr><th scope="col">Day</th><th scope="col">In VS Code</th><th scope="col">In the background or a terminal</th></tr></thead><tbody><tr><th scope="row">12 Nov</th><td>7</td><td>0</td></tr><tr><th scope="row">13 Nov</th><td>5</td><td>0</td></tr><tr><th scope="row">14 Nov</th><td>8</td><td>0</td></tr><tr><th scope="row">15 Nov</th><td>8</td><td>0</td></tr><tr><th scope="row">16 Nov</th><td>5</td><td>0</td></tr><tr><th scope="row">17 Nov</th><td>4</td><td>0</td></tr><tr><th scope="row">18 Nov</th><td>10</td><td>0</td></tr><tr><th scope="row">19 Nov</th><td>7</td><td>0</td></tr><tr><th scope="row">20 Nov</th><td>5</td><td>0</td></tr><tr><th scope="row">21 Nov</th><td>1</td><td>0</td></tr><tr><th scope="row">22 Nov</th><td>17</td><td>1</td></tr><tr><th scope="row">23 Nov</th><td>29</td><td>0</td></tr><tr><th scope="row">24 Nov</th><td>1</td><td>8</td></tr><tr><th scope="row">25 Nov</th><td>0</td><td>18</td></tr></tbody></table></details>
+            </figure>
+            <figure class="chart">
+              <figcaption id="chart-tasks">Tasks added and finished each day: 161 finished since 22 Nov</figcaption>
+              <ul class="chart-legend"><li><svg class="key" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" rx="3" fill="#2a9fbd" /></svg>Added</li><li><svg class="key" viewBox="0 0 12 12" aria-hidden="true"><rect width="12" height="12" rx="3" fill="#c0507a" /></svg>Finished</li></ul>
+              <svg class="chart-svg" viewBox="0 0 560 250" role="img" aria-labelledby="chart-tasks"><line class="grid" x1="34" x2="560" y1="222.0" y2="222.0" /><text class="tick" x="26" y="226.0" text-anchor="end">0</text><line class="grid" x1="34" x2="560" y1="156.0" y2="156.0" /><text class="tick" x="26" y="160.0" text-anchor="end">50</text><line class="grid" x1="34" x2="560" y1="90.0" y2="90.0" /><text class="tick" x="26" y="94.0" text-anchor="end">100</text><line class="grid" x1="34" x2="560" y1="24.0" y2="24.0" /><text class="tick" x="26" y="28.0" text-anchor="end">150</text><g><title>22 Nov: 10 added, 5 finished</title><rect class="hit" x="34.0" y="24" width="131.5" height="198" /><path fill="#2a9fbd" d="M80.8,222.0V212.8Q80.8,208.8 84.8,208.8H94.8Q98.8,208.8 98.8,212.8V222.0Z" /><path fill="#c0507a" d="M100.8,222.0V219.4Q100.8,215.4 104.8,215.4H114.8Q118.8,215.4 118.8,219.4V222.0Z" /></g><text class="tick" x="99.8" y="242" text-anchor="middle">22 Nov</text><g><title>23 Nov: 38 added, 16 finished</title><rect class="hit" x="165.5" y="24" width="131.5" height="198" /><path fill="#2a9fbd" d="M212.2,222.0V175.8Q212.2,171.8 216.2,171.8H226.2Q230.2,171.8 230.2,175.8V222.0Z" /><path fill="#c0507a" d="M232.2,222.0V204.9Q232.2,200.9 236.2,200.9H246.2Q250.2,200.9 250.2,204.9V222.0Z" /></g><text class="tick" x="231.2" y="242" text-anchor="middle">23 Nov</text><g><title>24 Nov: 21 added, 24 finished</title><rect class="hit" x="297.0" y="24" width="131.5" height="198" /><path fill="#2a9fbd" d="M343.8,222.0V198.3Q343.8,194.3 347.8,194.3H357.8Q361.8,194.3 361.8,198.3V222.0Z" /><path fill="#c0507a" d="M363.8,222.0V194.3Q363.8,190.3 367.8,190.3H377.8Q381.8,190.3 381.8,194.3V222.0Z" /></g><text class="tick" x="362.8" y="242" text-anchor="middle">24 Nov</text><g><title>25 Nov: 133 added, 116 finished</title><rect class="hit" x="428.5" y="24" width="131.5" height="198" /><path fill="#2a9fbd" d="M475.2,222.0V50.4Q475.2,46.4 479.2,46.4H489.2Q493.2,46.4 493.2,50.4V222.0Z" /><path fill="#c0507a" d="M495.2,222.0V72.9Q495.2,68.9 499.2,68.9H509.2Q513.2,68.9 513.2,72.9V222.0Z" /></g><text class="tick" x="494.2" y="242" text-anchor="middle">25 Nov</text><text class="peak" x="494.2" y="39.4" text-anchor="middle">133 added</text></svg>
+              <details class="chart-table"><summary>The numbers</summary><table><thead><tr><th scope="col">Day</th><th scope="col">Added</th><th scope="col">Finished</th></tr></thead><tbody><tr><th scope="row">22 Nov</th><td>10</td><td>5</td></tr><tr><th scope="row">23 Nov</th><td>38</td><td>16</td></tr><tr><th scope="row">24 Nov</th><td>21</td><td>24</td></tr><tr><th scope="row">25 Nov</th><td>133</td><td>116</td></tr></tbody></table></details>
+            </figure>
+          </div>
+          <!-- usage-charts:end -->
         </section>
 
         <!--
@@ -374,12 +417,13 @@
 
         <section class="features" id="features" aria-labelledby="features-title">
           <div class="section-head">
-            <span class="kicker">Under every session</span>
-            <h2 id="features-title">Every desktop, in one strip.</h2>
+            <span class="kicker">Underneath</span>
+            <h2 id="features-title">Every session's windows, in one strip.</h2>
             <p>
-              Windows has had virtual desktops for years, without names you can see or any
-              memory of what goes where. Deskbar is a layer over them that adds what was
-              missing.
+              Each workspace is one of Windows' own virtual desktops, so a session's editor,
+              terminal and browser stay together and out of the way of the others. Deskbar gives
+              the desktops names, colours, memory of what goes where, and one bar that shows them
+              all.
             </p>
           </div>
 
