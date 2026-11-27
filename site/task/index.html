@@ -4,7 +4,8 @@
   GitHub, and most other places a link is written, keep only http and https links: GitHub
   drops a deskbar:// link from a pull request altogether (measured with its markdown API on
   2026-11-26). This page hands the id on to the deskbar: protocol that Deskbar registers on
-  the PC, and Deskbar opens the task in its own window.
+  the PC, and Deskbar opens the task in its own window. Once Deskbar has answered, the page
+  closes its own tab (open.js says how it knows, and when it leaves the tab open).
 
   The id travels in the #fragment, which the browser never sends to a server, so no task
   id reaches GitHub Pages or anyone's logs. Reading the fragment takes a script, the only
